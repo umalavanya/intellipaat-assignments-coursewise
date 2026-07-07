@@ -1,0 +1,2 @@
+hello
+This is sample text file that is being watched
