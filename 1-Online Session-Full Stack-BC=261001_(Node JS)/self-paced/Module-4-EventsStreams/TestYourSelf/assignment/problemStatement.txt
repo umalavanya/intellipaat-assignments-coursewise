@@ -1,0 +1,11 @@
+Problem Statement:
+
+Create a NodeJs file that contains code, which will emit an event
+when a user connects to the server, and an event handler 
+that will log it to the console.
+
+The requirements look like this.
+
+1. Make sure to use the event module to do this.
+2. Create event handler methods in a separate file called handler.js 
+3. Import handler in the main.js file and register it with the event 'connect'.
