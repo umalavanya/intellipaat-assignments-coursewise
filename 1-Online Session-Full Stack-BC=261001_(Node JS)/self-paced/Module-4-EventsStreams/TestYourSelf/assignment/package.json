@@ -1,0 +1,14 @@
+{
+  "name": "event-emitter-server",
+  "version": "1.0.0",
+  "description": "Node.js server that emits events on user connection",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "node test.js"
+  },
+  "keywords": ["nodejs", "events", "server"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
