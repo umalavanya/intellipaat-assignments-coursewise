@@ -1,0 +1,12 @@
+Problem Statement
+
+Use NodeJS and teh http module to create a simple 
+http server that will handle specified URIs, form submission, and a querystring
+
+The requirements look like this
+
+1. Use the createServer method on the http module
+2. When a user visits '/form', it should show a simple http form.
+3. When the form is submitted, it should show the form data on the next page.
+4. When the user visits '/querystring', it should decode the querystring datat (if any) 
+and display it to the user.
