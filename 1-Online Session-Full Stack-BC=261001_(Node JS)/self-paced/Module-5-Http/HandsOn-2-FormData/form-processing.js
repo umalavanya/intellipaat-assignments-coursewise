@@ -3,9 +3,9 @@ const fs = require('fs');
 
 http.createServer((req,res) => {
     if(req.method == "POST"){
-        let body = '';
-        req.on('data', chunk =>{
-            body += chunk.toString();
+        let body = "";
+        req.on('data', data =>{
+            body += data.toString();
         });
         req.on('end', () =>{
             console.log(body);
@@ -17,4 +17,4 @@ http.createServer((req,res) => {
             res.end(data);
         });
     }
-}).listen(8080);
+}).listen(3030);
