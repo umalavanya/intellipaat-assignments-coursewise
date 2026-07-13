@@ -11,6 +11,8 @@ public class P6Area {
 		
 		System.out.println("Area of sqaure with "+squareSide+": "+squareArea(squareSide));
 		System.out.println("Area of a rectangle: "+ rectangleArea(recLength, recWidth)) ;
+
+		System.out.println("Perimeter of a rectangle: "+ recPerim(recLength, recWidth)) ;
 		System.out.println("Area of a circle: "+circleArea(radius));
 		
 	}
@@ -25,6 +27,10 @@ public class P6Area {
 	
 	public static double circleArea(double radius) {
 		return Math.PI*Math.pow(radius,2) ;
+	}
+	
+	public static double recPerim(double len, double width) {
+		return 2*(len + width) ;
 	}
 
 }
