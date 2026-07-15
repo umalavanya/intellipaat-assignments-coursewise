@@ -1,0 +1,14 @@
+Problem Statement
+
+Use ExpressJs to create a simple webserver to serve an HTML 
+file with a form which submits the data and the server 
+will log the submitted form data to the console.
+
+The requirememts look like this:
+
+1. Install the express module using npm.
+2. Create a get and post request to the uri '/form' to server 
+   a form and submit the data respectively
+3. Create a form.html and server it using res.sendFile method.
+4. Inside the POST request handler extract the form data and log it to the console
+  
