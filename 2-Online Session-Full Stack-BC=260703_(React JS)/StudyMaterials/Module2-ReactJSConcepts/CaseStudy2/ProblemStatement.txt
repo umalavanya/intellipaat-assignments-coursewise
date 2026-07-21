@@ -1,0 +1,18 @@
+Problem Statement
+You are required to create a counter application.
+
+Technical Requirements:
+
+1. Create a React App and use class-based components.
+2. Create a main class component called Counter.
+3. The component should maintain a state that keeps 
+track of teh counter value (initialize it to 0)
+4. Create methods to:
+    - Increment the counter.
+    - Decrement the counter.
+    - Reset the counter to 0.
+
+5. Use the componentDidMount lifecycle method to log a message to the 
+ console when the component mounts.
+6. render three buttons: "Decrement, and "Reset".
+7. Display the current counter value.
