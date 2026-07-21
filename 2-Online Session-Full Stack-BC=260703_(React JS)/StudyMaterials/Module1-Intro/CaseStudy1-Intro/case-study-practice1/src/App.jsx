@@ -12,6 +12,12 @@ const employees = [
 
 function App(){
 
+  const [filterDept, setFilterDept] = useState('all') ;
+
+
+  const filteredEmployees = filterDept === 'all' 
+  ? employees 
+  : employees.filter(emp => emp.department === filterDept) ;
 
   const departments = [ "all", ...new Set(employees.map(emp => emp.department))] ;
   return(
@@ -29,17 +35,67 @@ function App(){
         <div className="filter-group">
           {
             departments.map(dept => (
-              <button>
+              <button
+                key = {dept}
+                className={`filter-btn ${filterDept === dept? 'active': ''}`}
+              >
                 {dept === 'all' ? 'All departments': dept}
               </button>
-            ))
-          }
-
-
-
+            ))}
+            
+          </div>
         </div>
 
-      </div>
+
+
+        {/* Employee count summary */}
+
+        <div className="summary">
+
+          { filterDept === 'all' ? (
+
+            <span>Showing all <strong>{employees.length}</strong> Employees</span>
+          ) :( 
+              <span>
+
+                Showing All
+                <strong>{filteredEmployees.length}</strong>
+                employee{filteredEmployees.length === 1 ? 's':''}
+                in 
+                <strong>{filterDept}</strong>
+              </span>
+          )}
+        </div>
+
+
+        <div className="employee-grid">
+
+          {
+            filteredEmployees.map(emp => (
+              <div className="employee-card">
+
+                <div className="card-avatar">
+                  <span>{emp.name.charAt(0)}</span>
+                </div>
+                <div className="card-body">
+                  <h3 className="emp-name">{emp.name}</h3>
+                  <p className="emp-position">{emp.position}</p>
+                  <span className="emp-dept">{emp.department}</span>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {/* if no employees match */}
+        {
+          filteredEmployees.length === 0 && (
+            <div className="empty-state">
+              <p>No employees found in this department</p>
+            </div>
+
+          )}
+
+
     </div>
   ) ;
 } 

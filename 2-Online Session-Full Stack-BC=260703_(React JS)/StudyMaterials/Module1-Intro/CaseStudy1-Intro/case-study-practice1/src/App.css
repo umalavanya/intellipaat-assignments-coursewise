@@ -25,3 +25,89 @@
   font-size: 1rem ;
   margin: 0 ;
 }
+
+.filter-bar{
+  display: flex ;
+  flex-wrap: wrap ;
+  align-items: center ;
+  gap: 1rem 0.75rem ;
+  background: #f8fafd;
+  padding: 0.75rem 1.25rem ;
+  border-radius: 60px ;
+  margin-bottom: 1.5rem ;
+}
+
+.filter-label{
+  font-weight: 500 ;
+  color: #1f2a44 ;
+  font-size: 0.95rem ;
+  margin-right: 0.25rem ;
+}
+
+.filter-group{
+  display: flex ;
+  flex-wrap: wrap ;
+  gap: 0.5rem ;
+
+}
+
+  .filter-btn{
+    background: transparent ;
+    border: none ;
+    padding: 0.4rem 1.1rem ;
+    border-radius: 40px ;
+    font-weight: 500 ;
+    font-size: 0.9rem ;
+    color: #2dbb5a ;
+    cursor: pointer ;
+    transition: all 0.15s ease ;
+    background: #eef2f6; 
+    letter-spacing: 0.01rem ;
+  } 
+
+  .filter-btn:hover {
+    background: #d9e0e9 ;
+    transform: scale(0.97) ;
+
+  }
+
+  .filter-btn.active:hover{
+    background: #141e33 ;
+  }
+
+
+  .summary{
+    margin: 0.75rem 0 1.5rem 0 ;
+    font-size: 0.95rem ;
+    color: #2c3e5c ;
+    background: #f0f4fa ;
+    padding: 0.4rem 1.2rem ;
+    border-radius: 40px ;
+    display: inline-block ;
+    letter-spacing: 0.01rem ;
+  }
+
+  .summary strong{
+    color: #0b1a33 ;
+    font-weight: 600 ;
+  }
+
+  .employee-grid{
+    display: grid ;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) ;
+    gap: 1.5rem ;
+    margin-top: 0.5rem ;
+  }
+
+
+  .employee-card{
+    background: #ffffff;
+    border-radius: 20px ;
+    padding: 1.25rem 1.25rem 1.25rem 1rem ;
+    display: flex ;
+    align-items: center ;
+    gap: 1rem ;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.04) ;
+    border: 1px solid #eef3f8 ;
+    transition: all 0.2s ease ;
+  }

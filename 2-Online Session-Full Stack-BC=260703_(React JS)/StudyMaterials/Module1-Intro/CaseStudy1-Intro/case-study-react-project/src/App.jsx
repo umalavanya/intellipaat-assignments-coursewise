@@ -52,7 +52,11 @@ function App() {
         {filterDept === 'all' ? (
           <span>Showing all <strong>{employees.length}</strong> employees</span>
         ) : (
-          <span>Showing <strong>{filteredEmployees.length}</strong> employee{filteredEmployees.length !== 1 ? 's' : ''} in <strong>{filterDept}</strong></span>
+          <span>Showing <strong>{filteredEmployees.length}</strong> 
+                employee{filteredEmployees.length !== 1 ? 's' : ''} 
+                in 
+                <strong>{filterDept}</strong>
+                </span>
         )}
       </div>
 
