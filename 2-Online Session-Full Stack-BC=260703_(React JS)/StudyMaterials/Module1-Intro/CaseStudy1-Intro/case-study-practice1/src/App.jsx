@@ -28,8 +28,10 @@ function App(){
         <span className="filter-label">Filter by department: </span>
         <div className="filter-group">
           {
-
             departments.map(dept => (
+              <button>
+                {dept === 'all' ? 'All departments': dept}
+              </button>
             ))
           }
 
