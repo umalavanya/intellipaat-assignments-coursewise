@@ -1,0 +1,23 @@
+Problem Statement:
+
+Create a React application that showcases a catalog of products to effectively
+pass data from a parent component to child components.
+
+
+Technical requirements:
+
+1. Create Reeact application
+2. In App.js create an array of product objects.
+   Each product object should include:
+     id - number
+     name - string
+     price - number
+     description string
+
+3. The array should have atleast 10 product details
+4. pass each product's data as props to teh child component.
+5. Implement a child component called Product that will
+6. Accept props for name, price and description.
+7. Render the product details using map and create a card for each of the products.
+8. Apply the basic CSS to style the product cards, ensuring that the application
+   looks clean and user-friendly.
