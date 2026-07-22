@@ -1,0 +1,13 @@
+Problem Statement
+You work in xyz company as a front end developer,
+The company officials want you to build 
+a web application that allows users to add todo on the application
+
+tasks to be performed:
+
+1. Create an HTML page with basic HTML Skeleton
+2. Add React, reactDOM, Babel and PropTypes as scrpt tags
+3. Add script tag with babel jsx code in it
+4. Create a helpForm component that renders an input and a paragraph
+   that displays what user has types in the form.
+5. Use state to keep track of form value
