@@ -111,13 +111,9 @@ Objective: Introduce React hooks for managing form input and todo list data.
 Deliverables:
 
 useState for todoText (input value)
-
 useState for todos array
-
 Input field connected to state
-
 Live preview showing typed text in real-time
-
 Display todo count in stats
 
 Key Code Changes:
