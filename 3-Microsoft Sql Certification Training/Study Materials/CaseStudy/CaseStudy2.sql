@@ -1,19 +1,46 @@
+USE master ;
 DROP DATABASE IF EXISTS CaseStudyTwo ;
 CREATE DATABASE CaseStudyTwo ;
 USE CaseStudyTwo ;
 
-CREATE TABLE Location
-(
- Location_Id INT PRIMARY KEY,
- City VARCHAR(50)
+CREATE TABLE Locations(
+	Location_Id INT PRIMARY KEY,
+    City VARCHAR(50)
 ) ;
+
+INSERT INTO Locations VALUES (122, 'New York') ;
+INSERT INTO Locations VALUES (123, 'Dallas') ;
+INSERT INTO Locations VALUES (124, 'Chicago') ;
+INSERT INTO Locations VALUES (167, 'Boston') ;
+
 
 CREATE TABLE Department
 (
-Department_Id INT PRIMARY KEY,
-Name VARCHAR(100),
-Location_ID INT FOREIGN KEY REFERENCES Location(Location_Id)
+	Department_Id INT PRIMARY KEY,
+	DepName VARCHAR(100),
+	Location_ID INT FOREIGN KEY REFERENCES Locations(Location_Id)
+) ;
+
+INSERT INTO Department VALUES ( 10, 'Accounting', 122) ;
+INSERT INTO Department VALUES ( 20, 'Sales', 124) ;
+INSERT INTO Department VALUES ( 30, 'Research', 123) ;
+INSERT INTO Department VALUES ( 40, 'Operations', 167) ;
+
+
+CREATE TABLE Job
+(
+	Job_ID INT PRIMARY KEY ,
+	Designation VARCHAR(50)
+
 )
+
+INSERT INTO Job VALUES ( 667, 'Clerk') ;
+INSERT INTO Job VALUES ( 668, 'Staff') ;
+INSERT INTO Job VALUES ( 669, 'Analyst') ;
+INSERT INTO Job VALUES ( 670, 'Sales Person') ;
+INSERT INTO Job VALUES ( 671, 'Manager') ;
+INSERT INTO Job VALUES ( 672, 'President') ;
+
 
 -------------Simple Queries: ----------
 --1. List all the employee details. 
