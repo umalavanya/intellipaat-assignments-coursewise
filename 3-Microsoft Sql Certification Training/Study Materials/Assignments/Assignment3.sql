@@ -17,14 +17,14 @@ column.
 
 */
 
---1.
+--1. 
 CREATE TABLE Orders (
 order_id INT PRIMARY KEY IDENTITY(1,1),
 order_date DATE,
 amount DECIMAL(10,2),
 customer_id INT
 ) ;
-
+--2.
 INSERT INTO Orders(order_date, amount, customer_id)
 VALUES
 ('2025-09-13',102.00,2),
@@ -33,7 +33,7 @@ VALUES
 ('2025-07-25',302.00,4),
 ('2025-02-24',299.99,5)
 ;
-
+--3.
 SELECT *
 FROM customer c
 INNER JOIN Orders o
@@ -43,17 +43,17 @@ SELECT *
 FROM customer c
 LEFT JOIN Orders o
 ON c.customer_id = o.customer_id ;
-
+--4.
 SELECT *
 FROM customer c
 RIGHT JOIN Orders o
 ON c.customer_id = o.customer_id ;
-
+--5.
 SELECT *
 FROM customer c
 FULL JOIN Orders o
 ON c.customer_id = o.customer_id ;
-
+--6.
 UPDATE Orders
 SET amount = 100
 WHERE customer_id = 3 ;
