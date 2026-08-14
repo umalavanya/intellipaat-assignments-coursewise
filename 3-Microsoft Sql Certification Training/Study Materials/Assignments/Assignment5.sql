@@ -14,15 +14,15 @@ table.
 5. Apply the EXCEPT operator on these two tables
 
 */
-
+--1.
 SELECT * FROM Orders ORDER BY Amount DESC ;
-
+--2.
 CREATE TABLE Employee_details1(
 Emp_id INT PRIMARY KEY IDENTITY(1,1),
 Emp_name VARCHAR(100),
 Emp_salary DECIMAL(10,2)
 ) ;
-
+--3.
 SELECT * INTO Employee_details2 FROM Employee_details1 ;
 
 SELECT * FROM Employee_details1 
@@ -30,11 +30,13 @@ UNION
 SELECT * FROM Employee_details2 ;
 
 
-
+--4.
 SELECT * FROM Employee_details1 
 INTERSECT
 SELECT * FROM Employee_details2 ;
 
+
+--5.
 SELECT * FROM Employee_details1 
 EXCEPT
 SELECT * FROM Employee_details2 ;
