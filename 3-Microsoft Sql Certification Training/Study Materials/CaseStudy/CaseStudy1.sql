@@ -343,7 +343,7 @@ SELECT Area_Code FROM Location ;
 SELECT Area_Code FROM fact 
 INTERSECT
 SELECT Area_Code FROM Location ;
---26. Create a user-defined function for the product table to fetch aparticular product type based upon the user’s preference.
+--26. Create a user-defined function for the product table to fetch a particular product type based upon the user’s preference.
 
 
 --27. Change the product type from coffee to tea where product ID is 1and undo it.

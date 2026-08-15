@@ -117,10 +117,26 @@ SELECT * FROM Employee WHERE Last_name = 'Smith' ;
 --2. List out the employees who are working in department 20. 
 SELECT * FROM Employee 
 WHERE Department_ID = 20 ;
+
 --3. List out the employees who are earning salary between 2000 and 3000. 
+SELECT *
+FROM Employee
+WHERE Salary BETWEEN 2000 AND 3000 ; 
+
+
 --4. List out the employees who are working in department 10 or 20. 
+SELECT *
+FROM Employee
+WHERE Department_ID IN (10,20);
+
 --5. Find out the employees who are not working in department 10 or 30. 
+SELECT *
+FROM Employee
+WHERE Department_ID NOT IN (10,30);
+
 --6. List out the employees whose name starts with 'L'. 
+
+
 --7. List out the employees whose name starts with 'L' and ends with 'E'. 
 --8. List out the employees whose name length is 4 and start with 'J'. 
 --9. List out the employees who are working in department 30 and draw the salaries more than 2500. 
