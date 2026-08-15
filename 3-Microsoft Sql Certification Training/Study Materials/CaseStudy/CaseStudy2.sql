@@ -4,9 +4,11 @@ CREATE DATABASE CaseStudyTwo ;
 USE CaseStudyTwo ;
 
 CREATE TABLE Locations(
-	Location_Id INT PRIMARY KEY,
+	Location_ID INT PRIMARY KEY,
     City VARCHAR(50)
 ) ;
+
+SELECT * FROM Locations ;
 
 INSERT INTO Locations VALUES (122, 'New York') ;
 INSERT INTO Locations VALUES (123, 'Dallas') ;
@@ -16,9 +18,9 @@ INSERT INTO Locations VALUES (167, 'Boston') ;
 
 CREATE TABLE Department
 (
-	Department_Id INT PRIMARY KEY,
+	Department_ID INT PRIMARY KEY,
 	DepName VARCHAR(100),
-	Location_ID INT FOREIGN KEY REFERENCES Locations(Location_Id)
+	Location_ID INT FOREIGN KEY REFERENCES Locations(Location_ID)
 ) ;
 
 INSERT INTO Department VALUES ( 10, 'Accounting', 122) ;
@@ -42,17 +44,79 @@ INSERT INTO Job VALUES ( 671, 'Manager') ;
 INSERT INTO Job VALUES ( 672, 'President') ;
 
 
+
+CREATE TABLE Employee (
+	Employee_ID INT PRIMARY KEY,
+	Last_name VARCHAR(100),
+	First_name VARCHAR(100),
+	Middle_name VARCHAR(100),
+	Job_ID INT FOREIGN KEY REFERENCES Job(Job_ID),
+	HireDate DATE,
+	Salary DECIMAL(10,2),
+	Comm DECIMAL(5,2),
+	Department_ID INT FOREIGN KEY REFERENCES Department(Department_ID)
+) ;
+
+
+INSERT INTO Employee VALUES(7369, 'Smith', 'John', 'Q', 667, '17-Dec-84', 800, Null, 20) ;
+INSERT INTO Employee VALUES(7499, 'Allen', 'Kevin', 'J', 670, '20-Feb-85', 1600, 300, 30) ;
+INSERT INTO Employee VALUES(755, 'Doyle', 'Jean', 'K', 671, '04-Apr-85', 2850, Null, 30) ;
+INSERT INTO Employee VALUES(756, 'Dennis', 'Lynn', 'S', 671, '15-May-85', 2750, Null, 30) ;
+INSERT INTO Employee VALUES(757, 'Baker', 'Leslie', 'D', 671, '10-Jun-85', 2200, Null, 40) ;
+INSERT INTO Employee VALUES(7521, 'Wark', 'Cynthia', 'D', 670, '22-Feb-85', 1250, 50, 30) ;
+
+
+
 -------------Simple Queries: ----------
+
 --1. List all the employee details. 
+SELECT * FROM Employee ;
+
 --2. List all the department details. 
+SELECT * FROM Department ;
+
 --3. List all job details. 
+SELECT * FROM Job ;
 --4. List all the locations. 
+SELECT * FROM Locations ;
+
 --5. List out the First Name, Last Name, Salary, Commission for all Employees. 
+SELECT
+	First_name ,
+	Last_name,
+	Salary,
+	Comm
+FROM 
+	Employee ;
+
 --6. List out the Employee ID, Last Name, Department ID for all employees and  alias Employee ID as "ID of the Employee", Last Name as "Name of the  Employee", Department ID as "Dep_id". 
+
+SELECT 
+	Employee_ID AS "ID of the Employee",
+	Last_name AS "Name of the Employee",
+	Department_ID AS DEP_id 
+FROM 
+	Employee ;
+
 ---7. List out the annual salary of the employees with their names only. 
+
+
+SELECT 
+	First_name + ' ' + Last_name AS "Employee Name",
+	Salary AS "Annual Salary"
+FROM
+	Employee ;
+
+
 --------------WHERE Condition:---------------- 
+
+
 --1. List the details about "Smith". 
+SELECT * FROM Employee WHERE Last_name = 'Smith' ;
+
 --2. List out the employees who are working in department 20. 
+SELECT * FROM Employee 
+WHERE Department_ID = 20 ;
 --3. List out the employees who are earning salary between 2000 and 3000. 
 --4. List out the employees who are working in department 10 or 20. 
 --5. Find out the employees who are not working in department 10 or 30. 
@@ -61,12 +125,16 @@ INSERT INTO Job VALUES ( 672, 'President') ;
 --8. List out the employees whose name length is 4 and start with 'J'. 
 --9. List out the employees who are working in department 30 and draw the salaries more than 2500. 
 --10. List out the employees who are not receiving commission. 
+
+
 --ORDER BY Clause: 
 --1. List out the Employee ID and Last Name in ascending order based on the  Employee ID. 
 --2. List out the Employee ID and Name in descending order based on salary. 
 --3. List out the employee details according to their Last Name in ascending-order. 
 --4. List out the employee details according to their Last Name in ascending 
 --order and then Department ID in descending order. 
+
+
 --GROUP BY and HAVING Clause: 
 --1. List out the department wise maximum salary, minimum salary and average salary of the employees. 
 --2. List out the job wise maximum salary, minimum salary and average salary of the employees. 
@@ -79,6 +147,8 @@ INSERT INTO Job VALUES ( 672, 'President') ;
 --9. How many employees joined each month in 1985? 
 --10. How many employees were joined in April 1985? 
 --11. Which is the Department ID having greater than or equal to 3 employees joining in April 1985? 
+
+
 --Joins: 
 --1. List out employees with their department names. 
 --2. Display employees with their designations. 
@@ -88,6 +158,8 @@ INSERT INTO Job VALUES ( 672, 'President') ;
 --6. Which is the department having greater than or equal to 3 employees and display the department names in  ascending order. 
 --7. How many employees are working in 'Dallas'? 
 --8. Display all employees in sales or operation departments. 
+
+
 --CONDITIONAL STATEMENT 
 --1. Display the employee details with salary grades. Use conditional statement to create a grade column. 
 --2. List out the number of employees grade wise. Use conditional statement to create a grade column. 
