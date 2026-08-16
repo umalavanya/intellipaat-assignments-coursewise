@@ -135,6 +135,9 @@ FROM Employee
 WHERE Department_ID NOT IN (10,30);
 
 --6. List out the employees whose name starts with 'L'. 
+SELECT *
+FROM Employee
+WHERE First_name LIKE 'L%' ;
 
 
 --7. List out the employees whose name starts with 'L' and ends with 'E'. 
