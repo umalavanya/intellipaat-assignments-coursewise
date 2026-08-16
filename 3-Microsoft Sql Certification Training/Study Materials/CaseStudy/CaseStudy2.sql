@@ -141,7 +141,16 @@ WHERE First_name LIKE 'L%' ;
 
 
 --7. List out the employees whose name starts with 'L' and ends with 'E'. 
+SELECT *
+FROM Employee
+WHERE First_name LIKE 'L%e' ;
+
+
 --8. List out the employees whose name length is 4 and start with 'J'. 
+SELECT *
+FROM Employee
+WHERE First_name LIKE 'J[a-z]' ;
+
 --9. List out the employees who are working in department 30 and draw the salaries more than 2500. 
 --10. List out the employees who are not receiving commission. 
 
