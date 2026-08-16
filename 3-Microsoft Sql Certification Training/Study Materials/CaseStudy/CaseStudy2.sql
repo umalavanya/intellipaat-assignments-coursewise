@@ -169,10 +169,13 @@ FROM Employee
 ORDER BY Employee_ID ;
 
 --2. List out the Employee ID and Name in descending order based on salary. 
+SELECT Employee_ID, Salary
+FROM Employee
+ORDER BY Salary ;
 
 --3. List out the employee details according to their Last Name in ascending-order. 
---4. List out the employee details according to their Last Name in ascending 
---order and then Department ID in descending order. 
+
+--4. List out the employee details according to their Last Name in ascending order and then Department ID in descending order. 
 
 
 --GROUP BY and HAVING Clause: 
