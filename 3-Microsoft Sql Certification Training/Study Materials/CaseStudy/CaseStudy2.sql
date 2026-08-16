@@ -164,7 +164,12 @@ WHERE Comm IS NULL ;
 
 --ORDER BY Clause: 
 --1. List out the Employee ID and Last Name in ascending order based on the  Employee ID. 
+SELECT Employee_ID, Last_name
+FROM Employee
+ORDER BY Employee_ID ;
+
 --2. List out the Employee ID and Name in descending order based on salary. 
+
 --3. List out the employee details according to their Last Name in ascending-order. 
 --4. List out the employee details according to their Last Name in ascending 
 --order and then Department ID in descending order. 
