@@ -187,6 +187,14 @@ ORDER BY Last_name,
 
 --GROUP BY and HAVING Clause: 
 --1. List out the department wise maximum salary, minimum salary and average salary of the employees. 
+SELECT 
+	Department_ID,
+	MAX(Salary) AS Highest,
+	MIN(Salary) AS Minimum,
+	AVG(Salary) AS AVerage
+FROM Employee
+GROUP BY Department_ID ;
+
 --2. List out the job wise maximum salary, minimum salary and average salary of the employees. 
 --3. List out the number of employees who joined each month in ascending order. 
 --4. List out the number of employees for each month and year in ascending order based on the year and month. 
