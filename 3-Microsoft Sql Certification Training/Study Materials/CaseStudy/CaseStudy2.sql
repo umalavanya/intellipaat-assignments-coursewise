@@ -174,9 +174,16 @@ FROM Employee
 ORDER BY Salary ;
 
 --3. List out the employee details according to their Last Name in ascending-order. 
+SELECT * 
+FROM Employee
+ORDER BY Last_name ;
 
 --4. List out the employee details according to their Last Name in ascending order and then Department ID in descending order. 
 
+SELECT * 
+FROM Employee
+ORDER BY Last_name,
+         Department_ID DESC ;
 
 --GROUP BY and HAVING Clause: 
 --1. List out the department wise maximum salary, minimum salary and average salary of the employees. 
