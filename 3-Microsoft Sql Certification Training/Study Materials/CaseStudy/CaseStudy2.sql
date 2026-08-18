@@ -196,9 +196,38 @@ FROM Employee
 GROUP BY Department_ID ;
 
 --2. List out the job wise maximum salary, minimum salary and average salary of the employees. 
+SELECT 
+	Job_ID,
+	MAX(Salary) AS Highest,
+	MIN(Salary) AS Minimum,
+	AVG(Salary) AS AVerage
+FROM Employee
+GROUP BY Job_ID ;
+
+
 --3. List out the number of employees who joined each month in ascending order. 
+SELECT 
+	MONTH(HireDate) AS 'MONTH',
+	COUNT(*)
+FROM EMPLOYEE 
+GROUP BY MONTH(HireDate)
+ORDER BY (MONTH) ;
+
 --4. List out the number of employees for each month and year in ascending order based on the year and month. 
+SELECT 
+    YEAR(HireDate) AS 'Year',
+	MONTH(HireDate) AS 'Month',
+	COUNT(*)
+FROM EMPLOYEE 
+GROUP BY YEAR(HireDate), MONTH(HireDate)
+ORDER BY Year, Month ;
+
 --5. List out the Department ID having at least four employees. 
+SELECT Department_ID
+FROM EMPLOYEE
+GROUP BY Department_ID 
+HAVING COUNT(*) > 4;
+
 --6. How many employees joined in February month. 
 --7. How many employees joined in May or June month. 
 --8. How many employees joined in 1985? 
