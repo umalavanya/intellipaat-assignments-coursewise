@@ -3,6 +3,9 @@ const mongoose = require('mongoose') ;
 const cors = require('cors') ;
 require('dotenv').config() ;
 
+//Import Routes
+const taskRoutes = requier('./routes/taskRoutes') ;
+
 const app = express() ;
 const PORT = process.env.PORT || 5000 ;
 
@@ -25,6 +28,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 })
 
+//Routes 
+app.use('/api/tasks', taskRoutes) ;
 
 
 //TEST: Add this middleware to see if server works
@@ -44,5 +49,6 @@ app.get('/test', (req,res) => {
 // Start server
 app.listen(PORT, () =>{
     console.log(`Server is running on port ${PORT}`) ;
-    console.log(`Test: http://localhost:${PORT}/test`)
+    console.log(`API: http://localhpst:${PORT}/api/tasks`) ;
+    console.log(`Test: http://localhost:${PORT}/test`) ;
 }) ;
