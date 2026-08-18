@@ -1,31 +1,28 @@
+--This assignment has been designed keeping the level of training sessions in mind. 
+--Anybody who wants to practice about queries and creating tables in MS SQL should go through this.
+--Directions for questions 1-6. 
+--Each of the questions just gives a list of SQL data types. 
+--In some cases the list may consist of what the book calls synonyms. 
+--In other cases the types may not be synonyms, although they are related. 
+--For each question give a brief statement of what kind of data can be stored in the list of types given.
 
-(This assignment has been designed keeping the level of training sessions in
-mind. Anybody who wants to practice about queries and creating tables in MS
-SQL should go through this)
-Directions for questions 1-6. Each of the questions just gives a list of SQL data
-types. In some cases the list may consist of what the book calls synonyms. In
-other cases the types may not be synonyms, although they are related. For each
-question give a brief statement of what kind of data can be stored in the list of
-types given.
-1. CHAR(n), TEXT(n), VARCHAR(n).
-Alphanumeric data either fixed at n symbols or up to n symbols. It’s not possible
-to do arithmetic on this data.
-2. REAL, FLOAT, NUMBER, NUMERIC, DECIMAL.
-These are numbers with decimal places.
-3. INTEGER, LONG, INT, SMALLINT.
-These are all whole numbers. They vary in how big a number they can hold.
-4. MONEY, CURRENCY.
-These are numeric types with decimal places for holding monetary values.
-5. BINARY, LONGBINARY, GENERAL, IMAGE, OLEOBJECT.
-These can hold complete files, such as pictures or media. They are not fixed in
-size and the upper limit on their size is large.
-6. DATE, TIME, DATETIME.
-These can hold date and time values. These are hybrid types. Although you think
-of them as text type fields, it is possible to do arithmetic and numeric
-comparisons on them.
-Contact us: support@intellipaat.com / © Copyright Intellipaat / All rights reserved
-Inte liPaat
-SQL Certification Training
+--CHAR(n), TEXT(n), VARCHAR(n).
+
+
+--Alphanumeric data either fixed at n symbols or up to n symbols. 
+--It’s not possible to do arithmetic on this data.
+--2. REAL, FLOAT, NUMBER, NUMERIC, DECIMAL.
+--These are numbers with decimal places.
+--3. INTEGER, LONG, INT, SMALLINT.
+--These are all whole numbers. They vary in how big a number they can hold.
+--4. MONEY, CURRENCY.
+--These are numeric types with decimal places for holding monetary values.
+--5. BINARY, LONGBINARY, GENERAL, IMAGE, OLEOBJECT.
+--These can hold complete files, such as pictures or media. They are not fixed in size and the upper limit on their size is large.
+--6. DATE, TIME, DATETIME.
+--These can hold date and time values. These are hybrid types. Although you think of them as text type fields, it is possible to do arithmetic and numeric comparisons on them.
+
+
 7. Write an SQL command that will create a table named Friend with the
 following fields and types: idno CHAR(3), name CHAR(24), address
 CHAR(24), birthday DATE, waist size INTEGER, gift value CURRENCY.
@@ -104,7 +101,7 @@ SELECT *
 FROMSalesperson
 There aren’t as many fields in the Friend table as there are in the Salesperson
 table, so it’s not possible to select all from Salesperson to insert into Friend. Plus,
-the respective fields don't match anyway.
+the respective fields dont match anyway.
 19. Write an SQL command that will update the giftvalue to 49.99 for all
 people in the Friend table who are 21 and older.
 UPDATE Friend
@@ -186,5 +183,3 @@ table formatted as follows: 4 digit year, comma, 2 digit week of year,
 comma, 1 digit number of day of the week.
 SELECT FORMAT(date, 'yyyy, ww, w')
 FROMCarsale
-Contact us: support@intellipaat.com / © Copyright Intellipaat / All rights reserved
-Inte liPaat
