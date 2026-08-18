@@ -287,6 +287,11 @@ ORDER BY Department_ID;
 
 --Joins: 
 --1. List out employees with their department names. 
+SELECT 
+	e.First_name+' '+e.Last_name AS 'Employee Name',
+	d.DepName
+FROM Employee e
+JOIN Department d ON e.Department_ID = d.Department_ID ;
 --2. Display employees with their designations. 
 --3. Display the employees with their department names and city. 
 --4. How many employees are working in different departments? Display with department names. 
