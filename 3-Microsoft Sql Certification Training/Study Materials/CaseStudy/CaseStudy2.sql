@@ -292,9 +292,35 @@ SELECT
 	d.DepName
 FROM Employee e
 JOIN Department d ON e.Department_ID = d.Department_ID ;
+
+
 --2. Display employees with their designations. 
+SELECT 
+	e.First_name+' '+e.Last_name AS 'Employee Name',
+	j.Designation
+FROM Employee e
+JOIN Job j ON e.Job_ID = j.job_ID ;
+
+
 --3. Display the employees with their department names and city. 
+SELECT 
+	e.First_name+' '+e.Last_name AS 'Employee Name',
+	d.DepName AS 'Department Name',
+	l.city  AS 'City'
+FROM Employee e
+JOIN Department d ON e.Department_ID = d.Department_ID
+JOIN Locations l ON d.Location_ID = l.Location_ID ;
+
 --4. How many employees are working in different departments? Display with department names. 
+SELECT 
+    d.DepName,
+	COUNT(*) AS 'Number of Employees'
+FROM 
+	Employee e 
+JOIN 
+	Department d ON e.Department_ID = d.Department_ID 
+GROUP BY d.DepName ;
+
 --5. How many employees are working in the sales department? 
 --6. Which is the department having greater than or equal to 3 employees and display the department names in  ascending order. 
 --7. How many employees are working in 'Dallas'? 
