@@ -4,6 +4,7 @@
 --Perform SQL queries to get the key insights of a customer.
 
 --Dataset:
+
 --The 3 key datasets for this case study are:
 --a. Continent: The Continent table has two attributes i.e., region_id and region_name, where region_name consists of different continents such as Asia, Europe, Africa etc., assigned with the unique region id.
 --b. Customers: The Customers table has four attributes named customer_id, region_id, start_date and end_date which consists of 3500 records.
