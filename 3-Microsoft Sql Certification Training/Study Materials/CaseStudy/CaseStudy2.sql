@@ -226,15 +226,64 @@ ORDER BY Year, Month ;
 SELECT Department_ID
 FROM EMPLOYEE
 GROUP BY Department_ID 
-HAVING COUNT(*) > 4;
+HAVING COUNT(*) >= 4;
 
 --6. How many employees joined in February month. 
---7. How many employees joined in May or June month. 
---8. How many employees joined in 1985? 
---9. How many employees joined each month in 1985? 
---10. How many employees were joined in April 1985? 
---11. Which is the Department ID having greater than or equal to 3 employees joining in April 1985? 
+SELECT 
+	MONTH(HireDate) AS 'Month',
+	COUNT(*)
+FROM EMPLOYEE 
+GROUP BY YEAR(HireDate), MONTH(HireDate)
+HAVING MONTH(HireDate) = 2  ;
 
+--7. How many employees joined in May or June month. 
+SELECT 
+    DATENAME(month, HireDate) AS 'Month',
+    YEAR(HireDate) AS 'Year',
+    COUNT(*) AS EmployeeCount
+FROM EMPLOYEE 
+GROUP BY YEAR(HireDate), MONTH(HireDate), DATENAME(month, HireDate)
+HAVING MONTH(HireDate) IN (5, 6)
+ORDER BY YEAR(HireDate), MONTH(HireDate);
+
+
+--8. How many employees joined in 1985? 
+SELECT 
+	YEAR(HIREDATE) AS 'Year',
+	COUNT(*) AS Employees
+FROM Employee
+GROUP BY YEAR(HIREDATE)
+HAVING YEAR(HIREDATE) = 1985 ;
+
+
+--9. How many employees joined each month in 1985? 
+SELECT 
+	YEAR(HireDate) AS 'Year',
+	MONTH(HireDate) AS 'Month',
+	COUNT(*) AS Employees
+FROM Employee
+GROUP BY YEAR(HIREDATE), MONTH(HireDate)
+HAVING YEAR(HIREDATE) = 1985 ;
+
+
+--10. How many employees were joined in April 1985? 
+SELECT 
+	YEAR(HireDate) AS 'Year',
+	MONTH(HireDate) AS 'Month',
+	COUNT(*) AS Employees
+FROM Employee
+GROUP BY YEAR(HIREDATE), MONTH(HireDate)
+HAVING YEAR(HIREDATE) = 1985 AND MONTH(HireDate) = 4 ;
+
+--11. Which is the Department ID having greater than or equal to 3 employees joining in April 1985? 
+SELECT 
+    Department_ID,
+    COUNT(*) AS EmployeeCount
+FROM Employee
+WHERE YEAR(HireDate) = 1985 AND MONTH(HireDate) = 4
+GROUP BY Department_ID
+HAVING COUNT(*) >= 3
+ORDER BY Department_ID;
 
 --Joins: 
 --1. List out employees with their department names. 
