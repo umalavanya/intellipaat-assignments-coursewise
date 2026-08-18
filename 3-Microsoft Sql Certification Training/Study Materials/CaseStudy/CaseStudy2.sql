@@ -321,8 +321,32 @@ JOIN
 	Department d ON e.Department_ID = d.Department_ID 
 GROUP BY d.DepName ;
 
---5. How many employees are working in the sales department? 
---6. Which is the department having greater than or equal to 3 employees and display the department names in  ascending order. 
+--5. How many employees are working in the sales department?
+SELECT 
+    d.DepName,
+	COUNT(*) AS 'Number of Employees'
+FROM 
+	Employee e 
+JOIN 
+	Department d ON e.Department_ID = d.Department_ID 
+GROUP BY d.DepName 
+HAVING d.Depname = 'Sales';
+
+
+
+--6. Which is the department having greater than or equal to 3 employees and display the department names in  ascending order.
+SELECT 
+    d.DepName AS 'Department Name',
+	COUNT(*) AS 'Number of Employees'
+FROM 
+	Employee e 
+JOIN 
+	Department d ON e.Department_ID = d.Department_ID 
+GROUP BY d.DepName
+HAVING COUNT(*) > 3 
+ORDER BY 'Department Name' ;
+
+
 --7. How many employees are working in 'Dallas'? 
 --8. Display all employees in sales or operation departments. 
 
