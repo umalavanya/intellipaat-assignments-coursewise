@@ -1,0 +1,37 @@
+.task-stats {
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(135deg, #FFE8B4 0%, #FFE8B4 100%);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #E68457;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #5E244E;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.no-tasks {
+    text-align: center;
+    color: #5E244E;
+    font-size: 1rem;
+    padding: 10px;
+    background: rgba(255, 232, 180, 0.5);
+    border-radius: 8px;
+    margin: 0;
+}
