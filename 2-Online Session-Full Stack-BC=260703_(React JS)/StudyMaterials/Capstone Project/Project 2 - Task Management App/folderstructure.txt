@@ -1,0 +1,43 @@
+task-management-tool/
+├── client/
+│   ├── public/
+│   │   └── vite.svg
+│   ├── src/
+│   │   ├── assets/
+│   │   │   └── react.svg
+│   │   ├── components/
+│   │   │   ├── TaskForm.jsx
+│   │   │   ├── TaskList.jsx
+│   │   │   ├── TaskItem.jsx
+│   │   │   └── TaskStats.jsx
+│   │   ├── styles/
+│   │   │   ├── App.css
+│   │   │   ├── TaskForm.css
+│   │   │   ├── TaskList.css
+│   │   │   └── TaskItem.css
+│   │   ├── hooks/
+│   │   │   └── useTasks.js
+│   │   ├── context/
+│   │   │   └── TaskContext.jsx
+│   │   ├── utils/
+│   │   │   └── helpers.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+├── backend/
+│   ├── models/
+│   │   └── Task.js
+│   ├── routes/
+│   │   └── tasks.js
+│   ├── controllers/
+│   │   └── taskController.js
+│   ├── config/
+│   │   └── db.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── package.json (root - for concurrent running)
+└── README.md

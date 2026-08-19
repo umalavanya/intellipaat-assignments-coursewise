@@ -13,3 +13,23 @@ The tool will feature a user-friendly, responsive interaface for both desktop an
 By utilizing React best practices, the application will be maintainable and scalable.
 Overall, it will empower users to manage their tasks effectively and streamline their workflow.
 
+Tasks to be performed:
+Add Task
+-Users shoud be able to input a task description and add it to the task list.
+Each task should have a unique identifier.
+
+Edit Task:
+-Users should have the option to edit the description of any existing task.
+-The updated task should reflect immediately in the task list.
+
+Delete Task:
+-Users should be able to delete any task from the list.
+-Upon deletion, the task should be removed immediately from the display
+
+Mask as Completed:
+-Users should have the option to mark a task as completed.
+-Once marked as completed, teh task should be visually distinguished from pending tasks (e.g. strikethrough text).
+
+Renedering Tasks:
+-Completed tasks should automatically move to the bottom of teh task list.
+-The order of pending tasks should remain unchanged.
