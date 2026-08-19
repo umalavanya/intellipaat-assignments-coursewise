@@ -1,0 +1,15 @@
+Problem Statement:
+
+Develope a Task Management Tool using react that allows users to efficiently manage their tasks. 
+The application should enable users to add new tasks, mark tasks as completed, and delete tasks.
+Completed tasks should automatically be moved to the end of the task list, ensuring that
+users focus on their pending task first.
+
+Objective:
+
+The Objective os the Task management Tool is to create an efficient application that allows users to add, delete, and mark tasks as completed.
+It aims to enhance productivity by prioritizing pending tasks while ensuring completed tasks are organized at the end of teh list.
+The tool will feature a user-friendly, responsive interaface for both desktop and mobile devices.
+By utilizing React best practices, the application will be maintainable and scalable.
+Overall, it will empower users to manage their tasks effectively and streamline their workflow.
+
