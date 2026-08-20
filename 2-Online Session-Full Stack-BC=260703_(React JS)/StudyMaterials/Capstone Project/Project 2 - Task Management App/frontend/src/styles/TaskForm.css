@@ -47,11 +47,14 @@
 }
 
 .task-input.error {
+
     border-color: #AA1C41;
     background-color: #fff5f5;
+    
 }
 
 .add-task-btn {
+
     padding: 12px 30px;
     background: linear-gradient(135deg, #462C7D 0%, #831C91 100%);
     color: white;
@@ -62,44 +65,60 @@
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+
 }
 
 .add-task-btn:hover {
+
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(70, 44, 125, 0.4);
+
 }
 
 .add-task-btn:active {
+
     transform: translateY(0);
+
 }
 
 .add-task-btn:disabled {
+
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+
 }
 
 .error-message {
+
     color: #AA1C41;
     font-size: 0.85rem;
     margin-top: 8px;
     display: flex;
     align-items: center;
     gap: 6px;
+
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
     .task-form {
+
         flex-direction: column;
+
     }
 
     .task-input-wrapper {
+
         min-width: 100%;
+
     }
 
     .add-task-btn {
+
         width: 100%;
+
         padding: 14px;
+
     }
 }
