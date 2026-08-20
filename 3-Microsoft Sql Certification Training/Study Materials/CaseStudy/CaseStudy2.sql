@@ -348,7 +348,23 @@ ORDER BY 'Department Name' ;
 
 
 --7. How many employees are working in 'Dallas'? 
+SELECT 
+     l.City,
+	 COUNT(*) AS Employees
+FROM Employee e
+JOIN Department d ON e.department_ID = d.Department_ID
+JOIN Locations l ON d.Location_ID = l.Location_ID 
+GROUP BY l.City
+HAVING l.City = 'Dallas';
+
+
 --8. Display all employees in sales or operation departments. 
+SELECT 
+     d.DepName,
+     COUNT(*) AS Employees
+FROM Employee e
+JOIN Department d ON e.department_ID = d.Department_ID
+GROUP BY d.DepName ;
 
 
 --CONDITIONAL STATEMENT 
