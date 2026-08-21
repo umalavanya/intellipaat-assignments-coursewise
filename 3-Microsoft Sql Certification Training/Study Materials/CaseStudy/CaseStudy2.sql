@@ -364,11 +364,24 @@ SELECT
      COUNT(*) AS Employees
 FROM Employee e
 JOIN Department d ON e.department_ID = d.Department_ID
-GROUP BY d.DepName ;
+GROUP BY d.DepName
+HAVING d.DepName='Sales' OR d.DepName='Research';
 
 
 --CONDITIONAL STATEMENT 
 --1. Display the employee details with salary grades. Use conditional statement to create a grade column. 
+SELECT 
+	First_name+' '+Last_name AS 'Employee Name',
+	CASE
+		WHEN Salary > 5000 THEN 'Manager'
+		WHEN Salary > 3000 THEN 'Team Leader'
+		WHEN Salary > 1000 THEN 'General Employee'
+		WHEN Salary > 500 THEN 'Cleaner'
+	END
+	AS 'Grade'
+FROM Employee;
+
+
 --2. List out the number of employees grade wise. Use conditional statement to create a grade column. 
 --3. Display the employee salary grades and the number of employees between 2000 to 5000 range of salary.
 
