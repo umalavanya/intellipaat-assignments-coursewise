@@ -383,11 +383,80 @@ SELECT
 FROM Employee;
 
 
---2. List out the number of employees grade wise. Use conditional statement to create a grade column. 
+--2. List out the number of employees grade wise. Use conditional statement to create a grade column.
+WITH CTE_GradedEmployees AS 
+(
+	SELECT 
+		CONCAT(First_name,' ',Last_name) AS 'Employee Name',
+		CASE
+			WHEN Salary > 5000 THEN 'Manager'
+			WHEN Salary > 3000 THEN 'Team Leader'
+			WHEN Salary > 1000 THEN 'General Employee'
+			WHEN Salary > 500 THEN 'Cleaner'
+			ELSE 'Intern/Other'
+		END
+		AS 'Grade'
+	FROM Employee
+) 
+SELECT 
+	Grade,
+	COUNT(*) 
+FROM CTE_GradedEmployees
+GROUP BY Grade ;
+
 --3. Display the employee salary grades and the number of employees between 2000 to 5000 range of salary.
+WITH CTE_GradedEmployees AS 
+(
+	SELECT 
+		CONCAT(First_name,' ',Last_name) AS 'Employee Name',
+		CASE
+			WHEN Salary > 5000 THEN 'Manager'
+			WHEN Salary > 3000 THEN 'Team Leader'
+			WHEN Salary > 1000 THEN 'General Employee'
+			WHEN Salary > 500 THEN 'Cleaner'
+			ELSE 'Intern/Other'
+		END
+		AS 'Grade',
+		Salary
+	FROM Employee
+	
+) 
+SELECT 
+	Grade,
+	COUNT(*)  AS 'Employee Count'
+FROM CTE_GradedEmployees
+WHERE Salary BETWEEN 2000 AND 5000
+GROUP BY Grade ;
 
 --Subqueries: 
 --1. Display the employees list who got the maximum salary. 
+SELECT 
+	TOP 1 WITH TIES 
+	CONCAT(First_name, ' ', Last_name) AS 'Employee Name',
+	Salary
+FROM 
+	Employee
+ORDER BY Salary DESC ;
+-------
+SELECT 
+	CONCAT(First_name,' ',Last_name) AS 'Employee Name',
+	Salary 
+FROM Employee 
+WHERE 
+	Salary = (SELECT MAX(Salary) FROM Employee) ;
+-----------
+WITH RankedEmployees AS (
+    SELECT 
+        CONCAT(First_name, ' ', Last_name) AS 'Employee Name',
+        Salary,
+        RANK() OVER (ORDER BY Salary DESC) AS SalaryRank
+    FROM Employee
+)
+SELECT 
+    'Employee Name',
+    Salary
+FROM RankedEmployees
+WHERE SalaryRank = 1;
 --2. Display the employees who are working in the sales department. 
 --3. Display the employees who are working as 'Clerk'. 
 --4. Display the list of employees who are living in 'Boston'. 
