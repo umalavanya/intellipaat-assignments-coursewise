@@ -371,12 +371,13 @@ HAVING d.DepName='Sales' OR d.DepName='Research';
 --CONDITIONAL STATEMENT 
 --1. Display the employee details with salary grades. Use conditional statement to create a grade column. 
 SELECT 
-	First_name+' '+Last_name AS 'Employee Name',
+	CONCAT(First_name,' ',Last_name) AS 'Employee Name',
 	CASE
 		WHEN Salary > 5000 THEN 'Manager'
 		WHEN Salary > 3000 THEN 'Team Leader'
 		WHEN Salary > 1000 THEN 'General Employee'
 		WHEN Salary > 500 THEN 'Cleaner'
+		ELSE 'Intern/Other'
 	END
 	AS 'Grade'
 FROM Employee;
