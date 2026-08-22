@@ -457,12 +457,29 @@ SELECT
     Salary
 FROM RankedEmployees
 WHERE SalaryRank = 1;
+
+
 --2. Display the employees who are working in the sales department. 
+
+
 --3. Display the employees who are working as 'Clerk'. 
+
+
 --4. Display the list of employees who are living in 'Boston'. 
---5. Find out the number of employees working in the sales department. 
+
+
+--5. Find out the number of employees working in the sales department.
+
 --6. Update the salaries of employees who are working as clerks on the basis of 10%. 
+
+
 --7. Display the second highest salary drawing employee details. 
+
+
 --8. List out the employees who earn more than every employee in department 30. 
+
+
 --9. Find out which department has no employees. 
+
+
 --10. Find out the employees who earn greater than the average salary for their department. 

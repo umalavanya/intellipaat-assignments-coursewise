@@ -318,7 +318,7 @@ SELECT
 	END AS Profit_Loss_Status
 FROM fact ;
 
---24. Give the total weekly sales value with the date and productID details. Use roll-up to pull the data in hierarchical order.
+--23. Give the total weekly sales value with the date and productID details. Use roll-up to pull the data in hierarchical order.
 SELECT
 	DATEPART(year, Date) AS Year
 	,DATEPART(week, Date) AS Week
@@ -329,7 +329,7 @@ FROM
 GROUP BY ROLLUP(DATEPART(year, Date), DATEPART(week, Date), ProductId)
 Order BY Year, Week, ProductId ;
 
---25. Apply union and intersection operator on the tables which consist of attribute area code.
+--24. Apply union and intersection operator on the tables which consist of attribute area code.
 --UNION
 SELECT Area_Code FROM fact 
 UNION
@@ -343,15 +343,29 @@ SELECT Area_Code FROM Location ;
 SELECT Area_Code FROM fact 
 INTERSECT
 SELECT Area_Code FROM Location ;
---26. Create a user-defined function for the product table to fetch a particular product type based upon the user’s preference.
+--25. Create a user-defined function for the product table to fetch a particular product type based upon the user’s preference.
+GO ;
+CREATE FUNCTION fn_GetProductCountByType (@ProductType VARCHAR(50))
+RETURNS INT
+AS
+BEGIN
+	DECLARE @Count INT ;
+	SELECT @Count = COUNT(*)
+	FROM Product
+	WHERE Product_Type = @ProductType ;
+	RETURN @Count ;
+END ;
+GO ;
+SELECT dbo.fn_GetProductCountByType('Coffee') AS CoffeeProductCount;
 
 
---27. Change the product type from coffee to tea where product ID is 1and undo it.
 
---28. Display the date, product ID and sales where total expensesare between 100 to 200.
+--26. Change the product type from coffee to tea where product ID is 1and undo it.
 
-
---29. Delete the records in the Product Table for regulartype.
+--27. Display the date, product ID and sales where total expensesare between 100 to 200.
 
 
---30. Display the ASCII value of the fifth character from the columnProduct
+--28. Delete the records in the Product Table for regulartype.
+
+
+--29. Display the ASCII value of the fifth character from the columnProduct
