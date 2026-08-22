@@ -460,6 +460,20 @@ WHERE SalaryRank = 1;
 
 
 --2. Display the employees who are working in the sales department. 
+SELECT 
+	CONCAT(e.First_name,' ',e.Last_name) AS 'Employees in Sales'
+FROM Employee e
+WHERE e.Department_ID = (
+	SELECT Department_ID
+	FROM Department
+	WHERE DepName = 'Sales'
+)
+--Alternative
+SELECT 
+	CONCAT(e.First_name,' ',e.Last_name) AS 'Employees in Sales'
+FROM Employee e 
+JOIN Department d ON e.Department_ID = d.Department_ID 
+WHERE d.DepName = 'Sales' ;
 
 
 --3. Display the employees who are working as 'Clerk'. 

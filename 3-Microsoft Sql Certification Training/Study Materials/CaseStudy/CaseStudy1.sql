@@ -1,6 +1,4 @@
 -----      
-
-
 /*
 Problem Statement: 
 You are a database administrator. You want to use the data to answer a few questions about your customers, especially about the sales and profit coming from different states, money spent in marketing and various other factors such as COGS (Cost of Goods Sold), budget profit etc. You plan on using these insights to help find out which items are being sold the most. You have been provided with the sample of the overall customer data due to privacy issues. But you hope that these samples are enough for you to write fully functioning SQL queries to help answer the questions.
@@ -360,12 +358,45 @@ SELECT dbo.fn_GetProductCountByType('Coffee') AS CoffeeProductCount;
 
 
 
---26. Change the product type from coffee to tea where product ID is 1and undo it.
+--26. Change the product type from coffee to tea where product ID is 1 and undo it.
+SELECT * FROM Product WHERE ProductId = 1 ;
+
+BEGIN TRANSACTION ;
+
+UPDATE Product
+SET Product_Type = 'tea'
+WHERE ProductId = 1 ;
+
+SELECT * FROM Product WHERE ProductId = 1 ;
+
+ROLLBACK TRANSACTION ;
+
 
 --27. Display the date, product ID and sales where total expensesare between 100 to 200.
+SELECT
+	Date,
+	ProductId,
+	Sales,
+	Total_Expenses
+FROM fact
+WHERE Total_Expenses BETWEEN 100 AND 200
+ORDER BY Total_Expenses ;
 
 
---28. Delete the records in the Product Table for regulartype.
+--28. Delete the records in the Product Table for regular type.
+BEGIN TRANSACTION ;
+DELETE FROM Product 
+WHERE  Type = 'Regular' ;
 
+SELECT * FROM Product ;
+
+ROLLBACK TRANSACTION ;
 
 --29. Display the ASCII value of the fifth character from the columnProduct
+
+SELECT 
+	Product,
+	ASCII(SUBSTRING(Product, 5, 1)) AS ASCII_Fifth_Char,
+	SUBSTRING(Product,5,1) AS Fifth_Character
+FROM Product ;
+
