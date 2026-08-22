@@ -9,6 +9,11 @@
 --a. Continent: The Continent table has two attributes i.e., region_id and region_name, where region_name consists of different continents such as Asia, Europe, Africa etc., assigned with the unique region id.
 --b. Customers: The Customers table has four attributes named customer_id, region_id, start_date and end_date which consists of 3500 records.
 --c. Transaction: Finally, the Transaction table contains around 5850 records and has four attributes named customer_id, txn_date, txn_type and txn_amount.
+--
+
+--Create Database
+CREATE DATABASE CaseStudyThree ;
+USE CaseStudyThree ;
 
 
 
