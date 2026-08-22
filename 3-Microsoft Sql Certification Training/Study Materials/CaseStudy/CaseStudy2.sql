@@ -638,3 +638,18 @@ JOIN DepartmentAvg da ON e.Department_ID = da.Department_ID
 WHERE e.Salary > da.AvgSalary
 ORDER BY e.Department_ID, e.Salary DESC;
 
+
+--Additional Query: Data Verification
+
+-- View all data to verify results
+SELECT * FROM Locations;
+SELECT * FROM Department;
+SELECT * FROM Job;
+SELECT * FROM Employee;
+
+-- View summary statistics
+SELECT 
+    (SELECT COUNT(*) FROM Employee) AS TotalEmployees,
+    (SELECT COUNT(*) FROM Department) AS TotalDepartments,
+    (SELECT COUNT(*) FROM Job) AS TotalJobs,
+    (SELECT COUNT(*) FROM Locations) AS TotalLocations;
