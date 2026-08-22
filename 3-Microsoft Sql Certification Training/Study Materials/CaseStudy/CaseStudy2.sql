@@ -528,9 +528,39 @@ JOIN Department d ON e.Department_ID = d.Department_ID
 WHERE d.DepName = 'Sales';
 
 --6. Update the salaries of employees who are working as clerks on the basis of 10%. 
+SELECT 
+	CONCAT(First_Name, ' ', Last_name) AS 'Employee name',
+	Salary AS 'Current Salary'
+FROM Employee
+WHERE Job_ID  = (SELECT Job_ID FROM Job WHERE Designation = 'Clerk' ) ;
 
+--Perform the update (using transaction for safelty)
+BEGIN TRANSACTION ;
+
+UPDATE Employee 
+SET Salary = Salary*1.10
+WHERE Job_ID = (SELECT Job_ID FROM Job WHERE Designation = 'Clerk') ;
+
+-- Verify the update
+SELECT 
+	CONCAT(First_name, ' ', Last_name) AS 'Employee Name',
+	Salary AS 'Updated Salary'
+FROM Employee 
+WHERE Job_ID = (SELECT Job_ID FROM Job WHERE Designation = 'Clerk') ;
+
+ROLLBACK ;
 
 --7. Display the second highest salary drawing employee details. 
+WITH RankedEmployees AS(
+	SELECT 
+		CONCAT(First_name,' ', Last_name) AS 'Employee Name',
+		Salary,
+		DENSE_RANK() OVER (ORDER BY Salary DESC) AS SalaryRank
+	FROM Employee 
+)
+SELECT [Employee Name], Salary, SalaryRank
+FROM RankedEmployees
+WHERE SalaryRank >= 2 ;
 
 
 --8. List out the employees who earn more than every employee in department 30. 
