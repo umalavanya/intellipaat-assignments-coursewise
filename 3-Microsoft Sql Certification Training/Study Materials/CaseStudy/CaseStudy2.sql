@@ -488,6 +488,27 @@ WHERE e.Job_ID = (
 )
 
 --4. Display the list of employees who are living in 'Boston'. 
+SELECT 
+	CONCAT(e.First_name, ' ', e.Last_name) AS 'Employee Name'
+FROM Employee e
+WHERE Department_ID IN (
+	SELECT Department_ID
+	FROM Department
+	WHERE Location_ID = (
+		SELECT Location_ID
+		FROM Locations
+		WHERE City = 'Boston'
+		)
+) ;
+
+
+-- Using Joins
+SELECT 
+	CONCAT(e.First_name, ' ', e.Last_name) AS 'Employee Name'
+FROM Employee e
+JOIN Department d ON e.Department_ID = d.Department_ID
+JOIN Locations l ON d.Location_ID = l.Location_ID
+WHERE l.City = 'Boston';
 
 
 --5. Find out the number of employees working in the sales department.
