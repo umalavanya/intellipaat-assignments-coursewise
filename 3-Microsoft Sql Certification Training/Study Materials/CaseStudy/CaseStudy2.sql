@@ -477,7 +477,15 @@ WHERE d.DepName = 'Sales' ;
 
 
 --3. Display the employees who are working as 'Clerk'. 
-
+SELECT 
+	CONCAT(e.First_name, ' ', e.Last_name) AS 'Employee Name'
+FROM Employee e
+WHERE e.Job_ID = (
+	SELECT Job_ID
+	FROM Job
+	WHERE Designation = 'Clerk'
+	
+)
 
 --4. Display the list of employees who are living in 'Boston'. 
 
