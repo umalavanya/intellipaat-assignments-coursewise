@@ -510,8 +510,22 @@ JOIN Department d ON e.Department_ID = d.Department_ID
 JOIN Locations l ON d.Location_ID = l.Location_ID
 WHERE l.City = 'Boston';
 
-
 --5. Find out the number of employees working in the sales department.
+SELECT 
+	COUNT(*) AS 'Number of Employees'
+FROM Employee
+WHERE Department_ID = (
+    SELECT Department_ID 
+    FROM Department 
+    WHERE DepName = 'Sales'
+);
+
+-- Alternative using JOIN
+SELECT 
+	COUNT(*) AS 'Number of Employees'
+FROM Employee e
+JOIN Department d ON e.Department_ID = d.Department_ID
+WHERE d.DepName = 'Sales';
 
 --6. Update the salaries of employees who are working as clerks on the basis of 10%. 
 
