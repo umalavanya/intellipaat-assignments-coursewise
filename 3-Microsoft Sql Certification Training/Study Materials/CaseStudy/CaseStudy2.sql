@@ -564,9 +564,77 @@ WHERE SalaryRank >= 2 ;
 
 
 --8. List out the employees who earn more than every employee in department 30. 
+SELECT 
+	CONCAT(First_name, ' ', Last_name) AS 'Employee Name',
+	Salary
+FROM Employee
+WHERE SALARY > ALL (
+	SELECT Salary
+	FROM Employee
+	WHERE Department_ID = 30
+    )
+AND Department_ID != 30 ;
 
+-- Alternative: Using MAX
+SELECT 
+	CONCAT(First_name, ' ', Last_name) AS 'Employee Name',
+	Salary
+FROM Employee
+WHERE Salary > (
+    SELECT MAX(Salary) 
+    FROM Employee 
+    WHERE Department_ID = 30
+);
 
 --9. Find out which department has no employees. 
+SELECT 
+	d.Department_ID,
+	d.DepName
+FROM Department d
+LEFT JOIN Employee e ON d.Department_ID = e.Department_ID 
+WHERE e.Department_ID IS NULL ;
 
 
+-- Using NOT EXISTS
+SELECT 
+	Department_ID,
+	DepName
+FROM Department d 
+WHERE NOT EXISTS (
+	SELECT 1
+	FROM Employee e
+	WHERE e.Department_ID = d.Department_ID ) ;
 --10. Find out the employees who earn greater than the average salary for their department. 
+SELECT 
+	CONCAT(e.First_name, ' ', Last_name) AS 'Employee Name',
+	e.Salary,
+	e.Department_ID,
+	d.DepName
+FROM Employee e 
+JOIN Department d ON e.Department_ID = d.Department_ID 
+WHERE e.Salary > (
+	SELECT AVG(Salary) 
+	FROM Employee e2
+	WHERE e2.Department_ID = e.Department_ID
+)
+ORDER BY e.Department_ID, e.Salary DESC ;
+
+-- Alternative using CTE with window function
+WITH DepartmentAvg AS (
+    SELECT 
+        Department_ID,
+        AVG(Salary) AS AvgSalary
+    FROM Employee
+    GROUP BY Department_ID
+)
+SELECT 
+	CONCAT(e.First_name, ' ', e.Last_name) AS 'Employee Name',
+	e.Salary,
+	e.Department_ID,
+	d.DepName
+FROM Employee e
+JOIN Department d ON e.Department_ID = d.Department_ID
+JOIN DepartmentAvg da ON e.Department_ID = da.Department_ID
+WHERE e.Salary > da.AvgSalary
+ORDER BY e.Department_ID, e.Salary DESC;
+
