@@ -6,7 +6,7 @@ Backend Setup
 -----------------------
 Create project directory structure
 
-Create root folder named event-management-system
+1. Create root folder named event-management-system
 
 Inside root, create server folder
 
@@ -43,7 +43,7 @@ Install path module: npm install path
 
 Install concurrently: npm install concurrently
 
-
+---------------------------
 
 Create .env file
 
@@ -52,7 +52,7 @@ In server folder, create .env file
 Add PORT=4000 to .env file
 
 Add MONGODB_URI=mongodb://127.0.0.1:27017/mydatabase to .env file
-
+----------------------------------
 Update package.json scripts
 
 Open server/package.json
@@ -60,6 +60,8 @@ Open server/package.json
 Add "start": "node server.js" to scripts
 
 Add "dev": "nodemon server.js" to scripts (optional)
+
+-----------------------------
 
 Create database connection file
 
@@ -80,6 +82,8 @@ Log success message on connection
 Log error message on failure
 
 Export connectDB function
+
+-------------------------------------
 
 Create server.js entry file
 
