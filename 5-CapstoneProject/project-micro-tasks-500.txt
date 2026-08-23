@@ -103,6 +103,7 @@ Import path: const path = require("path")
 
 Import fs: const fs = require("fs")
 
+
 Initialize express app
 
 Create app: const app = express()
@@ -113,12 +114,16 @@ Use cors middleware: app.use(cors())
 
 Use body-parser: app.use(bodyParser.json())
 
+
+
 Set up database connection in server.js
 
 Import connectDB: const connectDB = require("./config/db")
 
 Call connectDB() after middleware setup
 
+
+------
 Set up static file serving
 
 Define clientDistPath: const clientDistPath = path.join(__dirname, "..", "client", "dist")
@@ -140,6 +145,9 @@ Get PORT from process.env or default to 4000
 Use server.listen(PORT, callback)
 
 Log server running message with port
+
+
+---------------------------------------
 
 Frontend Setup
 Initialize frontend with Vite
