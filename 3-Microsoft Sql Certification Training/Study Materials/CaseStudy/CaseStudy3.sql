@@ -12,12 +12,47 @@
 --
 
 --Create Database
+DROP DATABASE IF EXISTS CaseStudyThree ;
 CREATE DATABASE CaseStudyThree ;
 USE CaseStudyThree ;
 
+--Create Continent Table
+CREATE TABLE Continent (
+	region_id INT PRIMARY KEY, 
+	region_name VARCHAR(50) NOT NULL 
+);
+
+
+SELECT * FROM Continent ;
+
+--Create Customer Table 
+CREATE TABLE Customers(
+	customer_id SMALLINT PRIMARY KEY,
+	region_id TINYINT FOREIGN KEY REFERENCES Continent(region_id),
+	 start_date DATE,
+	 end_date DATE
+) ;
+
+ALTER TABLE Customers 
+ALTER COLUMN customer_id SMALLINT NOT NULL ;
+
+ALTER TABLE Customers
+ADD CONSTRAINT PK_Customers_customer_id
+PRIMARY KEY (customer_id) WITH (IGNORE_DUP_KEY = ON ) ;
+
+DELETE FROM Customers
+WHERE customer_id NOT IN (
+	SELECT MIN(customer_id)
+	FROM Customers
+	GROUP BY customer_id ) ;
+
+SELECT
+	(SELECT COUNT(*) FROM Customers) AS 'Total Customers' ,
+	(SELECT COUNT(*) FROM Transactions) AS 'Total Transactions' ;
 
 
 --1. Display the count of customers in each region who have done the transaction in the year 2020.
+
 --2. Display the maximum and minimum transaction amount of each transaction type.
 --3. Display the customer id, region name and transaction amount where transaction type is deposit and transaction amount > 2000.
 --4. Find duplicate records in the Customer table.
