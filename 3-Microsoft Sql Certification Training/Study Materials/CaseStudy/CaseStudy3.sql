@@ -16,44 +16,92 @@ DROP DATABASE IF EXISTS CaseStudyThree ;
 CREATE DATABASE CaseStudyThree ;
 USE CaseStudyThree ;
 
---Create Continent Table
+
+-- Create Continent Table
 CREATE TABLE Continent (
-	region_id INT PRIMARY KEY, 
-	region_name VARCHAR(50) NOT NULL 
+    region_id INT PRIMARY KEY,
+    region_name VARCHAR(50) NOT NULL
 );
 
+-- Insert sample data for Continent
+INSERT INTO Continent VALUES 
+(1, 'Asia'),
+(2, 'Europe'),
+(3, 'Africa'),
+(4, 'North America'),
+(5, 'South America'),
+(6, 'Australia'),
+(7, 'Antarctica');
 
-SELECT * FROM Continent ;
+-- Create Customers Table
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    region_id INT,
+    start_date DATE,
+    end_date DATE,
+    FOREIGN KEY (region_id) REFERENCES Continent(region_id)
+);
 
---Create Customer Table 
-CREATE TABLE Customers(
-	customer_id SMALLINT PRIMARY KEY,
-	region_id TINYINT FOREIGN KEY REFERENCES Continent(region_id),
-	 start_date DATE,
-	 end_date DATE
-) ;
+-- Create Transaction Table
+CREATE TABLE Transaction (
+    customer_id INT,
+    txn_date DATE,
+    txn_type VARCHAR(20),
+    txn_amount DECIMAL(10,2),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
 
-ALTER TABLE Customers 
-ALTER COLUMN customer_id SMALLINT NOT NULL ;
+-- Sample data insertion (generating realistic data)
+-- Note: In a real scenario, you'd have 3500 customers and 5850 transactions
+-- Here's sample data for testing:
 
-ALTER TABLE Customers
-ADD CONSTRAINT PK_Customers_customer_id
-PRIMARY KEY (customer_id) WITH (IGNORE_DUP_KEY = ON ) ;
+-- Insert sample customers
+INSERT INTO Customers VALUES 
+(1, 1, '2019-01-15', '2023-12-31'),
+(2, 2, '2018-06-20', '2024-01-15'),
+(3, 3, '2020-03-10', '2023-11-30'),
+(4, 1, '2019-08-05', '2024-02-28'),
+(5, 4, '2020-01-01', '2024-03-31'),
+(6, 2, '2017-11-12', '2023-10-15'),
+(7, 5, '2020-02-15', '2024-04-30'),
+(8, 1, '2018-09-25', '2023-12-31'),
+(9, 3, '2020-05-20', '2024-01-15'),
+(10, 4, '2019-07-10', '2024-02-28');
 
-DELETE FROM Customers
-WHERE customer_id NOT IN (
-	SELECT MIN(customer_id)
-	FROM Customers
-	GROUP BY customer_id ) ;
-
-SELECT
-	(SELECT COUNT(*) FROM Customers) AS 'Total Customers' ,
-	(SELECT COUNT(*) FROM Transactions) AS 'Total Transactions' ;
-
+-- Insert sample transactions
+INSERT INTO Transaction VALUES 
+(1, '2020-01-15', 'Deposit', 2500.00),
+(1, '2020-03-20', 'Withdrawal', 500.00),
+(2, '2020-02-10', 'Deposit', 1500.00),
+(2, '2020-05-15', 'Withdrawal', 200.00),
+(3, '2020-06-01', 'Purchase', 3500.00),
+(3, '2020-07-15', 'Deposit', 4500.00),
+(4, '2020-08-20', 'Withdrawal', 300.00),
+(4, '2020-09-10', 'Deposit', 1800.00),
+(5, '2020-10-05', 'Purchase', 2200.00),
+(5, '2020-11-15', 'Deposit', 5000.00),
+(6, '2020-12-01', 'Withdrawal', 400.00),
+(6, '2020-12-20', 'Deposit', 3200.00),
+(7, '2020-01-25', 'Purchase', 4500.00),
+(8, '2020-02-28', 'Deposit', 2800.00),
+(9, '2020-03-15', 'Withdrawal', 150.00),
+(10, '2020-04-20', 'Deposit', 6000.00);
 
 --1. Display the count of customers in each region who have done the transaction in the year 2020.
+SELECT 
+	c.region_id,
+	con.region_name
+	COUNT(DISTINCT t.customer_id) AS customer_count
+FROM Transactions t
+JOIN Customers c ON t.customer_id = c.customer_id
+JOIN Continent con ON c.region_id = con.region_id 
+WHERE YEAR(t.txn_date) = 2020
+GROUP BY c.region_id, con.region_name
+ORDER BY customer_count DESC ;
 
 --2. Display the maximum and minimum transaction amount of each transaction type.
+
+
 --3. Display the customer id, region name and transaction amount where transaction type is deposit and transaction amount > 2000.
 --4. Find duplicate records in the Customer table.
 --5. Display the customer id, region name, transaction type and transaction amount for the minimum transaction amount in deposit.
