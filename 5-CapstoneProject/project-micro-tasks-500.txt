@@ -1,0 +1,4078 @@
+Event Management System - Implementation Guide
+Complete Micro-Tasks (500+ Tasks)
+PHASE 1: PROJECT SETUP & ENVIRONMENT (50 tasks)
+=================================================================
+Backend Setup
+-----------------------
+Create project directory structure
+
+Create root folder named event-management-system
+
+Inside root, create server folder
+
+Inside server, create config folder
+
+Inside server, create controllers folder
+
+Inside server, create models folder
+
+Inside server, create routes folder
+
+
+Initialize backend
+-------------------------------
+Navigate to server folder in terminal
+
+Run npm init -y to create package.json
+
+Install express: npm install express
+
+Install mongoose: npm install mongoose
+
+Install dotenv: npm install dotenv
+
+Install cors: npm install cors
+
+Install body-parser: npm install body-parser
+
+Install bcrypt: npm install bcrypt
+
+Install socket.io: npm install socket.io
+
+Install path module: npm install path
+
+Install concurrently: npm install concurrently
+
+
+
+Create .env file
+
+In server folder, create .env file
+
+Add PORT=4000 to .env file
+
+Add MONGODB_URI=mongodb://127.0.0.1:27017/mydatabase to .env file
+
+Update package.json scripts
+
+Open server/package.json
+
+Add "start": "node server.js" to scripts
+
+Add "dev": "nodemon server.js" to scripts (optional)
+
+Create database connection file
+
+In server/config, create db.js
+
+Import mongoose: const mongoose = require("mongoose")
+
+Create async function connectDB
+
+Use try-catch block for connection
+
+Get MONGODB_URI from process.env
+
+Use mongoose.connect(mongoURI) inside try
+
+Log success message on connection
+
+Log error message on failure
+
+Export connectDB function
+
+Create server.js entry file
+
+In server folder, create server.js
+
+Import express: const express = require("express")
+
+Import http: const http = require("http")
+
+Import cors: const cors = require("cors")
+
+Import body-parser: const bodyParser = require("body-parser")
+
+Import dotenv: require("dotenv").config()
+
+Import path: const path = require("path")
+
+Import fs: const fs = require("fs")
+
+Initialize express app
+
+Create app: const app = express()
+
+Create server: const server = http.createServer(app)
+
+Use cors middleware: app.use(cors())
+
+Use body-parser: app.use(bodyParser.json())
+
+Set up database connection in server.js
+
+Import connectDB: const connectDB = require("./config/db")
+
+Call connectDB() after middleware setup
+
+Set up static file serving
+
+Define clientDistPath: const clientDistPath = path.join(__dirname, "..", "client", "dist")
+
+Check if dist exists using fs.existsSync
+
+If exists, serve static files: app.use(express.static(clientDistPath))
+
+Create catch-all route for SPA fallback
+
+Send index.html if build exists
+
+Send error message if build not found
+
+Set up server listening
+
+Get PORT from process.env or default to 4000
+
+Use server.listen(PORT, callback)
+
+Log server running message with port
+
+Frontend Setup
+Initialize frontend with Vite
+
+Navigate to root folder
+
+Run npm create vite@latest client -- --template react
+
+Navigate to client folder
+
+Install dependencies: npm install
+
+Install socket.io-client: npm install socket.io-client
+
+Install lucide-react: npm install lucide-react
+
+Update frontend package.json
+
+Open client/package.json
+
+Verify scripts: dev, build, preview, lint
+
+Ensure dependencies include react, react-dom, socket.io-client, lucide-react
+
+Ensure devDependencies include vite, @vitejs/plugin-react, @types/react, @types/react-dom
+
+Create folder structure in src
+
+In client/src, create components folder
+
+In client/src, create hooks folder
+
+In client/src, create services folder
+
+In client/src, create utils folder
+
+In client/src, create constants folder
+
+Create subfolders in components
+
+In client/src/components, create events folder
+
+In client/src/components/events, we will place EventCard, EventHeader, EventList, EventModal
+
+Set up index.html
+
+Open client/index.html
+
+Add title: Event Management System
+
+Ensure root div exists with id="root"
+
+Ensure script tag includes /src/main.jsx
+
+Set up main.jsx
+
+Open client/src/main.jsx
+
+Import React: import { StrictMode } from 'react'
+
+Import createRoot: import { createRoot } from 'react-dom/client'
+
+Import App: import App from './App.jsx'
+
+Import index.css: import './index.css'
+
+Render App inside StrictMode
+
+Add Google Font (Outfit)
+
+In client/src/index.css, import font: @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap')
+
+Set font-family for body: font-family: 'Outfit', sans-serif
+
+Define CSS variables
+
+In index.css, create :root selector
+
+Add --primary: #ff4f75
+
+Add --primary-hover: #e03992
+
+Add --primary-gradient: linear-gradient(135deg, #ff8fa5 0%, #e94a7f 100%)
+
+Add --bg-gradient: radial-gradient(circle, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%)
+
+Add --card-bg: rgba(255, 255, 255, 0.92)
+
+Add --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.12)
+
+Add --text-main: #2d3748
+
+Add --text-muted: #718096
+
+Add --radius: 14px
+
+Set global reset styles
+
+Add * { box-sizing: border-box; margin: 0; padding: 0; }
+
+Set body styles: font-family, background, min-height, color
+
+Set #root styles: min-height, display flex, flex-direction column
+
+Create auth page styles
+
+Add .auth-page class: min-height, flex, align-center, justify-center, padding
+
+Add .auth-card class: background, backdrop-filter, padding, width, max-width, border-radius, box-shadow, border, animation
+
+Add .auth-card-wide class: max-width larger
+
+Add fadeIn keyframes animation
+
+PHASE 2: BACKEND MODELS (15 tasks)
+Create User model
+
+In server/models, create User.js
+
+Import mongoose: const mongoose = require("mongoose")
+
+Define userSchema using mongoose.Schema
+
+Add firstName field: String type
+
+Add lastName field: String type
+
+Add email field: String, required, unique
+
+Add phone field: String type
+
+Add password field: String, required
+
+Add confirmPassword field: String, default null
+
+Add age field: Mixed type
+
+Add dob field: String type
+
+Add gender field: String type
+
+Add country field: String type
+
+Add languages field: Array of Strings
+
+Add timestamps: true
+
+Export model: mongoose.model("User", userSchema)
+
+Create Event model
+
+In server/models, create Event.js
+
+Import mongoose
+
+Define eventSchema
+
+Add title field: String, required
+
+Add description field: String
+
+Add eventStartDate field: String
+
+Add eventEndDate field: String
+
+Add location field: String
+
+Add category field: String
+
+Add status field: String
+
+Add createdBy field: String, required
+
+Add timestamps: true
+
+Export Event model
+
+PHASE 3: BACKEND CONTROLLERS (30 tasks)
+Create authController.js
+
+In server/controllers, create authController.js
+
+Import bcrypt: const bcrypt = require("bcrypt")
+
+Import User model: const User = require("../models/User")
+
+Implement signup controller
+
+Create signup async function (req, res)
+
+Extract data from req.body
+
+Check if user exists: await User.findOne({ email: data.email })
+
+If exists, return 400 with "Email already exists" message
+
+Hash password: await bcrypt.hash(data.password, 10)
+
+Create new User instance with data
+
+Set confirmPassword to null
+
+Save user: await userDoc.save()
+
+Return success response
+
+Add try-catch error handling
+
+Implement login controller
+
+Create login async function (req, res)
+
+Extract email and password from req.body
+
+Find user by email: await User.findOne({ email })
+
+If no user, return 401 with "Invalid email"
+
+Compare password: await bcrypt.compare(password, user.password)
+
+If match, return success response
+
+If no match, return 401 with "Incorrect password"
+
+Add try-catch error handling
+
+Export controllers
+
+Export signup and login functions
+
+Create eventController.js
+
+In server/controllers, create eventController.js
+
+Import Event model: const Event = require("../models/Event")
+
+Implement createEvent controller
+
+Create createEvent async function
+
+Extract data from req.body
+
+Create new Event instance with data
+
+Save event: await eventDoc.save()
+
+Return success with eventId
+
+Add try-catch error handling
+
+Implement getEventsByEmail controller
+
+Create getEventsByEmail async function
+
+Get email from req.params
+
+Find events: await Event.find({ createdBy: email }).lean()
+
+Convert _id to string for each event
+
+Return success with events array
+
+Add try-catch error handling
+
+Implement updateEvent controller
+
+Create updateEvent async function
+
+Get event_id from req.params
+
+Get data from req.body
+
+Update event: await Event.findByIdAndUpdate(eventId, { $set: data })
+
+Return success message
+
+Add try-catch error handling
+
+Implement deleteEvent controller
+
+Create deleteEvent async function
+
+Get event_id from req.params
+
+Delete event: await Event.findByIdAndDelete(eventId)
+
+Return success message
+
+Add try-catch error handling
+
+Export event controllers
+
+Export createEvent, getEventsByEmail, updateEvent, deleteEvent
+
+PHASE 4: BACKEND ROUTES (10 tasks)
+Create authRoutes.js
+
+In server/routes, create authRoutes.js
+
+Import express: const express = require("express")
+
+Create router: const router = express.Router()
+
+Import signup and login from authController
+
+Define POST route for "/signup"
+
+Define POST route for "/login"
+
+Export router
+
+Create eventRoutes.js
+
+In server/routes, create eventRoutes.js
+
+Import express
+
+Create router
+
+Import createEvent, getEventsByEmail, updateEvent, deleteEvent
+
+Define POST route for "/" - create event
+
+Define GET route for "/:email" - get events by email
+
+Define PUT route for "/:event_id" - update event
+
+Define DELETE route for "/:event_id" - delete event
+
+Export router
+
+Register routes in server.js
+
+Import authRoutes: const authRoutes = require("./routes/authRoutes")
+
+Import eventRoutes: const eventRoutes = require("./routes/eventRoutes")
+
+Use authRoutes: app.use("/", authRoutes)
+
+Use eventRoutes: app.use("/events", eventRoutes)
+
+PHASE 5: SOCKET.IO IMPLEMENTATION (15 tasks)
+Create socket.js
+
+In server folder, create socket.js
+
+Import Server from socket.io: const { Server } = require("socket.io")
+
+Implement initSocket function
+
+Create function initSocket(server)
+
+Create io instance with cors config
+
+Set origin: "*", methods: ["GET", "POST"]
+
+Handle connection event
+
+Use io.on("connection", (socket) => { ... })
+
+Initialize currentUserEmail = null
+
+Handle user_connected event
+
+Listen for "user_connected" with email
+
+Set currentUserEmail = email
+
+Set socket.userEmail = email
+
+Create roomName: user:${email}
+
+Check existing sockets: await io.in(roomName).fetchSockets()
+
+Join room: socket.join(roomName)
+
+If existing sockets > 0, emit "multiple_login_detected"
+
+Handle confirm_continue_here event
+
+Listen for "confirm_continue_here" with email
+
+Get targetEmail from email or currentUserEmail
+
+Get sockets in room: await io.in(roomName).fetchSockets()
+
+Loop through sockets
+
+If socket.id !== current socket id, emit "force_logout"
+
+Leave room for each socket
+
+Handle user_logout event
+
+Listen for "user_logout"
+
+If currentUserEmail exists, leave room
+
+Set currentUserEmail = null
+
+Handle disconnect event
+
+Listen for "disconnect"
+
+If currentUserEmail exists, leave room
+
+Export initSocket function
+
+Initialize socket in server.js
+
+Import initSocket: const initSocket = require("./socket")
+
+Call initSocket(server) after creating server
+
+PHASE 6: FRONTEND SERVICES (15 tasks)
+Create sessionService.js
+
+In client/src/services, create sessionService.js
+
+Create getLoggedInUser function: returns localStorage.getItem('loggedinUser')
+
+Create saveLoggedInUser function: localStorage.setItem('loggedinUser', email)
+
+Create clearLoggedInUser function: localStorage.removeItem('loggedinUser')
+
+Export all functions
+
+Create eventService.js
+
+In client/src/services, create eventService.js
+
+Define API_URL: "http://localhost:4000/events"
+
+Implement getEvents function
+
+Create getEvents async function (email)
+
+Fetch from ${API_URL}/${email}
+
+Return response.json()
+
+Implement createEvent function
+
+Create createEvent async function (payload)
+
+Return fetch(API_URL, { method: "POST", headers, body })
+
+Implement updateEvent function
+
+Create updateEvent async function (id, payload)
+
+Return fetch(${API_URL}/${id}, { method: "PUT", headers, body })
+
+Implement deleteEvent function
+
+Create deleteEvent async function (id)
+
+Return fetch(${API_URL}/${id}, { method: "DELETE" })
+
+Export all functions
+
+PHASE 7: FRONTEND UTILITIES (10 tasks)
+Create eventUtils.js
+
+In client/src/utils, create eventUtils.js
+
+Implement formatDate function
+
+Create formatDate function (dateStr)
+
+If !dateStr return "N/A"
+
+Create Date object: new Date(dateStr)
+
+If invalid date, return dateStr
+
+Return date.toLocaleString()
+
+Implement getBadgeClass function
+
+Create getBadgeClass function (status)
+
+Use switch on status?.toLowerCase()
+
+Case "completed": return "badge-completed"
+
+Case "cancelled": return "badge-cancelled"
+
+Default: return "badge-upcoming"
+
+Export both functions
+
+PHASE 8: SOCKET CONSTANTS (3 tasks)
+Create socket.js constants file
+
+In client/src/constants, create socket.js
+
+Define SOCKET_SERVER_URL = 'http://localhost:4000'
+
+Export SOCKET_SERVER_URL
+
+PHASE 9: CUSTOM HOOK - useSocketSession (20 tasks)
+Create useSocketSession.js
+
+In client/src/hooks, create useSocketSession.js
+
+Import useState, useEffect, useRef from react
+
+Import io from socket.io-client
+
+Import SOCKET_SERVER_URL from constants
+
+Implement hook
+
+Create useSocketSession function
+
+Create socketRef using useRef(null)
+
+Create showMultiLoginModal state: useState(false)
+
+Create forceLogoutMessage state: useState('')
+
+Set up socket connection in useEffect
+
+Create socket = io(SOCKET_SERVER_URL)
+
+Assign to socketRef.current
+
+Cleanup: return socket.disconnect()
+
+Empty dependency array
+
+Handle multiple_login_detected event
+
+socket.on('multiple_login_detected', () => { setShowMultiLoginModal(true) })
+
+Handle force_logout event
+
+socket.on('force_logout', (data) => { setForceLogoutMessage(data?.message || default) })
+
+Set showMultiLoginModal(false)
+
+Create connectUser function
+
+Use socketRef.current?.emit('user_connected', { email })
+
+Create logoutUser function
+
+Emit 'user_logout'
+
+Set showMultiLoginModal(false)
+
+Create continueHere function
+
+Emit 'confirm_continue_here', { email }
+
+Set showMultiLoginModal(false)
+
+Return all functions and states
+
+Return { showMultiLoginModal, forceLogoutMessage, connectUser, logoutUser, continueHere }
+
+PHASE 10: LOGIN COMPONENT (20 tasks)
+Create Login.jsx
+
+In client/src/components, create Login.jsx
+
+Import useState from react
+
+Import LogIn, Mail, Lock, AlertCircle, Info from lucide-react
+
+Set up component
+
+Export default function Login({ onLoginSuccess, navigateToSignup, infoMessage })
+
+Create email state: useState('')
+
+Create password state: useState('')
+
+Create error state: useState('')
+
+Create loading state: useState(false)
+
+Implement handleLogin function
+
+Create async handleLogin(e)
+
+e.preventDefault()
+
+Set error('')
+
+Validate email and password exist
+
+Set loading(true)
+
+Try-catch block for fetch
+
+Make login API call
+
+Fetch to 'http://localhost:4000/login'
+
+Method POST, headers, body JSON.stringify({ email, password })
+
+Parse response as JSON
+
+If data.success, localStorage.setItem('loggedinUser', email), call onLoginSuccess(email)
+
+Else setError(data.message)
+
+Handle network errors
+
+Catch block for errors
+
+setError('Unable to connect to server...')
+
+Finally set loading(false)
+
+Render login UI
+
+Return JSX with auth-page div
+
+Add auth-card div
+
+Add logo-header with img and h2
+
+Conditionally render infoMessage alert
+
+Conditionally render error alert
+
+Create form with onSubmit={handleLogin}
+
+Add email input with state binding
+
+Add password input with state binding
+
+Add submit button with loading state
+
+Add auth-footer with navigateToSignup button
+
+Style alerts
+
+Add AlertCircle icon to error
+
+Add Info icon to info message
+
+Use appropriate styles
+
+PHASE 11: SIGNUP COMPONENT (30 tasks)
+Create Signup.jsx
+
+In client/src/components, create Signup.jsx
+
+Import useState from react
+
+Import AlertCircle, CheckCircle from lucide-react
+
+Set up component
+
+Export default function Signup({ navigateToLogin })
+
+Create formData state with all fields
+
+Create error state: useState('')
+
+Create success state: useState(false)
+
+Create loading state: useState(false)
+
+Initialize formData state
+
+firstName: ''
+
+lastName: ''
+
+email: ''
+
+phone: ''
+
+password: ''
+
+confirmPassword: ''
+
+gender: 'male'
+
+age: ''
+
+dob: ''
+
+country: 'India'
+
+languages: []
+
+Implement handleChange function
+
+Create handleChange(e)
+
+Destructure id, name, value, type, checked
+
+If type === 'checkbox', handle languages array
+
+If type === 'radio', handle gender
+
+Else use id or name as key
+
+Implement handleSignup function
+
+Create async handleSignup(e)
+
+e.preventDefault()
+
+Set error('')
+
+Validate passwords match
+
+Set loading(true)
+
+Try-catch for API call
+
+Make signup API call
+
+Fetch to 'http://localhost:4000/signup'
+
+Method POST, headers, body JSON.stringify(formData)
+
+Parse response
+
+If success, setSuccess(true), setTimeout navigateToLogin
+
+Else setError(data.message)
+
+Render signup UI
+
+Return JSX with auth-page div
+
+Add auth-card auth-card-wide div
+
+Add logo-header with h2 and subtitle
+
+Conditionally render error
+
+Conditionally render success
+
+Create form with onSubmit
+
+Create form fields
+
+First Name input
+
+Last Name input
+
+Email input
+
+Phone input
+
+Password input
+
+Confirm Password input
+
+Gender radio buttons (male, female, others)
+
+Age input (number)
+
+DOB input (date)
+
+Languages checkboxes (English, Japanese, Russian)
+
+Country select (India, America, Russia, Japan)
+
+Add submit button
+
+Button with type="submit"
+
+Text: loading ? 'Creating Account...' : 'SIGNUP'
+
+Disabled when loading
+
+Add footer
+
+Already have an account? Login here button
+
+PHASE 12: EVENTS COMPONENT (30 tasks)
+Create Events.jsx
+
+In client/src/components, create Events.jsx
+
+Import useState, useEffect
+
+Import EventHeader, EventList, EventModal
+
+Import getEvents, createEvent, updateEvent, deleteEvent
+
+Set up component
+
+Export default function Events({ userEmail, onLogout })
+
+Create events state: useState([])
+
+Create loading state: useState(true)
+
+Create showModal state: useState(false)
+
+Create editingEventId state: useState(null)
+
+Initialize formData state
+
+title: ""
+
+description: ""
+
+eventStartDate: ""
+
+eventEndDate: ""
+
+location: ""
+
+category: ""
+
+status: "Upcoming"
+
+Implement fetchAllEvents function
+
+Create async fetchAllEvents
+
+Set loading(true)
+
+const data = await getEvents(userEmail)
+
+If data.success, setEvents(data.events || [])
+
+Finally set loading(false)
+
+Set up useEffect
+
+useEffect(() => { if (userEmail) fetchAllEvents() }, [userEmail])
+
+Implement openCreateModal function
+
+Set editingEventId(null)
+
+Reset formData
+
+Set showModal(true)
+
+Implement openEditModal function
+
+Set editingEventId(event._id)
+
+Populate formData from event
+
+Set showModal(true)
+
+Implement handleSaveEvent function
+
+Create async handleSaveEvent(e)
+
+e.preventDefault()
+
+Create payload with formData and createdBy: userEmail
+
+If editingEventId, call updateEvent
+
+Else call createEvent
+
+Set showModal(false)
+
+Call fetchAllEvents()
+
+Implement handleDeleteEvent function
+
+Create async handleDeleteEvent(id)
+
+If !window.confirm('Delete this event?') return
+
+Call deleteEvent(id)
+
+Call fetchAllEvents()
+
+Render Events component
+
+Return div with dashboard-container
+
+Render EventHeader with userEmail and onLogout
+
+Display events count
+
+Create Event List
+
+Render EventModal with props
+
+Add CREATE EVENT button
+
+Button with className="btn-primary"
+
+onClick={openCreateModal}
+
+Text: "CREATE EVENT"
+
+PHASE 13: EVENT HEADER COMPONENT (5 tasks)
+Create EventHeader.jsx
+
+In client/src/components/events, create EventHeader.jsx
+
+Import LogOut from lucide-react
+
+Set up component
+
+Export default function EventHeader({ userEmail, onLogout })
+
+Return header with dashboard-header class
+
+Add logo section
+
+div with dashboard-logo class
+
+img with src="/events_logo.png" alt="My Events"
+
+div with h2 "Event Manager"
+
+p with user-badge class: "Logged in as: {userEmail}"
+
+Add logout button
+
+div with header-actions class
+
+button with className="btn-danger"
+
+onClick={onLogout}
+
+LogOut icon and "Logout" text
+
+Style the logout button
+
+Add display flex, align items center, gap
+
+Padding, border-radius, border none, cursor pointer, font-weight
+
+PHASE 14: EVENT LIST COMPONENT (10 tasks)
+Create EventList.jsx
+
+In client/src/components/events, create EventList.jsx
+
+Import EventCard component
+
+Set up component
+
+Export default function EventList({ loading, events, onEdit, onDelete })
+
+Handle loading state
+
+If loading, return div with loading text
+
+Handle empty events
+
+If events.length === 0, return div with "No events found"
+
+Render events grid
+
+Return div with event-grid class
+
+Map through events
+
+Render EventCard for each
+
+Pass props to EventCard
+
+key={event._id}
+
+event={event}
+
+onEdit={onEdit}
+
+onDelete={onDelete}
+
+PHASE 15: EVENT CARD COMPONENT (15 tasks)
+Create EventCard.jsx
+
+In client/src/components/events, create EventCard.jsx
+
+Import Calendar, MapPin, Tag, Edit2, Trash2 from lucide-react
+
+Import formatDate, getBadgeClass from utils
+
+Set up component
+
+Export default function EventCard({ event, onEdit, onDelete })
+
+Render event card
+
+Return div with event-card class
+
+Add title and status
+
+div with display flex
+
+div with event-title class: {event.title}
+
+span with badge class and badgeClass: {event.status}
+
+Add description
+
+If event.description, render p with event-description class
+
+Add meta information
+
+div with event-meta class
+
+Calendar icon with formatted start date → end date
+
+MapPin icon with location (if exists)
+
+Tag icon with category (if exists)
+
+Add action buttons
+
+div with action-buttons class
+
+Edit button with Edit2 icon
+
+Delete button with Trash2 icon
+
+Style edit button
+
+className="btn-edit"
+
+onClick={() => onEdit(event)}
+
+Text: "EDIT"
+
+Style delete button
+
+className="btn-delete"
+
+onClick={() => onDelete(event._id)}
+
+Text: "DELETE"
+
+PHASE 16: EVENT MODAL COMPONENT (20 tasks)
+Create EventModal.jsx
+
+In client/src/components/events, create EventModal.jsx
+
+Import X from lucide-react
+
+Set up component
+
+Export default function EventModal({ show, editingEventId, formData, setFormData, onSave, onClose })
+
+Handle modal visibility
+
+If !show return null
+
+Render modal overlay
+
+Return div with modal-overlay class
+
+div with modal-content class
+
+Add modal header
+
+div with modal-header class
+
+h3: editingEventId ? "EDIT EVENT" : "CREATE EVENT"
+
+Close button with X icon
+
+Create form
+
+form with onSubmit={onSave}
+
+Add Title field
+
+div with form-group class
+
+label "Title"
+
+input with className="form-input", type="text"
+
+value={formData.title}
+
+onChange with setFormData
+
+Add Description field
+
+div with form-group class
+
+label "Description"
+
+textarea with className="form-textarea", rows="3"
+
+value={formData.description}
+
+onChange with setFormData
+
+Add Date fields (grid layout)
+
+div with grid 1fr 1fr
+
+Start Date input (datetime-local)
+
+End Date input (datetime-local)
+
+Add Location field
+
+input with className="form-input"
+
+placeholder="Location"
+
+value={formData.location}
+
+onChange with setFormData
+
+Add Category field
+
+input with className="form-input"
+
+placeholder="Category"
+
+value={formData.category}
+
+onChange with setFormData
+
+Add Status dropdown
+
+select with className="form-select"
+
+value={formData.status}
+
+onChange with setFormData
+
+Options: Upcoming, Completed, Cancelled
+
+Add modal actions
+
+div with modal-actions class
+
+Submit button: "SAVE"
+
+Close button: "CLOSE"
+
+PHASE 17: MULTI-LOGIN MODAL (10 tasks)
+Create MultiLoginModal.jsx
+
+In client/src/components, create MultiLoginModal.jsx
+
+Import ShieldAlert from lucide-react
+
+Set up component
+
+Export default function MultiLoginModal({ onContinue, onCancel })
+
+Render modal
+
+Return div with modal-overlay class, zIndex 9999
+
+div with modal-content class, text-align center
+
+Add icon
+
+ShieldAlert size 48, color #e53e3e
+
+Add title
+
+h3 with "Multiple Login Detected"
+
+Add message
+
+p with message text
+
+Add buttons
+
+div with flex gap 1rem
+
+Continue Here button (btn-primary)
+
+Cancel & Logout button (btn-secondary)
+
+PHASE 18: APP COMPONENT (25 tasks)
+Create App.jsx
+
+In client/src, create or update App.jsx
+
+Import useState, useEffect
+
+Import Login, Signup, Events, MultiLoginModal
+
+Import useSocketSession custom hook
+
+Import getLoggedInUser, clearLoggedInUser from sessionService
+
+Set up component
+
+Export default function App()
+
+Create currentView state: useState('login')
+
+Create userEmail state: useState('')
+
+Create infoMessage state: useState('')
+
+Initialize socket hook
+
+const { showMultiLoginModal, forceLogoutMessage, connectUser, logoutUser, continueHere } = useSocketSession()
+
+Set up useEffect for saved user
+
+useEffect(() => {
+
+const savedUser = getLoggedInUser()
+
+if (savedUser) {
+
+setUserEmail(savedUser)
+
+setCurrentView('events')
+
+connectUser(savedUser)
+
+}
+
+}, [])
+
+Set up useEffect for force logout
+
+useEffect(() => {
+
+if (forceLogoutMessage) {
+
+setInfoMessage(forceLogoutMessage)
+
+setUserEmail('')
+
+setCurrentView('login')
+
+clearLoggedInUser()
+
+}
+
+}, [forceLogoutMessage])
+
+Implement handleLoginSuccess
+
+(email) => {
+
+setUserEmail(email)
+
+setCurrentView('events')
+
+connectUser(email)
+
+}
+
+Implement handleLogout
+
+() => {
+
+logoutUser()
+
+clearLoggedInUser()
+
+setUserEmail('')
+
+setCurrentView('login')
+
+}
+
+Render conditional views
+
+currentView === 'login' → Login component
+
+currentView === 'signup' → Signup component
+
+currentView === 'events' → Events component
+
+Render MultiLoginModal
+
+If showMultiLoginModal, render modal
+
+onContinue: continueHere(userEmail)
+
+onCancel: handleLogout
+
+PHASE 19: CSS STYLES - AUTHENTICATION (20 tasks)
+Add form input styles
+
+.form-input, .form-select, .form-textarea
+
+width: 100%
+
+padding: 0.75rem 1rem
+
+border: 1.5px solid #e2e8f0
+
+border-radius: 8px
+
+font-size: 0.95rem
+
+transition for border-color and box-shadow
+
+Add focus styles
+
+.form-input:focus, .form-select:focus, .form-textarea:focus
+
+outline: none
+
+border-color: #e03992
+
+box-shadow: 0 0 0 3px rgba(224, 57, 146, 0.15)
+
+Add form group styles
+
+.form-group
+
+display: flex
+
+flex-direction: column
+
+gap: 0.4rem
+
+margin-bottom: 1.1rem
+
+Add form labels
+
+.form-group label
+
+font-weight: 600
+
+font-size: 0.9rem
+
+color: #4a5568
+
+Add radio/checkbox groups
+
+.radio-group, .checkbox-group
+
+display: flex
+
+gap: 1.2rem
+
+flex-wrap: wrap
+
+align-items: center
+
+padding-top: 0.2rem
+
+Add radio/checkbox labels
+
+.radio-group label, .checkbox-group label
+
+display: flex
+
+align-items: center
+
+gap: 0.4rem
+
+font-size: 0.92rem
+
+font-weight: 500
+
+cursor: pointer
+
+Add primary button styles
+
+.btn-primary
+
+width: 100%
+
+padding: 0.85rem 1.2rem
+
+background: var(--primary-gradient)
+
+color: #ffffff
+
+border: none
+
+border-radius: 8px
+
+font-size: 1rem
+
+font-weight: 600
+
+cursor: pointer
+
+transition for transform and box-shadow
+
+box-shadow: 0 4px 12px rgba(233, 74, 127, 0.3)
+
+Add primary button hover
+
+.btn-primary:hover
+
+transform: translateY(-2px)
+
+box-shadow: 0 6px 16px rgba(233, 74, 127, 0.4)
+
+Add primary button active
+
+.btn-primary:active
+
+transform: translateY(0)
+
+Add secondary button styles
+
+.btn-secondary
+
+padding: 0.75rem 1.2rem
+
+background: #718096
+
+color: white
+
+border: none
+
+border-radius: 8px
+
+font-weight: 600
+
+cursor: pointer
+
+Add secondary button hover
+
+.btn-secondary:hover
+
+background: #4a5568
+
+Add danger button styles
+
+.btn-danger
+
+background: #e53e3e
+
+color: white
+
+Add danger button hover
+
+.btn-danger:hover
+
+background: #c53030
+
+Add auth footer styles
+
+.auth-footer
+
+text-align: center
+
+margin-top: 1.2rem
+
+font-size: 0.92rem
+
+Add auth footer links
+
+.auth-footer a, .auth-footer button
+
+color: #c0207e
+
+font-weight: 600
+
+text-decoration: none
+
+background: none
+
+border: none
+
+cursor: pointer
+
+Add auth footer hover
+
+.auth-footer a:hover, .auth-footer button:hover
+
+text-decoration: underline
+
+Add alert error styles
+
+.alert-error
+
+background: #fff5f5
+
+color: #c53030
+
+border: 1px solid #feb2b2
+
+padding: 0.75rem 1rem
+
+border-radius: 8px
+
+font-size: 0.9rem
+
+margin-bottom: 1rem
+
+Add alert success styles
+
+.alert-success
+
+background: #f0fff4
+
+color: #276749
+
+border: 1px solid #9ae6b4
+
+padding: 0.75rem 1rem
+
+border-radius: 8px
+
+font-size: 0.9rem
+
+margin-bottom: 1rem
+
+PHASE 20: CSS STYLES - DASHBOARD (20 tasks)
+Add dashboard container styles
+
+.dashboard-container
+
+width: 90%
+
+max-width: 1100px
+
+margin: 2rem auto
+
+flex: 1
+
+Add dashboard header styles
+
+.dashboard-header
+
+display: flex
+
+justify-content: space-between
+
+align-items: center
+
+margin-bottom: 2rem
+
+background: var(--card-bg)
+
+padding: 1.2rem 2rem
+
+border-radius: var(--radius)
+
+box-shadow: var(--card-shadow)
+
+Add dashboard logo styles
+
+.dashboard-logo
+
+display: flex
+
+align-items: center
+
+gap: 1rem
+
+Add dashboard logo image styles
+
+.dashboard-logo img
+
+height: 60px
+
+width: auto
+
+border-radius: 8px
+
+Add user badge styles
+
+.user-badge
+
+font-size: 0.9rem
+
+color: var(--text-muted)
+
+font-weight: 500
+
+Add header actions styles
+
+.header-actions
+
+display: flex
+
+align-items: center
+
+gap: 1rem
+
+Add event grid styles
+
+.event-grid
+
+display: flex
+
+flex-direction: column
+
+gap: 1rem
+
+margin-bottom: 2rem
+
+Add event card styles
+
+.event-card
+
+background: white
+
+padding: 1.5rem
+
+border-radius: var(--radius)
+
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08)
+
+display: flex
+
+justify-content: space-between
+
+align-items: center
+
+transition for transform and box-shadow
+
+border: 1px solid #edf2f7
+
+Add event card hover
+
+.event-card:hover
+
+transform: translateY(-3px)
+
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12)
+
+Add event title styles
+
+.event-title
+
+font-size: 1.4rem
+
+font-weight: 700
+
+color: #fa2e5d
+
+margin-bottom: 0.4rem
+
+Add event description styles
+
+.event-description
+
+color: #4a5568
+
+font-size: 0.95rem
+
+margin-bottom: 0.6rem
+
+Add event meta styles
+
+.event-meta
+
+display: flex
+
+flex-wrap: wrap
+
+gap: 1rem
+
+font-size: 0.9rem
+
+color: var(--text-muted)
+
+Add badge styles
+
+.badge
+
+padding: 0.25rem 0.75rem
+
+border-radius: 20px
+
+font-size: 0.8rem
+
+font-weight: 600
+
+text-transform: uppercase
+
+Add upcoming badge
+
+.badge-upcoming
+
+background: #ebf8ff
+
+color: #2b6cb0
+
+Add completed badge
+
+.badge-completed
+
+background: #f0fff4
+
+color: #276749
+
+Add cancelled badge
+
+.badge-cancelled
+
+background: #fff5f5
+
+color: #c53030
+
+Add action buttons styles
+
+.action-buttons
+
+display: flex
+
+gap: 0.6rem
+
+Add edit button styles
+
+.btn-edit
+
+background: #e03992
+
+color: white
+
+border: none
+
+padding: 0.6rem 1rem
+
+border-radius: 8px
+
+font-weight: 600
+
+cursor: pointer
+
+Add edit button hover
+
+.btn-edit:hover
+
+background: #c0207e
+
+Add delete button styles
+
+.btn-delete
+
+background: #a8334b
+
+color: white
+
+border: none
+
+padding: 0.6rem 1rem
+
+border-radius: 8px
+
+font-weight: 600
+
+cursor: pointer
+
+Add delete button hover
+
+.btn-delete:hover
+
+background: #d32f2f
+
+PHASE 21: CSS STYLES - MODAL (10 tasks)
+Add modal overlay styles
+
+.modal-overlay
+
+position: fixed
+
+top: 0, left: 0, right: 0, bottom: 0
+
+background: rgba(0, 0, 0, 0.5)
+
+backdrop-filter: blur(4px)
+
+display: flex
+
+align-items: center
+
+justify-content: center
+
+z-index: 1000
+
+padding: 1rem
+
+animation: fadeIn 0.2s ease-out
+
+Add modal content styles
+
+.modal-content
+
+background: white
+
+width: 100%
+
+max-width: 480px
+
+border-radius: var(--radius)
+
+padding: 2rem
+
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2)
+
+Add modal header styles
+
+.modal-header
+
+margin-bottom: 1.2rem
+
+Add modal header h3 styles
+
+.modal-header h3
+
+color: #9f007f
+
+font-size: 1.3rem
+
+Add modal actions styles
+
+.modal-actions
+
+display: flex
+
+gap: 0.8rem
+
+margin-top: 1.2rem
+
+Ensure responsive design for mobile
+
+@media (max-width: 1024px) for dashboard
+
+@media (max-width: 1024px) for auth-card
+
+PHASE 22: TESTING - BACKEND API (20 tasks)
+Start MongoDB server
+
+Open terminal
+
+Run mongod or sudo service mongod start
+
+Verify MongoDB is running on port 27017
+
+Start backend server
+
+Navigate to server folder
+
+Run npm start
+
+Verify server running on http://localhost:4000
+
+Test signup API
+
+Use Postman or curl
+
+POST to http://localhost:4000/signup
+
+Body: { firstName, lastName, email, phone, password, confirmPassword, gender, age, dob, country, languages }
+
+Verify success response
+
+Test duplicate signup
+
+POST to /signup with same email
+
+Verify 400 error "Email already exists"
+
+Test login API
+
+POST to http://localhost:4000/login
+
+Body: { email, password }
+
+Verify success response
+
+Test invalid login
+
+POST with wrong password
+
+Verify 401 error "Incorrect password"
+
+Test non-existent user login
+
+POST with unknown email
+
+Verify 401 error "Invalid email"
+
+Test create event API
+
+POST to http://localhost:4000/events
+
+Body: { title, description, eventStartDate, eventEndDate, location, category, status, createdBy }
+
+Verify success with eventId
+
+Test get events API
+
+GET to http://localhost:4000/events/{email}
+
+Verify events array returned
+
+Test update event API
+
+PUT to http://localhost:4000/events/{event_id}
+
+Body: updated fields
+
+Verify success message
+
+Test delete event API
+
+DELETE to http://localhost:4000/events/{event_id}
+
+Verify success message
+
+Test socket connection
+
+Open browser console
+
+Connect to socket server
+
+Emit 'user_connected' with email
+
+Verify connection established
+
+PHASE 23: TESTING - FRONTEND (30 tasks)
+Start frontend dev server
+
+Navigate to client folder
+
+Run npm run dev
+
+Open browser at http://localhost:5173
+
+Test login page
+
+Verify login page loads
+
+Verify email and password inputs
+
+Verify login button
+
+Test login functionality
+
+Enter valid credentials
+
+Click login
+
+Verify navigation to Events page
+
+Test invalid login
+
+Enter wrong password
+
+Verify error message displayed
+
+Test signup navigation
+
+Click "Signup" link
+
+Verify signup page loads
+
+Test signup page
+
+Verify all form fields present
+
+Verify radio buttons, checkboxes, select
+
+Verify signup button
+
+Test signup functionality
+
+Fill all fields
+
+Click signup
+
+Verify success message
+
+Verify redirect to login
+
+Test signup validation
+
+Enter mismatched passwords
+
+Verify error message
+
+Test events page
+
+Verify dashboard header
+
+Verify user email displayed
+
+Verify logout button
+
+Test create event
+
+Click CREATE EVENT button
+
+Verify modal opens
+
+Fill form fields
+
+Click SAVE
+
+Verify event appears in list
+
+Test edit event
+
+Click EDIT button on an event
+
+Verify modal opens with populated data
+
+Modify fields
+
+Click SAVE
+
+Verify event updated
+
+Test delete event
+
+Click DELETE button on an event
+
+Verify confirmation dialog
+
+Confirm deletion
+
+Verify event removed from list
+
+Test logout
+
+Click Logout button
+
+Verify redirect to login page
+
+Verify localStorage cleared
+
+Test session persistence
+
+Login
+
+Refresh page
+
+Verify still on Events page
+
+Test multi-login detection
+
+Login in Tab 1
+
+Login in Tab 2 with same account
+
+Verify multi-login modal appears
+
+Test continue here functionality
+
+Click "Continue Here" on multi-login modal
+
+Verify other tab shows force logout message
+
+Test cancel functionality
+
+Click "Cancel & Logout" on multi-login modal
+
+Verify logout and redirect to login
+
+Test socket reconnection
+
+Disconnect network
+
+Reconnect
+
+Verify socket reconnects
+
+PHASE 24: ERROR HANDLING (15 tasks)
+Add error handling to login API call
+
+Try-catch for fetch
+
+Set error state with message
+
+Display error to user
+
+Add error handling to signup API call
+
+Try-catch for fetch
+
+Set error state with message
+
+Display error to user
+
+Add error handling to events fetch
+
+Try-catch for getEvents
+
+Display error if fetch fails
+
+Add error handling to create event
+
+Try-catch for createEvent
+
+Display error if fails
+
+Add error handling to update event
+
+Try-catch for updateEvent
+
+Display error if fails
+
+Add error handling to delete event
+
+Try-catch for deleteEvent
+
+Display error if fails
+
+Add loading states
+
+Show loading spinner or text
+
+Disable buttons during loading
+
+Add validation for event form
+
+Title required
+
+Date validation (start <= end)
+
+Add validation for signup form
+
+All required fields
+
+Password confirmation match
+
+Valid email format
+
+Add validation for login form
+
+Email and password required
+
+Valid email format
+
+Add network error handling
+
+Display "Unable to connect to server" message
+
+Suggest checking backend
+
+Add empty state handling
+
+Show "No events found" message
+
+Suggest creating first event
+
+Add confirmation for delete
+
+Use window.confirm
+
+Only delete if user confirms
+
+Add success messages
+
+Show success on event creation
+
+Show success on event update
+
+Show success on signup
+
+Add error boundary
+
+Create ErrorBoundary component
+
+Wrap App with ErrorBoundary
+
+PHASE 25: DEPENDENCIES & CONFIGURATION (15 tasks)
+Verify all dependencies installed
+
+express, mongoose, dotenv, cors, body-parser, bcrypt, socket.io, path
+
+Verify frontend dependencies
+
+react, react-dom, socket.io-client, lucide-react, vite, @vitejs/plugin-react
+
+Check MongoDB connection
+
+Verify mongod running
+
+Verify connection string correct
+
+Check database created
+
+Configure CORS properly
+
+Allow http://localhost:5173
+
+Allow http://localhost:4000
+
+Configure environment variables
+
+PORT=4000
+
+MONGODB_URI
+
+Configure Vite proxy (if needed)
+
+Add proxy to vite.config.js
+
+Optimize build process
+
+Test npm run build for client
+
+Test npm start for server
+
+Check package.json scripts
+
+npm start for server
+
+npm run dev for client
+
+npm run build for client
+
+Add nodemon for development (optional)
+
+npm install nodemon --save-dev
+
+Add "dev": "nodemon server.js"
+
+Add concurrently for running both (optional)
+
+npm install concurrently
+
+Add script to run both
+
+Configure ESLint (optional)
+
+Check oxlint configuration
+
+Add prettier (optional)
+
+Configure formatting
+
+Verify gitignore
+
+Add node_modules
+
+Add .env
+
+Add dist
+
+Check file structure
+
+Verify all folders exist
+
+Verify all files in correct locations
+
+Test production build
+
+Build client: npm run build
+
+Start server: npm start
+
+Access at http://localhost:4000
+
+PHASE 26: SECURITY (15 tasks)
+Hash passwords with bcrypt
+
+Use bcrypt.hash with salt round 10
+
+Store hashed password
+
+Compare passwords with bcrypt
+
+Use bcrypt.compare for login
+
+Never store plaintext passwords
+
+Validate email format
+
+Use regex or validation library
+
+Reject invalid emails
+
+Sanitize user input
+
+Trim whitespace
+
+Escape special characters
+
+Protect against XSS
+
+Use React's built-in protection
+
+Avoid dangerouslySetInnerHTML
+
+Protect against CSRF
+
+Use CORS properly
+
+Same-origin policy
+
+Validate MongoDB ObjectId
+
+Use mongoose.Types.ObjectId.isValid
+
+Validate before query
+
+Use environment variables
+
+Never hardcode secrets
+
+Use .env for sensitive data
+
+Set secure cookie options
+
+HttpOnly, Secure, SameSite
+
+Limit request size
+
+Use body-parser limit option
+
+Add rate limiting (optional)
+
+Install express-rate-limit
+
+Add to API routes
+
+Add helmet middleware (optional)
+
+npm install helmet
+
+app.use(helmet())
+
+Validate event data
+
+Check required fields
+
+Validate date formats
+
+Validate user data
+
+Check required fields
+
+Validate phone number format
+
+Secure socket.io connections
+
+Use authentication tokens
+
+Validate user identity
+
+PHASE 27: PERFORMANCE OPTIMIZATION (15 tasks)
+Use React.memo for components
+
+Wrap EventCard with React.memo
+
+Wrap EventList with React.memo
+
+Use useCallback for functions
+
+Memoize event handlers
+
+Prevent unnecessary re-renders
+
+Use useMemo for computed values
+
+Memoize filtered events
+
+Memoize sorted events
+
+Optimize API calls
+
+Cache event data
+
+Use conditional fetching
+
+Implement pagination (optional)
+
+Limit events per page
+
+Add pagination controls
+
+Add loading indicators
+
+Show loading spinners
+
+Improve perceived performance
+
+Optimize images
+
+Compress event logo
+
+Use appropriate image formats
+
+Lazy load components
+
+Use React.lazy for code splitting
+
+Load on demand
+
+Optimize MongoDB queries
+
+Use indexes on email
+
+Use lean() for read-only queries
+
+Use connection pooling
+
+Default mongoose connection pool
+
+Configure pool size
+
+Minimize socket.io broadcasts
+
+Only broadcast to relevant rooms
+
+Avoid over-broadcasting
+
+Optimize CSS
+
+Remove unused styles
+
+Use CSS variables
+
+Bundle optimization
+
+Analyze bundle size
+
+Code split vendor chunks
+
+Add service worker (optional)
+
+Enable offline support
+
+Cache static assets
+
+Implement debouncing
+
+Debounce search inputs
+
+Debounce form submissions
+
+PHASE 28: USER EXPERIENCE (20 tasks)
+Add smooth transitions
+
+Fade in animations
+
+Hover effects on cards
+
+Add responsive design
+
+Mobile-first approach
+
+Media queries for breakpoints
+
+Add form feedback
+
+Validation messages
+
+Success/failure indicators
+
+Add visual indicators
+
+Loading spinners
+
+Progress bars
+
+Add tooltips
+
+Hover information
+
+Button descriptions
+
+Add keyboard shortcuts
+
+Enter key for forms
+
+Escape to close modals
+
+Add accessibility
+
+ARIA labels
+
+Focus management
+
+Keyboard navigation
+
+Add color contrast
+
+WCAG compliance
+
+Readable text
+
+Add focus indicators
+
+Focus rings on interactive elements
+
+Visible focus states
+
+Add empty states
+
+"No events" illustration
+
+Call-to-action buttons
+
+Add confirmation dialogs
+
+Delete confirmation
+
+Logout confirmation
+
+Add toast notifications (optional)
+
+Success toast on save
+
+Error toast on failure
+
+Add avatar/initials
+
+User avatar in header
+
+Fallback for no image
+
+Add date formatting
+
+User-friendly date display
+
+Relative time (optional)
+
+Add search functionality (optional)
+
+Filter events by title
+
+Search by category
+
+Add sorting options (optional)
+
+Sort by date
+
+Sort by status
+
+Add filtering (optional)
+
+Filter by status
+
+Filter by category
+
+Add event count badge
+
+Show number of events
+
+Update on change
+
+Add feedback on actions
+
+"Event saved" message
+
+"Event deleted" message
+
+Add confirmation on logout
+
+Confirm before logging out
+
+PHASE 29: DOCUMENTATION (20 tasks)
+Add README.md
+
+Project description
+
+Setup instructions
+
+Tech stack
+
+Add API documentation
+
+All endpoints
+
+Request/response examples
+
+Add component documentation
+
+Component hierarchy
+
+Props descriptions
+
+Add setup guide
+
+Step-by-step instructions
+
+Prerequisites
+
+Add troubleshooting guide
+
+Common issues
+
+Solutions
+
+Add comments in code
+
+Function descriptions
+
+Complex logic explanations
+
+Add JSDoc comments
+
+Function signatures
+
+Parameter types
+
+Document environment variables
+
+What each variable does
+
+Example values
+
+Document folder structure
+
+Purpose of each folder
+
+File naming conventions
+
+Add development guide
+
+How to run
+
+How to debug
+
+Add deployment guide
+
+Production build
+
+Deployment steps
+
+Add database schema documentation
+
+User schema
+
+Event schema
+
+Add socket events documentation
+
+All events
+
+Payload structures
+
+Add dependency list
+
+All packages
+
+Version numbers
+
+Add contributor guidelines
+
+Coding standards
+
+PR process
+
+Add license information
+
+License type
+
+Copyright notice
+
+Add changelog
+
+Version history
+
+Changes per version
+
+Add roadmap
+
+Future features
+
+Planned improvements
+
+Add screenshots
+
+Login page
+
+Dashboard
+
+Modal
+
+Add demo link
+
+Live demo URL (if deployed)
+
+Video demo (optional)
+
+PHASE 30: DEPLOYMENT (20 tasks)
+Prepare for production
+
+Build client: npm run build
+
+Verify build works
+
+Set up production environment
+
+Create .env.production
+
+Set NODE_ENV=production
+
+Configure production MongoDB
+
+Set MongoDB Atlas URI
+
+Whitelist IP addresses
+
+Set up server in production
+
+Use process manager (PM2)
+
+Set up environment variables
+
+Deploy to Vercel/Netlify (frontend)
+
+Connect GitHub repository
+
+Configure build settings
+
+Deploy to Heroku (backend)
+
+Add Procfile
+
+Set environment variables
+
+Deploy to AWS (optional)
+
+Set up EC2 instance
+
+Configure security groups
+
+Deploy to DigitalOcean (optional)
+
+Set up droplet
+
+Install dependencies
+
+Set up domain
+
+Register domain
+
+Configure DNS
+
+Set up SSL
+
+Use Let's Encrypt
+
+Configure HTTPS
+
+Set up CI/CD
+
+GitHub Actions
+
+Automated deployment
+
+Set up monitoring
+
+Application monitoring
+
+Server monitoring
+
+Set up logging
+
+Application logs
+
+Error tracking
+
+Set up backups
+
+Database backups
+
+File backups
+
+Configure load balancing (optional)
+
+Multiple instances
+
+Round-robin
+
+Set up CDN (optional)
+
+Static asset delivery
+
+Faster loading
+
+Set up caching
+
+Redis for API caching
+
+Static asset caching
+
+Test production build
+
+Run locally in production mode
+
+Verify all features
+
+Deploy database migrations
+
+Set up indexes
+
+Seed initial data
+
+Monitor after deployment
+
+Check logs
+
+Verify functionality
+
+PHASE 31: ADDITIONAL FEATURES - ENHANCEMENTS (30 tasks)
+Add event filtering
+
+Filter by category
+
+Filter by status
+
+Filter by date range
+
+Add event search
+
+Search by title
+
+Search by description
+
+Add event sorting
+
+Sort by date
+
+Sort by title
+
+Sort by status
+
+Add pagination for events
+
+10 events per page
+
+Next/Previous buttons
+
+Add user profile
+
+View profile
+
+Edit profile
+
+Add password reset
+
+Forgot password
+
+Reset via email
+
+Add email notifications
+
+Welcome email
+
+Event reminders
+
+Add event comments
+
+Comment on events
+
+Threaded comments
+
+Add event sharing
+
+Share on social media
+
+Share via link
+
+Add event attachments
+
+Upload images
+
+Upload documents
+
+Add calendar view
+
+Month view
+
+Week view
+
+Add event reminders
+
+Email reminders
+
+In-app notifications
+
+Add recurring events
+
+Daily, weekly, monthly
+
+Custom recurrence
+
+Add event categories management
+
+Create custom categories
+
+Delete categories
+
+Add user roles
+
+Admin role
+
+User role
+
+Add activity log
+
+User actions
+
+Event changes
+
+Add reports
+
+Event statistics
+
+User statistics
+
+Add export functionality
+
+Export as CSV
+
+Export as Excel
+
+Add dark mode
+
+Theme toggle
+
+Save preference
+
+Add internationalization
+
+Multiple languages
+
+Language switching
+
+Add accessibility features
+
+Screen reader support
+
+Keyboard navigation
+
+Add analytics
+
+User analytics
+
+Event analytics
+
+Add user registration confirmation
+
+Email verification
+
+Confirm account
+
+Add two-factor authentication
+
+SMS verification
+
+Authenticator app
+
+Add social login
+
+Google login
+
+Facebook login
+
+Add API rate limiting
+
+Prevent abuse
+
+User quotas
+
+Add event templates
+
+Pre-defined templates
+
+Quick create
+
+Add import/export events
+
+Import from CSV
+
+Export to CSV
+
+Add recurring event patterns
+
+Every Monday
+
+First of month
+
+Add event notifications
+
+Push notifications
+
+Browser notifications
+
+PHASE 32: DATABASE OPTIMIZATION (15 tasks)
+Create indexes for User collection
+
+Index on email for fast login
+
+Index on firstName, lastName
+
+Create indexes for Event collection
+
+Index on createdBy
+
+Index on eventStartDate
+
+Index on eventEndDate
+
+Compound index on createdBy and eventStartDate
+
+Use projection in queries
+
+Select only needed fields
+
+Reduce data transfer
+
+Use lean queries
+
+For read-only operations
+
+Faster performance
+
+Implement data validation
+
+Schema validation
+
+Custom validators
+
+Set up database replication (optional)
+
+Replica sets
+
+High availability
+
+Set up database sharding (optional)
+
+Shard by user ID
+
+Scale horizontally
+
+Implement query optimization
+
+Use explain() to analyze
+
+Optimize slow queries
+
+Set up database monitoring
+
+MongoDB Atlas monitoring
+
+Custom monitoring
+
+Implement data archiving (optional)
+
+Archive old events
+
+Archive inactive users
+
+Set up data backup
+
+Scheduled backups
+
+Point-in-time recovery
+
+Implement soft delete
+
+Add isDeleted field
+
+Filter out deleted items
+
+Add audit fields
+
+createdBy, updatedBy
+
+createdAt, updatedAt
+
+Implement data migration strategy
+
+Versioned migrations
+
+Rollback capability
+
+Optimize connection pool
+
+Configure pool size
+
+Monitor connections
+
+PHASE 33: SOCKET.IO ENHANCEMENTS (15 tasks)
+Add socket authentication
+
+Verify user token
+
+Validate session
+
+Implement socket reconnection
+
+Auto-reconnect on disconnect
+
+Exponential backoff
+
+Add real-time event updates
+
+Notify users of changes
+
+Live event feed
+
+Add typing indicators (optional)
+
+User is typing
+
+Live feedback
+
+Add online status
+
+Show online users
+
+Presence system
+
+Implement socket rooms
+
+User-specific rooms
+
+Event-specific rooms
+
+Add socket middleware
+
+Authentication middleware
+
+Logging middleware
+
+Implement message buffering
+
+Buffer offline messages
+
+Deliver on reconnect
+
+Add socket error handling
+
+Connection errors
+
+Message errors
+
+Implement heartbeat mechanism
+
+Keep-alive messages
+
+Detect disconnects
+
+Add socket logging
+
+Log connections
+
+Log events
+
+Configure socket options
+
+pingTimeout, pingInterval
+
+transport options
+
+Implement namespace support
+
+Separate namespaces
+
+Isolated events
+
+Add broadcast limits
+
+Rate limit messages
+
+Prevent spam
+
+Implement message queuing
+
+Queue messages
+
+Process in order
+
+PHASE 34: TESTING (20 tasks)
+Set up testing framework
+
+Install Jest
+
+Install React Testing Library
+
+Write unit tests for authController
+
+Test signup
+
+Test login
+
+Write unit tests for eventController
+
+Test createEvent
+
+Test getEventsByEmail
+
+Test updateEvent
+
+Test deleteEvent
+
+Write unit tests for eventService
+
+Test getEvents
+
+Test createEvent
+
+Test updateEvent
+
+Test deleteEvent
+
+Write unit tests for sessionService
+
+Test getLoggedInUser
+
+Test saveLoggedInUser
+
+Test clearLoggedInUser
+
+Write unit tests for eventUtils
+
+Test formatDate
+
+Test getBadgeClass
+
+Write component tests for Login
+
+Test renders correctly
+
+Test login functionality
+
+Write component tests for Signup
+
+Test renders correctly
+
+Test signup functionality
+
+Write component tests for Events
+
+Test renders correctly
+
+Test event CRUD
+
+Write component tests for EventCard
+
+Test renders correctly
+
+Test edit and delete
+
+Write component tests for EventModal
+
+Test renders correctly
+
+Test form submission
+
+Write integration tests
+
+Test full login flow
+
+Test full event CRUD flow
+
+Write e2e tests
+
+Test user journey
+
+Test multiple scenarios
+
+Set up test coverage
+
+Generate coverage report
+
+Aim for >80% coverage
+
+Set up CI testing
+
+Run tests on PR
+
+Block PR if tests fail
+
+Test edge cases
+
+Empty data
+
+Invalid data
+
+Network errors
+
+Test performance
+
+Load testing
+
+Stress testing
+
+Test security
+
+SQL injection
+
+XSS attacks
+
+Test accessibility
+
+Screen reader
+
+Keyboard navigation
+
+Test cross-browser compatibility
+
+Chrome, Firefox, Safari
+
+Edge cases
+
+PHASE 35: CODE QUALITY (15 tasks)
+Fix ESLint errors
+
+Run oxlint
+
+Fix all errors
+
+Fix all warnings
+
+Add formatting rules
+
+Use consistent formatting
+
+Add prettier
+
+Refactor duplicate code
+
+Extract common functions
+
+Create utilities
+
+Use meaningful variable names
+
+Descriptive names
+
+Consistent naming
+
+Add proper error messages
+
+User-friendly messages
+
+Debug information
+
+Remove console.log statements
+
+Remove debug logs
+
+Use proper logging
+
+Add proper comments
+
+Explain complex logic
+
+Document edge cases
+
+Use ES6+ features
+
+Arrow functions
+
+Destructuring
+
+Spread operator
+
+Organize imports
+
+Group imports logically
+
+Remove unused imports
+
+Use constants
+
+Extract magic numbers
+
+Use named constants
+
+Implement proper error handling
+
+Try-catch blocks
+
+Error boundaries
+
+Use TypeScript (optional)
+
+Add type safety
+
+Better IDE support
+
+Follow React best practices
+
+Functional components
+
+Hooks API
+
+Proper useEffect cleanup
+
+Follow REST API best practices
+
+Proper status codes
+
+Consistent response format
+
+Add code comments
+
+Document public APIs
+
+Explain complex logic
+
+PHASE 36: PERFORMANCE TUNING (15 tasks)
+Implement lazy loading
+
+Lazy load routes
+
+Lazy load components
+
+Add image optimization
+
+Use WebP format
+
+Lazy load images
+
+Implement caching strategy
+
+Browser caching
+
+Server caching
+
+Optimize bundle size
+
+Analyze bundle
+
+Remove duplicates
+
+Use CDN for static assets
+
+Faster delivery
+
+Reduce load
+
+Implement code splitting
+
+Split by route
+
+Split by component
+
+Add service worker
+
+Offline support
+
+Caching strategy
+
+Optimize React re-renders
+
+Use React.memo
+
+Use useMemo
+
+Use useCallback
+
+Optimize API calls
+
+Batch requests
+
+Use caching
+
+Optimize database queries
+
+Add indexes
+
+Use projection
+
+Implement pagination
+
+Limit results
+
+Use cursor-based
+
+Add compression
+
+Gzip compression
+
+Brotli compression
+
+Optimize images
+
+Use responsive images
+
+Use srcset
+
+Add HTTP/2
+
+Multiplexing
+
+Server push
+
+Monitor performance
+
+Use Lighthouse
+
+Use Performance API
+
+PHASE 37: FINAL VERIFICATION (20 tasks)
+Verify all endpoints work
+
+Test login
+
+Test signup
+
+Test CRUD operations
+
+Verify socket.io connections
+
+Test user_connected
+
+Test multiple_login_detected
+
+Test force_logout
+
+Verify frontend routing
+
+Login page
+
+Signup page
+
+Events page
+
+Redirects
+
+Verify localStorage handling
+
+Save user session
+
+Clear on logout
+
+Persist on refresh
+
+Verify responsive design
+
+Desktop view
+
+Tablet view
+
+Mobile view
+
+Verify form validations
+
+Required fields
+
+Password match
+
+Email format
+
+Verify error handling
+
+Network errors
+
+Validation errors
+
+Server errors
+
+Verify loading states
+
+Loading spinners
+
+Disabled buttons
+
+Verify CRUD operations
+
+Create new event
+
+Read events
+
+Update events
+
+Delete events
+
+Verify user authentication
+
+Protected routes
+
+Session management
+
+Logout functionality
+
+Verify multi-login feature
+
+Multiple tabs
+
+Session control
+
+Force logout
+
+Verify environment variables
+
+PORT configured
+
+MongoDB URI configured
+
+All variables set
+
+Verify dependencies
+
+All installed
+
+No conflicts
+
+Correct versions
+
+Verify build process
+
+npm run build works
+
+Production build generated
+
+Verify start process
+
+npm start works
+
+Server starts correctly
+
+Verify database connection
+
+Connected to MongoDB
+
+Collections created
+
+Verify CORS configuration
+
+Frontend can access API
+
+No CORS errors
+
+Verify static file serving
+
+React build served
+
+Fallback works
+
+Verify all imports/exports
+
+No import errors
+
+No circular dependencies
+
+Final code review
+
+Check for bugs
+
+Check for improvements
+
+PHASE 38: DEPLOYMENT CHECKLIST (20 tasks)
+Prepare environment variables
+
+Production MongoDB URI
+
+Production PORT
+
+All secrets
+
+Build frontend
+
+npm run build
+
+Verify dist folder created
+
+Test production build locally
+
+Serve dist folder
+
+Verify all functionality
+
+Set up MongoDB Atlas
+
+Create cluster
+
+Get connection string
+
+Set up server hosting
+
+Choose hosting provider
+
+Set up instance
+
+Configure server environment
+
+Install Node.js
+
+Install dependencies
+
+Deploy backend
+
+Copy server files
+
+Set up PM2
+
+Deploy frontend
+
+Upload dist folder
+
+Configure web server
+
+Set up domain
+
+Point domain to hosting
+
+Configure DNS
+
+Set up SSL certificate
+
+Use Let's Encrypt
+
+Configure HTTPS
+
+Configure security groups
+
+Open necessary ports
+
+Restrict access
+
+Set up monitoring
+
+Application monitoring
+
+Server monitoring
+
+Set up logging
+
+Error logging
+
+Access logging
+
+Set up backups
+
+Database backup
+
+File backup
+
+Configure CI/CD pipeline
+
+GitHub Actions
+
+Automated deployment
+
+Test deployed application
+
+All features work
+
+No errors
+
+Set up error tracking
+
+Sentry or similar
+
+Monitor errors
+
+Configure performance monitoring
+
+APM tool
+
+Track performance
+
+Set up analytics
+
+Google Analytics
+
+User tracking
+
+Document deployment process
+
+Steps for deployment
+
+Rollback procedure
+
+PHASE 39: MAINTENANCE (15 tasks)
+Regular dependency updates
+
+Check for outdated packages
+
+Update safely
+
+Database maintenance
+
+Regular backups
+
+Index maintenance
+
+Security updates
+
+Monitor vulnerabilities
+
+Apply patches
+
+Performance monitoring
+
+Check server load
+
+Monitor response times
+
+Error monitoring
+
+Check error logs
+
+Fix recurring errors
+
+User feedback collection
+
+Gather feedback
+
+Prioritize improvements
+
+Feature updates
+
+Plan new features
+
+Implement improvements
+
+Bug fixes
+
+Prioritize bugs
+
+Release fixes
+
+Code refactoring
+
+Improve code quality
+
+Reduce technical debt
+
+Documentation updates
+
+Update README
+
+Update API docs
+
+Testing maintenance
+
+Update tests
+
+Maintain coverage
+
+Performance optimization
+
+Identify bottlenecks
+
+Implement optimizations
+
+Database optimization
+
+Analyze query performance
+
+Optimize slow queries
+
+Security audits
+
+Regular security checks
+
+Penetration testing
+
+Backup verification
+
+Test restore process
+
+Verify backup integrity
+
+PHASE 40: FINAL DELIVERY (15 tasks)
+Package the project
+
+Remove node_modules
+
+Create zip/tar file
+
+Write final documentation
+
+Complete README
+
+Add setup guide
+
+Create demo video
+
+Walk through features
+
+Highlight key functionality
+
+Prepare presentation
+
+Project overview
+
+Technical decisions
+
+Create user guide
+
+How to use the app
+
+Common workflows
+
+Prepare deployment artifacts
+
+Build files
+
+Environment templates
+
+Create release notes
+
+What's new
+
+Known issues
+
+Tag the release
+
+Version tag
+
+Release on GitHub
+
+Submit project
+
+Upload to repository
+
+Submit to review
+
+Final review
+
+Check all requirements
+
+Verify all features
+
+Clean up code
+
+Remove unused code
+
+Remove debug logs
+
+Add final touches
+
+Polish UI
+
+Improve UX
+
+Verify all links
+
+Check all navigation
+
+Verify external links
+
+Test final version
+
+Full regression test
+
+All features working
+
+Project completed!
+
+Celebrate success
+
+Plan future improvements
