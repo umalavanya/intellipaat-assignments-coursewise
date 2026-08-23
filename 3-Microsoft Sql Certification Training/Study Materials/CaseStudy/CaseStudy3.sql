@@ -43,7 +43,7 @@ CREATE TABLE Customers (
 );
 
 -- Create Transaction Table
-CREATE TABLE Transaction (
+CREATE TABLE Transactions (
     customer_id INT,
     txn_date DATE,
     txn_type VARCHAR(20),
@@ -69,7 +69,7 @@ INSERT INTO Customers VALUES
 (10, 4, '2019-07-10', '2024-02-28');
 
 -- Insert sample transactions
-INSERT INTO Transaction VALUES 
+INSERT INTO Transactions VALUES 
 (1, '2020-01-15', 'Deposit', 2500.00),
 (1, '2020-03-20', 'Withdrawal', 500.00),
 (2, '2020-02-10', 'Deposit', 1500.00),
