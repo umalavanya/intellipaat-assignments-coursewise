@@ -22,6 +22,10 @@ app.use(bodyParser.json()) ;
 // Connect the Database
 connectDB() ;
 
+
+
+
+
 // --Server Strat -----
 const PORT = process.env.PORT || 4000 ;
 server.listen(PORT, () => {
