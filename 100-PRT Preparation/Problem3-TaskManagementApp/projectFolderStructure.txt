@@ -1,0 +1,96 @@
+events-management-app/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── database.js
+│   │   │   ├── socket.js
+│   │   │   └── cloudinary.js
+│   │   ├── models/
+│   │   │   ├── User.js
+│   │   │   ├── Event.js
+│   │   │   └── Category.js
+│   │   ├── controllers/
+│   │   │   ├── authController.js
+│   │   │   ├── eventController.js
+│   │   │   └── categoryController.js
+│   │   ├── routes/
+│   │   │   ├── authRoutes.js
+│   │   │   ├── eventRoutes.js
+│   │   │   └── categoryRoutes.js
+│   │   ├── middleware/
+│   │   │   ├── auth.js
+│   │   │   ├── error.js
+│   │   │   └── validation.js
+│   │   ├── utils/
+│   │   │   ├── jwt.js
+│   │   │   ├── bcrypt.js
+│   │   │   └── validators.js
+│   │   └── app.js
+│   ├── .env
+│   ├── package.json
+│   └── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── common/
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Input.jsx
+│   │   │   │   ├── Card.jsx
+│   │   │   │   ├── Modal.jsx
+│   │   │   │   ├── Spinner.jsx
+│   │   │   │   ├── Toast.jsx
+│   │   │   │   └── Navbar.jsx
+│   │   │   ├── events/
+│   │   │   │   ├── EventCard.jsx
+│   │   │   │   ├── EventList.jsx
+│   │   │   │   ├── EventForm.jsx
+│   │   │   │   ├── EventFilters.jsx
+│   │   │   │   └── EventRegistration.jsx
+│   │   │   └── auth/
+│   │   │       ├── LoginForm.jsx
+│   │   │       └── RegisterForm.jsx
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Events.jsx
+│   │   │   ├── EventDetails.jsx
+│   │   │   ├── CreateEvent.jsx
+│   │   │   ├── EditEvent.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   └── MyEvents.jsx
+│   │   ├── redux/
+│   │   │   ├── store.js
+│   │   │   ├── slices/
+│   │   │   │   ├── authSlice.js
+│   │   │   │   ├── eventSlice.js
+│   │   │   │   └── uiSlice.js
+│   │   │   └── actions/
+│   │   │       └── eventActions.js
+│   │   ├── hooks/
+│   │   │   ├── useAuth.js
+│   │   │   ├── useEvents.js
+│   │   │   ├── useSocket.js
+│   │   │   └── useForm.js
+│   │   ├── services/
+│   │   │   ├── api.js
+│   │   │   ├── authService.js
+│   │   │   ├── eventService.js
+│   │   │   └── socketService.js
+│   │   ├── utils/
+│   │   │   ├── constants.js
+│   │   │   ├── helpers.js
+│   │   │   └── validators.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── .env
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── tailwind.config.js
+│
+├── .gitignore
+└── README.md
