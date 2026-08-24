@@ -1,5 +1,8 @@
 Event Management System - Implementation Guide
 Complete Micro-Tasks (500+ Tasks)
+
+====================================================
+=====================================================
 PHASE 1: PROJECT SETUP & ENVIRONMENT (50 tasks)
 =================================================================
 Backend Setup
@@ -132,6 +135,7 @@ Check if dist exists using fs.existsSync
 
 If exists, serve static files: app.use(express.static(clientDistPath))
 
+
 Create catch-all route for SPA fallback
 
 Send index.html if build exists
@@ -150,6 +154,7 @@ Log server running message with port
 ---------------------------------------
 
 Frontend Setup
+
 Initialize frontend with Vite
 
 Navigate to root folder
@@ -164,6 +169,8 @@ Install socket.io-client: npm install socket.io-client
 
 Install lucide-react: npm install lucide-react
 
+------
+
 Update frontend package.json
 
 Open client/package.json
@@ -174,6 +181,8 @@ Ensure dependencies include react, react-dom, socket.io-client, lucide-react
 
 Ensure devDependencies include vite, @vitejs/plugin-react, @types/react, @types/react-dom
 
+
+------------
 Create folder structure in src
 
 In client/src, create components folder
@@ -192,6 +201,7 @@ In client/src/components, create events folder
 
 In client/src/components/events, we will place EventCard, EventHeader, EventList, EventModal
 
+-------------
 Set up index.html
 
 Open client/index.html
@@ -201,7 +211,7 @@ Add title: Event Management System
 Ensure root div exists with id="root"
 
 Ensure script tag includes /src/main.jsx
-
+-------------------------
 Set up main.jsx
 
 Open client/src/main.jsx
@@ -215,12 +225,13 @@ Import App: import App from './App.jsx'
 Import index.css: import './index.css'
 
 Render App inside StrictMode
-
+--------------------
 Add Google Font (Outfit)
 
 In client/src/index.css, import font: @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap')
 
 Set font-family for body: font-family: 'Outfit', sans-serif
+
 
 Define CSS variables
 
@@ -252,6 +263,8 @@ Set body styles: font-family, background, min-height, color
 
 Set #root styles: min-height, display flex, flex-direction column
 
+
+-----
 Create auth page styles
 
 Add .auth-page class: min-height, flex, align-center, justify-center, padding
@@ -261,6 +274,7 @@ Add .auth-card class: background, backdrop-filter, padding, width, max-width, bo
 Add .auth-card-wide class: max-width larger
 
 Add fadeIn keyframes animation
+-------------------
 
 PHASE 2: BACKEND MODELS (15 tasks)
 Create User model
@@ -297,6 +311,8 @@ Add timestamps: true
 
 Export model: mongoose.model("User", userSchema)
 
+------------------------------
+
 Create Event model
 
 In server/models, create Event.js
@@ -325,7 +341,11 @@ Add timestamps: true
 
 Export Event model
 
+
+------------------------------------------
+
 PHASE 3: BACKEND CONTROLLERS (30 tasks)
+
 Create authController.js
 
 In server/controllers, create authController.js
@@ -377,6 +397,9 @@ Add try-catch error handling
 Export controllers
 
 Export signup and login functions
+
+
+----------
 
 Create eventController.js
 
@@ -441,6 +464,8 @@ Add try-catch error handling
 Export event controllers
 
 Export createEvent, getEventsByEmail, updateEvent, deleteEvent
+
+----------------------------------
 
 PHASE 4: BACKEND ROUTES (10 tasks)
 Create authRoutes.js
