@@ -489,6 +489,9 @@ Define POST route for "/login"
 
 Export router
 
+
+
+
 Create eventRoutes.js
 
 In server/routes, create eventRoutes.js
