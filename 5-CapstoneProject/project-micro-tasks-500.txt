@@ -403,6 +403,7 @@ Export signup and login functions
 
 Create eventController.js
 
+
 In server/controllers, create eventController.js
 
 Import Event model: const Event = require("../models/Event")
@@ -423,6 +424,7 @@ Add try-catch error handling
 
 Implement getEventsByEmail controller
 
+
 Create getEventsByEmail async function
 
 Get email from req.params
@@ -437,6 +439,7 @@ Add try-catch error handling
 
 Implement updateEvent controller
 
+
 Create updateEvent async function
 
 Get event_id from req.params
@@ -450,6 +453,7 @@ Return success message
 Add try-catch error handling
 
 Implement deleteEvent controller
+
 
 Create deleteEvent async function
 
@@ -466,6 +470,7 @@ Export event controllers
 Export createEvent, getEventsByEmail, updateEvent, deleteEvent
 
 ----------------------------------
+
 
 PHASE 4: BACKEND ROUTES (10 tasks)
 Create authRoutes.js
@@ -513,6 +518,9 @@ Import eventRoutes: const eventRoutes = require("./routes/eventRoutes")
 Use authRoutes: app.use("/", authRoutes)
 
 Use eventRoutes: app.use("/events", eventRoutes)
+
+
+-----------------------------------------------
 
 PHASE 5: SOCKET.IO IMPLEMENTATION (15 tasks)
 Create socket.js
@@ -587,6 +595,9 @@ Import initSocket: const initSocket = require("./socket")
 
 Call initSocket(server) after creating server
 
+
+------------------------------------------------
+
 PHASE 6: FRONTEND SERVICES (15 tasks)
 Create sessionService.js
 
@@ -634,6 +645,9 @@ Return fetch(${API_URL}/${id}, { method: "DELETE" })
 
 Export all functions
 
+
+
+
 PHASE 7: FRONTEND UTILITIES (10 tasks)
 Create eventUtils.js
 
@@ -665,6 +679,10 @@ Default: return "badge-upcoming"
 
 Export both functions
 
+
+
+
+
 PHASE 8: SOCKET CONSTANTS (3 tasks)
 Create socket.js constants file
 
@@ -673,6 +691,10 @@ In client/src/constants, create socket.js
 Define SOCKET_SERVER_URL = 'http://localhost:4000'
 
 Export SOCKET_SERVER_URL
+
+
+
+
 
 PHASE 9: CUSTOM HOOK - useSocketSession (20 tasks)
 Create useSocketSession.js
@@ -734,6 +756,10 @@ Set showMultiLoginModal(false)
 Return all functions and states
 
 Return { showMultiLoginModal, forceLogoutMessage, connectUser, logoutUser, continueHere }
+
+
+
+
 
 PHASE 10: LOGIN COMPONENT (20 tasks)
 Create Login.jsx
@@ -819,6 +845,9 @@ Add AlertCircle icon to error
 Add Info icon to info message
 
 Use appropriate styles
+
+
+
 
 PHASE 11: SIGNUP COMPONENT (30 tasks)
 Create Signup.jsx
@@ -953,6 +982,11 @@ Add footer
 
 Already have an account? Login here button
 
+
+
+
+
+
 PHASE 12: EVENTS COMPONENT (30 tasks)
 Create Events.jsx
 
@@ -1070,6 +1104,9 @@ onClick={openCreateModal}
 
 Text: "CREATE EVENT"
 
+
+
+
 PHASE 13: EVENT HEADER COMPONENT (5 tasks)
 Create EventHeader.jsx
 
@@ -1109,6 +1146,10 @@ Add display flex, align items center, gap
 
 Padding, border-radius, border none, cursor pointer, font-weight
 
+
+
+
+
 PHASE 14: EVENT LIST COMPONENT (10 tasks)
 Create EventList.jsx
 
@@ -1145,6 +1186,9 @@ event={event}
 onEdit={onEdit}
 
 onDelete={onDelete}
+
+
+
 
 PHASE 15: EVENT CARD COMPONENT (15 tasks)
 Create EventCard.jsx
@@ -1208,6 +1252,10 @@ className="btn-delete"
 onClick={() => onDelete(event._id)}
 
 Text: "DELETE"
+
+
+
+
 
 PHASE 16: EVENT MODAL COMPONENT (20 tasks)
 Create EventModal.jsx
@@ -1312,6 +1360,10 @@ Submit button: "SAVE"
 
 Close button: "CLOSE"
 
+
+
+
+
 PHASE 17: MULTI-LOGIN MODAL (10 tasks)
 Create MultiLoginModal.jsx
 
@@ -1348,6 +1400,9 @@ div with flex gap 1rem
 Continue Here button (btn-primary)
 
 Cancel & Logout button (btn-secondary)
+
+
+
 
 PHASE 18: APP COMPONENT (25 tasks)
 Create App.jsx
@@ -1453,6 +1508,11 @@ If showMultiLoginModal, render modal
 onContinue: continueHere(userEmail)
 
 onCancel: handleLogout
+
+
+
+
+
 
 PHASE 19: CSS STYLES - AUTHENTICATION (20 tasks)
 Add form input styles
@@ -1678,6 +1738,10 @@ border-radius: 8px
 font-size: 0.9rem
 
 margin-bottom: 1rem
+
+
+
+
 
 PHASE 20: CSS STYLES - DASHBOARD (20 tasks)
 Add dashboard container styles
@@ -1923,6 +1987,9 @@ Add delete button hover
 .btn-delete:hover
 
 background: #d32f2f
+
+
+
 
 PHASE 21: CSS STYLES - MODAL (10 tasks)
 Add modal overlay styles
