@@ -617,6 +617,8 @@ Create clearLoggedInUser function: localStorage.removeItem('loggedinUser')
 
 Export all functions
 
+--------
+
 Create eventService.js
 
 In client/src/services, create eventService.js
