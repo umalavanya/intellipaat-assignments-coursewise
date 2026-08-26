@@ -23,7 +23,7 @@ const createTask = async (req, res) => {
   }
 };
 
-// @desc    Get all tasks
+// @desc    Get all tasks.
 // @route   GET /api/tasks
 // @access  Private
 const getTasks = async (req, res) => {
