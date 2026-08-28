@@ -8,7 +8,7 @@ const TaskSchema = mongoose.Schema({
         required: true,
     },
     title:{
-        typr: String,
+        type: String,
         required: true,
         trim: true,
     },
