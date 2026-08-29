@@ -22,7 +22,7 @@ const UserSchema= mongoose.Schema({
 
 
 // Password Hashing - middleware
-UserSchema.pre('save', async () => {
+UserSchema.pre('save', async function () {
     if(!this.isModified('password')){
         return next() ;
     }

@@ -47,7 +47,7 @@ Body -> raw -> JSON:
 }
 
 Save the token returned in the response.
-
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTFhZTZmMmFiZDFiZTgzMjQ2ZjVjZiIsImlhdCI6MTc4NzkzMjI3MSwiZXhwIjoxNzkwNTI0MjcxfQ.Dkg05idtx6agijf5adtZooLiSef1VIx4GOvEtQ8rVNA
 
 4. LOGIN USER
 -------------
@@ -63,6 +63,10 @@ Body -> raw -> JSON:
 }
 
 Save the token returned in the response.
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhOTFhZTZmMmFiZDFiZTgzMjQ2ZjVjZiIsImlhdCI6MTc4NzkzMjM2NSwiZXhwIjoxNzkwNTI0MzY1fQ.j0xhjs6ZqYaVfbxOF4R6fu_u_OUOIzTHzF-iYfETmsM
+
+
+
 
 
 Protected task endpoints
@@ -90,6 +94,8 @@ Body -> raw -> JSON:
 }
 
 Allowed description values: pending, completed
+6a91ae6f2abd1be83246f5cf
+
 
 
 6. GET ALL USER TASKS
