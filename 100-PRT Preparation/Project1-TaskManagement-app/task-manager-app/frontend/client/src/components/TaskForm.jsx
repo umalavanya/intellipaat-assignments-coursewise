@@ -89,6 +89,7 @@ const TaskForm = ({ taskToEdit, onClose }) => {
               </select>
             </div>
           )}
+          
           <div className="form-actions">
             <button type="submit" disabled={isLoading}>
               {isLoading ? 'Saving...' : taskToEdit ? 'Update' : 'Create'}
