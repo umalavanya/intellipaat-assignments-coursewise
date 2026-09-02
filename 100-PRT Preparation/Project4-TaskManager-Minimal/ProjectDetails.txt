@@ -1,0 +1,26 @@
+Create a MERN stack project to demonstrate the skills 
+jsonwebtoken, bcryptjs, cors, mongoose, express, dotenv in the backend. 
+
+React with vite, react-router-dom, axios, lucide-react, redux,  @reduxjs/toolkit, 
+
+create the list of api end points in separete .txt file to test form POSTMAN.
+create 
+backend and frontend
+
+If I type the code, it must complete within two hours
+
+
+For a two-hour version, focus on:
+
+
+Register and login
+JWT authentication
+Protected dashboard
+Create tasks
+Display tasks
+Mark tasks completed
+Edit and delete tasks
+the completed tasks toggle to down
+Basic CSS styling.
+
+I 
