@@ -7,10 +7,10 @@
 
 :root {
     /* Primary Colors */
-    --primary: #3b82f6;
-    --primary-dark: #2563eb;
+    --primary: #2274f9;
+    --primary-dark: #032e8a;
     --primary-light: #93bbfc;
-    --primary-bg: #eff6ff;
+    --primary-bg: #c1c6cc;
 
     /* Neutral Colors */
     --bg: #f8fafc;
