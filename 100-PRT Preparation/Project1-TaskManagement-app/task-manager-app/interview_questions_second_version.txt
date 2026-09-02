@@ -1,0 +1,165 @@
+TASK MANAGER PROJECT - INTERVIEW QUESTION BANK (SECOND VERSION)
+=================================================================
+
+SECTION 1: EASY QUESTIONS
+=========================
+
+1. What is this project about?
+2. What is the main purpose of a task manager application?
+3. Which frontend library is used in this project?
+4. Which backend framework is used in this project?
+5. Which database is used in this project?
+6. What is MongoDB?
+7. What is React?
+8. What is Express.js?
+9. What is Node.js?
+10. What is JWT?
+11. What is a user model?
+12. What is a task model?
+13. What is the difference between frontend and backend?
+14. What is the purpose of authentication?
+15. What is authorization?
+16. What is a protected route?
+17. Why is password hashing important?
+18. What is bcrypt?
+19. What is Redux?
+20. What is Redux Toolkit?
+21. What is localStorage used for here?
+22. What is Axios?
+23. What is React Router used for?
+24. What is a route in web development?
+25. What is a dashboard in this application?
+26. What is the dashboard used for?
+27. What is a task status?
+28. What values can a task status have in this project?
+29. What does a user do after logging in?
+30. What happens when a user clicks the New Task button?
+
+
+SECTION 2: MEDIUM QUESTIONS
+===========================
+
+31. How does the frontend communicate with the backend?
+32. What is the purpose of the authSlice file?
+33. What is the purpose of the taskSlice file?
+34. Why do we store the user object in localStorage?
+35. How does the frontend redirect unauthenticated users?
+36. What role does the PrivateRoute component play?
+37. How does the app know whether a user is logged in?
+38. Why is there a login and a register page separately?
+39. How is a new task created in the app?
+40. How is a task edited in the app?
+41. How is a task deleted in the app?
+42. How is a task marked complete or incomplete?
+43. What happens in the backend when a user registers?
+44. What happens in the backend when a user logs in?
+45. What is the purpose of the JWT token sent after login?
+46. Why is the token included in the Authorization header?
+47. What does middleware/auth.js do?
+48. How do task routes ensure that only logged-in users can access them?
+49. How is a user prevented from accessing another user’s tasks?
+50. Why is MongoDB connected at server startup?
+51. What is the purpose of the .env file?
+52. Why is the MONGO_URI important?
+53. Why is the JWT_SECRET important?
+54. How does the backend validate user input?
+55. How is the project structured into folders?
+56. Why is there a separate routes folder?
+57. Why is there a separate controllers folder?
+58. Why is there a separate models folder?
+59. What is the role of config/db.js?
+60. Why use CORS in the backend?
+61. What do the frontend components represent?
+62. Which component handles the login form?
+63. Which component handles the registration form?
+64. Which component handles the dashboard UI?
+65. Which component handles task form creation/editing?
+66. How does the dashboard fetch tasks after login?
+67. Why does the app call `getTasks()` on mount?
+68. Why is a modal used in the task form?
+69. How does the app show loading state?
+70. How does the app show error state?
+
+
+SECTION 3: ADVANCED QUESTIONS
+=============================
+
+71. Explain the full authentication flow from frontend to backend.
+72. Explain the full task CRUD flow from frontend to backend.
+73. How would you handle token expiration in this app?
+74. What is the security issue if a JWT secret is weak?
+75. How do you prevent duplicate users from being created?
+76. How do you ensure that one user cannot access another user’s tasks?
+77. Why is `req.user.id` used after JWT verification?
+78. How does the app ensure that only a valid token can access protected routes?
+79. What are the risks of storing token data in localStorage?
+80. How would you implement refresh tokens in this app?
+81. What is the difference between bcrypt hashing and encryption?
+82. How would you improve this app for production use?
+83. What would you add for better form validation?
+84. How would you add pagination to tasks?
+85. How would you add search and filtering in the dashboard?
+86. How would you add sorting by priority or date?
+87. How would you implement dark mode?
+88. How would you add unit tests for the backend?
+89. How would you add unit tests for the frontend?
+90. How would you handle failed API requests gracefully?
+91. What is the purpose of `reset()` in the Redux slices?
+92. What happens if the backend fails to connect to MongoDB?
+93. How would you handle startup errors in production?
+94. Why is it important to validate task title and description before creating a task?
+95. How can you improve the user experience of the dashboard?
+96. What would be the first improvement you make to this project?
+97. How would you deploy this project to a real cloud environment?
+98. How would you secure the API against malicious requests?
+99. How would you separate concerns better in this project architecture?
+100. How would you explain the project in one short interview answer?
+
+
+SECTION 4: SITUATION-BASED QUESTIONS
+=====================================
+
+101. Suppose the login request fails. What will the user see?
+102. Suppose the user enters mismatched passwords during registration. What happens?
+103. Suppose the user is not logged in but visits the dashboard URL. What happens?
+104. Suppose the API returns 401 Unauthorized. How should the frontend react?
+105. Suppose a user tries to update another user’s task. What should happen in the backend?
+106. Suppose the database is down. How would the app behave?
+107. Suppose a task creation request has no title. What should the backend return?
+108. Suppose a user logs out. What state should be cleared?
+109. Suppose the page refreshes after login. How does the app recover the session?
+110. Suppose you need to add a new feature like due date. How would you update the app?
+
+
+SECTION 5: QUICK ANSWER PRACTICE
+=================================
+
+111. What is the main use of the backend in this project?
+112. What is the main use of the frontend in this project?
+113. Why does the task API require a token?
+114. Why is Express used in this project?
+115. Why is React used in this project?
+116. Why is MongoDB chosen here?
+117. Why is Redux used in this project?
+118. Why is the app divided into frontend and backend folders?
+119. What is the purpose of a controller in this project?
+120. What is the purpose of a route in this project?
+
+
+SECTION 6: MINI INTERVIEW TOPICS
+=================================
+
+121. Authentication flow
+122. Authorization rules
+123. JWT token handling
+124. Task CRUD operations
+125. Redux state management
+126. Protected routes
+127. MongoDB schemas
+128. API design
+129. Frontend-backend integration
+130. Security considerations
+
+
+END OF QUESTION FILE
+====================

@@ -1,0 +1,108 @@
+TASK MANAGER PROJECT INTERVIEW QUESTIONS
+======================================
+
+1. What is the purpose of this project?
+2. What technologies are used in the frontend of this project?
+3. What technologies are used in the backend of this project?
+4. Which database is used in this application?
+5. What is the role of MongoDB in this project?
+6. Why is JWT used in this application?
+7. How does user authentication work in this app?
+8. What happens during user registration?
+9. What happens during user login?
+10. How is the backend protected from unauthorized access?
+11. What is the purpose of the auth middleware?
+12. What is the difference between frontend and backend in this project?
+13. Which files are responsible for user authentication in the backend?
+14. Which files are responsible for task operations in the backend?
+15. What are the main routes in the backend?
+16. What is the route for user registration?
+17. What is the route for user login?
+18. What is the route for fetching tasks?
+19. What is the route for creating a task?
+20. What is the route for updating a task?
+21. What is the route for deleting a task?
+22. Why do task routes use protected middleware?
+23. What does the User model contain?
+24. What does the Task model contain?
+25. What is the relationship between User and Task?
+26. How is a password stored securely in the database?
+27. Why is bcrypt used in this project?
+28. How does the frontend know whether a user is logged in?
+29. Which state management library is used in the frontend?
+30. What is Redux Toolkit used for here?
+31. Why is the authSlice file important?
+32. Why is the taskSlice file important?
+33. How does the frontend call the backend APIs?
+34. Why is Axios used in the frontend?
+35. What is the role of React Router in this application?
+36. Why is there a PrivateRoute component?
+37. What happens when a user is not logged in and tries to open the dashboard?
+38. What are the main frontend pages/components?
+39. What is the purpose of Login.jsx?
+40. What is the purpose of Register.jsx?
+41. What is the purpose of Dashboard.jsx?
+42. What is the purpose of TaskForm.jsx?
+43. What is the difference between create and edit task flow?
+44. How does the dashboard show task status?
+45. How does the user toggle a task between pending and completed?
+46. What happens when the user clicks the delete button?
+47. How is the task list rendered on the UI?
+48. Why is localStorage used in this app?
+49. What if the user refreshes the page after login?
+50. Why do we store the user object in localStorage?
+51. What is the purpose of the Redux `reset` action?
+52. What does `isLoading`, `isError`, and `isSuccess` represent in Redux?
+53. How does the UI handle errors in login and registration?
+54. How does the UI show an error message to the user?
+55. What does the Dashboard show after successful login?
+56. What happens after a task is created successfully?
+57. What happens after a task is deleted successfully?
+58. What is the purpose of the `status` field in the Task model?
+59. Why do we use `pending` and `completed` as enum values?
+60. Which files contain the main frontend styling?
+61. What is the purpose of the CSS file in the client app?
+62. How is the modal style implemented for creating or editing tasks?
+63. What is CORS and why is it needed here?
+64. Why does the backend need to allow Cross-Origin requests?
+65. How does the frontend send the JWT token to the backend?
+66. What is the format of the Authorization header?
+67. What is the difference between public and private routes?
+68. What is the purpose of the app root route?
+69. Why does the dashboard route use `PrivateRoute`?
+70. What is the entry file of the frontend application?
+71. What is the entry file of the backend application?
+72. How do you run the frontend application?
+73. How do you run the backend application?
+74. What command starts the backend in development mode?
+75. What command starts the frontend in development mode?
+76. How does the frontend update after a successful create or delete operation?
+77. What is the flow of data from frontend to backend during login?
+78. What is the flow of data from frontend to backend during task creation?
+79. Why is it important to validate user input?
+80. How would you describe this project in one sentence?
+
+
+ADVANCED FOLLOW-UP QUESTIONS
+===========================
+
+81. How would you improve this project for production?
+82. What enhancements would you add to the UI?
+83. How would you handle token expiration?
+84. What would you do if the backend returns a 401 Unauthorized error?
+85. How would you add pagination for tasks?
+86. How would you add search and filter features?
+87. How would you implement a dark mode?
+88. How would you handle form validation more professionally?
+89. How would you add loading spinners or skeleton screens?
+90. How would you secure the application against XSS or CSRF?
+91. How would you add sorting by date or priority?
+92. How would you restructure the code for better scalability?
+93. How would you add unit testing to this project?
+94. How would you add integration testing for the API?
+95. How would you deploy this project to production?
+96. How would you handle environment configuration in deployment?
+97. What are the possible bugs in this project if the backend is down?
+98. How would you handle failed API calls gracefully in the frontend?
+99. What would you change if multiple users need to work on the same task list?
+100. How would you explain this project to a non-technical interviewer?

@@ -1,0 +1,635 @@
+BACKEND MICROTASK GUIDE FOR THIS TASK MANAGER APP
+=================================================
+
+Goal:
+Create a Node.js + Express backend that connects to MongoDB and supports:
+- user registration
+- user login
+- JWT authentication
+- task CRUD operations
+- protected routes for task APIs
+
+This guide is written as microtasks. Follow them in order.
+
+-------------------------------------------------------------------
+MICROTASK 1: CREATE BACKEND FOLDER STRUCTURE
+-------------------------------------------------------------------
+Inside the project root, create:
+
+backend/
+  package.json
+  server.js
+  .env
+  config/
+    db.js
+  controllers/
+    authController.js
+    taskController.js
+  middleware/
+    auth.js
+  models/
+    User.js
+    Task.js
+  routes/
+    authRoutes.js
+    taskRoutes.js
+
+Important:
+- `server.js` starts the Express application
+- `config/db.js` connects to MongoDB
+- `routes/` handles URL endpoints
+- `controllers/` handles business logic
+- `models/` defines database schemas
+- `middleware/auth.js` protects private routes
+
+-------------------------------------------------------------------
+MICROTASK 2: INITIALIZE BACKEND PROJECT
+-------------------------------------------------------------------
+Open terminal in the backend folder and run:
+
+npm init -y
+
+Then install dependencies:
+
+npm install express mongoose dotenv cors jsonwebtoken bcryptjs
+npm install -D nodemon
+
+Your package.json should look like this structurally:
+
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
+
+-------------------------------------------------------------------
+MICROTASK 3: SET UP ENVIRONMENT VARIABLES
+-------------------------------------------------------------------
+Create a `.env` file in the backend folder:
+
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/task-manager
+JWT_SECRET=your_secret_key_here
+
+Notes:
+- `PORT` is the backend port
+- `MONGO_URI` points to your MongoDB database
+- `JWT_SECRET` is used to sign auth tokens
+
+You must load env variables using:
+
+require('dotenv').config();
+
+-------------------------------------------------------------------
+MICROTASK 4: CREATE DATABASE CONNECTION FILE
+-------------------------------------------------------------------
+Create `config/db.js`:
+
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log('MongoDB Connected');
+    } catch (error) {
+        console.error(error.message);
+        process.exit(1);
+    }
+};
+
+module.exports = connectDB;
+
+This file should connect MongoDB once when the server starts.
+
+-------------------------------------------------------------------
+MICROTASK 5: BUILD THE MAIN SERVER FILE
+-------------------------------------------------------------------
+Create `server.js`.
+
+This file should:
+- import express, dotenv, cors, connectDB
+- call `dotenv.config()`
+- connect to MongoDB at startup
+- create the Express app
+- enable JSON parsing and CORS
+- define test route `/api/test`
+- register routes for `/api/auth` and `/api/tasks`
+- define an error handling middleware
+- start listening on a port
+
+Exact structure:
+
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./config/db');
+
+dotenv.config();
+
+connectDB().catch(err => {
+  console.error('Failed to connect to MongoDB:', err);
+  process.exit(1);
+});
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is running!' });
+});
+
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/tasks', require('./routes/taskRoutes'));
+
+app.get('/', (req, res) => {
+  res.send('Task Manager API is running');
+});
+
+app.use((err, req, res, next) => {
+  console.error('Global error:', err);
+  res.status(500).json({ 
+    message: 'Something went wrong!',
+    error: err.message
+  });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Test the server at: http://localhost:${PORT}/api/test`);
+});
+
+-------------------------------------------------------------------
+MICROTASK 6: CREATE USER MODEL
+-------------------------------------------------------------------
+Create `models/User.js`.
+
+This schema should store:
+- `name` required
+- `email` required and unique
+- `password` required
+- timestamps
+
+Add password hashing before save:
+
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true,
+});
+
+UserSchema.pre('save', async function() {
+  if (!this.isModified('password')) {
+    return next;
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+UserSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
+
+Important:
+- never store plain text passwords
+- `matchPassword()` is used during login
+
+-------------------------------------------------------------------
+MICROTASK 7: CREATE TASK MODEL
+-------------------------------------------------------------------
+Create `models/Task.js`.
+
+This schema should include:
+- `user` reference to User
+- `title` required
+- `description` required
+- `status` enum with `pending` or `completed`
+- `timestamps: true`
+
+Exact structure:
+
+const mongoose = require('mongoose');
+
+const TaskSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'completed'],
+        default: 'pending'
+    }
+}, {
+    timestamps: true,
+});
+
+module.exports = mongoose.model('Task', TaskSchema);
+
+-------------------------------------------------------------------
+MICROTASK 8: BUILD AUTH ROUTES
+-------------------------------------------------------------------
+Create `routes/authRoutes.js`.
+
+This file maps endpoints to controller functions:
+
+const express = require('express');
+const router = express.Router();
+const { registerUser, loginUser } = require('../controllers/authController');
+
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+
+module.exports = router;
+
+Your endpoints should be:
+- POST /api/auth/register
+- POST /api/auth/login
+
+-------------------------------------------------------------------
+MICROTASK 9: CREATE JWT HELPER IN AUTH CONTROLLER
+-------------------------------------------------------------------
+Create `controllers/authController.js`.
+
+This file should include:
+- `generateToken(id)` using `jsonwebtoken.sign`
+- `registerUser` controller
+- `loginUser` controller
+
+Token generation logic:
+
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  });
+};
+
+Then implement registration:
+
+const registerUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    const userExists = await User.findOne({ email });
+
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = await User.create({ name, email, password });
+
+    if (user) {
+      const token = generateToken(user.id);
+      res.status(201).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid user data' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+Then implement login:
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+      const token = generateToken(user.id);
+      res.json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser };
+
+-------------------------------------------------------------------
+MICROTASK 10: CREATE TASK ROUTES
+-------------------------------------------------------------------
+Create `routes/taskRoutes.js`.
+
+This file should attach the auth middleware to all task routes:
+
+const express = require('express');
+const router = express.Router();
+const { protect } = require('../middleware/auth');
+const {
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+} = require('../controllers/taskController');
+
+router.route('/')
+  .post(protect, createTask)
+  .get(protect, getTasks);
+
+router.route('/:id')
+  .put(protect, updateTask)
+  .delete(protect, deleteTask);
+
+module.exports = router;
+
+Routes:
+- GET /api/tasks
+- POST /api/tasks
+- PUT /api/tasks/:id
+- DELETE /api/tasks/:id
+
+-------------------------------------------------------------------
+MICROTASK 11: CREATE AUTH MIDDLEWARE
+-------------------------------------------------------------------
+Create `middleware/auth.js`.
+
+This middleware reads the `Authorization` header and validates the JWT:
+
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const protect = async (req, res, next) => {
+  let token;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select('-password');
+      next();
+    } catch (error) {
+      res.status(401).json({ message: 'Not authorized, token failed' });
+    }
+  }
+
+  if (!token) {
+    res.status(401).json({ message: 'Not authorized, no token' });
+  }
+};
+
+module.exports = { protect };
+
+Important behavior:
+- it expects `Authorization: Bearer <token>`
+- it adds `req.user` after successful verification
+- it blocks unauthenticated requests
+
+-------------------------------------------------------------------
+MICROTASK 12: CREATE TASK CONTROLLER
+-------------------------------------------------------------------
+Create `controllers/taskController.js`.
+
+This file handles CRUD for tasks.
+
+Create task:
+
+const Task = require('../models/Task');
+
+const createTask = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+
+    if (!title || !description) {
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    const task = await Task.create({
+      user: req.user.id,
+      title,
+      description,
+    });
+
+    res.status(201).json(task);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+Get tasks:
+
+const getTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ user: req.user.id });
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+Update task:
+
+const updateTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+Delete task:
+
+const deleteTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    await task.deleteOne();
+    res.json({ message: 'Task removed' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createTask, getTasks, updateTask, deleteTask };
+
+-------------------------------------------------------------------
+MICROTASK 13: TEST THE BACKEND
+-------------------------------------------------------------------
+Start the server:
+
+npm run dev
+
+Then test these endpoints manually with Postman or Thunder Client:
+
+1. Register user
+   POST http://localhost:5000/api/auth/register
+   Body:
+   {
+     "name": "Test User",
+     "email": "test@example.com",
+     "password": "123456"
+   }
+
+2. Login user
+   POST http://localhost:5000/api/auth/login
+   Body:
+   {
+     "email": "test@example.com",
+     "password": "123456"
+   }
+
+3. Create task
+   POST http://localhost:5000/api/tasks
+   Headers:
+   Authorization: Bearer <token>
+   Body:
+   {
+     "title": "Learn backend",
+     "description": "Complete the task manager API"
+   }
+
+4. Get tasks
+   GET http://localhost:5000/api/tasks
+   Headers:
+   Authorization: Bearer <token>
+
+5. Update task
+   PUT http://localhost:5000/api/tasks/:id
+   Headers:
+   Authorization: Bearer <token>
+   Body:
+   {
+     "title": "Updated task",
+     "description": "Updated description",
+     "status": "completed"
+   }
+
+6. Delete task
+   DELETE http://localhost:5000/api/tasks/:id
+   Headers:
+   Authorization: Bearer <token>
+
+-------------------------------------------------------------------
+MICROTASK 14: CHECK COMMON BACKEND ISSUES
+-------------------------------------------------------------------
+Before considering the backend complete, verify:
+
+- MongoDB is running and reachable
+- `.env` values are correct
+- `JWT_SECRET` exists and is not empty
+- `Authorization` header is sent as `Bearer <token>`
+- `req.user.id` is available inside protected routes
+- user can only access their own tasks
+- registration prevents duplicate emails
+- login returns a valid JWT token
+- password is hashed before saving to MongoDB
+- server can run with `npm run dev`
+
+-------------------------------------------------------------------
+MICROTASK 15: FINAL FILE SUMMARY
+-------------------------------------------------------------------
+Your final backend should contain these files:
+
+backend/server.js
+backend/config/db.js
+backend/middleware/auth.js
+backend/models/User.js
+backend/models/Task.js
+backend/controllers/authController.js
+backend/controllers/taskController.js
+backend/routes/authRoutes.js
+backend/routes/taskRoutes.js
+backend/.env
+backend/package.json
+
+If you follow all steps in order, you will recreate the same backend logic and structure as this project.

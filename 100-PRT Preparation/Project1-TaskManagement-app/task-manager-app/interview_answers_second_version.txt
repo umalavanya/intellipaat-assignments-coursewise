@@ -1,0 +1,418 @@
+TASK MANAGER PROJECT - ANSWERS FOR SECOND VERSION
+==================================================
+
+SECTION 1: EASY QUESTIONS
+=========================
+
+1. What is this project about?
+Answer: This project is a full-stack task management application where users can register, log in, and manage their own tasks.
+
+2. What is the main purpose of a task manager application?
+Answer: It helps users organize tasks, track progress, and manage work efficiently.
+
+3. Which frontend library is used in this project?
+Answer: React is used in the frontend.
+
+4. Which backend framework is used in this project?
+Answer: Express.js is used in the backend.
+
+5. Which database is used in this project?
+Answer: MongoDB is used as the database.
+
+6. What is MongoDB?
+Answer: MongoDB is a NoSQL database that stores data in JSON-like documents.
+
+7. What is React?
+Answer: React is a JavaScript library used to build interactive user interfaces with reusable components.
+
+8. What is Express.js?
+Answer: Express.js is a Node.js framework used to create server-side APIs and handle HTTP requests.
+
+9. What is Node.js?
+Answer: Node.js is a JavaScript runtime that allows JavaScript code to run on the server.
+
+10. What is JWT?
+Answer: JWT stands for JSON Web Token, and it is used for secure user authentication.
+
+11. What is a user model?
+Answer: A user model defines the structure of a user document, such as name, email, and password.
+
+12. What is a task model?
+Answer: A task model defines the structure of a task, such as title, description, status, and user reference.
+
+13. What is the difference between frontend and backend?
+Answer: The frontend is what users see and interact with, while the backend handles logic, database access, and business rules.
+
+14. What is the purpose of authentication?
+Answer: Authentication confirms the identity of the user before allowing access to protected resources.
+
+15. What is authorization?
+Answer: Authorization decides whether an authenticated user has permission to access or modify a resource.
+
+16. What is a protected route?
+Answer: A protected route is only accessible to authenticated users.
+
+17. Why is password hashing important?
+Answer: Hashing secures passwords by storing them in a non-reversible format instead of plain text.
+
+18. What is bcrypt?
+Answer: bcrypt is a library used to hash and verify passwords securely.
+
+19. What is Redux?
+Answer: Redux is a state management library used to manage app-wide data across components.
+
+20. What is Redux Toolkit?
+Answer: Redux Toolkit is a simplified way to write Redux logic with less boilerplate.
+
+21. What is localStorage used for here?
+Answer: It stores the logged-in user information so the app can remember the session after refresh.
+
+22. What is Axios?
+Answer: Axios is a library used in the frontend to send HTTP requests to the backend.
+
+23. What is React Router used for?
+Answer: It manages the app routes and navigation between pages/components.
+
+24. What is a route in web development?
+Answer: A route is a URL path that maps to a specific page or component.
+
+25. What is a dashboard in this application?
+Answer: The dashboard is the main authenticated page where users manage tasks.
+
+26. What is the dashboard used for?
+Answer: It displays the user’s task list and allows them to create, update, delete, and mark tasks complete.
+
+27. What is a task status?
+Answer: A task status tells whether a task is pending or completed.
+
+28. What values can a task status have in this project?
+Answer: It can be pending or completed.
+
+29. What does a user do after logging in?
+Answer: They are redirected to the dashboard and can manage tasks.
+
+30. What happens when a user clicks the New Task button?
+Answer: A modal form opens so the user can enter task details and create a task.
+
+
+SECTION 2: MEDIUM QUESTIONS
+===========================
+
+31. How does the frontend communicate with the backend?
+Answer: It uses Axios to send HTTP requests to backend endpoints.
+
+32. What is the purpose of the authSlice file?
+Answer: It manages login and registration state, such as user, loading, success, and error status.
+
+33. What is the purpose of the taskSlice file?
+Answer: It manages task operations like fetching, creating, updating, and deleting tasks.
+
+34. Why do we store the user object in localStorage?
+Answer: To keep the user logged in even when the page reloads.
+
+35. How does the frontend redirect unauthenticated users?
+Answer: Through the PrivateRoute component, which redirects to /login if there is no user.
+
+36. What role does the PrivateRoute component play?
+Answer: It blocks access to protected pages unless the user is authenticated.
+
+37. How does the app know whether a user is logged in?
+Answer: It checks the user in Redux and also restores it from localStorage.
+
+38. Why is there a login and a register page separately?
+Answer: One is for existing users and the other is for new users creating accounts.
+
+39. How is a new task created in the app?
+Answer: The user fills out the task form and submits it; the task slice sends a create request to the backend.
+
+40. How is a task edited in the app?
+Answer: The user clicks the edit icon, the modal is prefilled, and the form submits the updated data.
+
+41. How is a task deleted in the app?
+Answer: Clicking delete triggers a confirm prompt, and then the delete request is sent.
+
+42. How is a task marked complete or incomplete?
+Answer: The toggle button changes the task status and sends an update request.
+
+43. What happens in the backend when a user registers?
+Answer: It validates details, checks for existing email, hashes the password, creates the user, and returns a JWT token.
+
+44. What happens in the backend when a user logs in?
+Answer: It checks the email and password, verifies them, and if valid, returns a token.
+
+45. What is the purpose of the JWT token sent after login?
+Answer: It identifies the logged-in user for subsequent protected API requests.
+
+46. Why is the token included in the Authorization header?
+Answer: The backend reads it to authenticate the user.
+
+47. What does middleware/auth.js do?
+Answer: It verifies the JWT and attaches the user to the request before allowing access.
+
+48. How do task routes ensure that only logged-in users can access them?
+Answer: The protect middleware is applied to task routes.
+
+49. How is a user prevented from accessing another user’s tasks?
+Answer: The backend checks whether the task belongs to the current user before update or delete.
+
+50. Why is MongoDB connected at server startup?
+Answer: So the backend can connect to the database before serving requests.
+
+51. What is the purpose of the .env file?
+Answer: It stores environment variables like the port, database URI, and JWT secret.
+
+52. Why is the MONGO_URI important?
+Answer: It tells MongoDB where the database is located.
+
+53. Why is the JWT_SECRET important?
+Answer: It is required to sign and verify tokens securely.
+
+54. How does the backend validate user input?
+Answer: It checks if required fields are present and rejects invalid or missing fields.
+
+55. How is the project structured into folders?
+Answer: It is separated into frontend and backend folders, each containing specific responsibilities.
+
+56. Why is there a separate routes folder?
+Answer: To keep API endpoints clean and organized.
+
+57. Why is there a separate controllers folder?
+Answer: To manage the logic executed when a route is called.
+
+58. Why is there a separate models folder?
+Answer: To define the database schema for each entity.
+
+59. What is the role of config/db.js?
+Answer: It connects the backend application to MongoDB.
+
+60. Why use CORS in the backend?
+Answer: To allow requests from the frontend domain to access the backend API.
+
+61. What do the frontend components represent?
+Answer: They represent the pages and UI blocks of the app.
+
+62. Which component handles the login form?
+Answer: Login.jsx handles login.
+
+63. Which component handles the registration form?
+Answer: Register.jsx handles registration.
+
+64. Which component handles the dashboard UI?
+Answer: Dashboard.jsx handles the main dashboard page.
+
+65. Which component handles task form creation/editing?
+Answer: TaskForm.jsx handles both create and edit form behavior.
+
+66. How does the dashboard fetch tasks after login?
+Answer: It dispatches getTasks when the user is authenticated.
+
+67. Why does the app call getTasks() on mount?
+Answer: To fetch all tasks for the logged-in user immediately after the dashboard loads.
+
+68. Why is a modal used in the task form?
+Answer: It makes task creation and editing more user-friendly without navigating away from the page.
+
+69. How does the app show loading state?
+Answer: It uses isLoading in Redux and shows messages or disables buttons during network requests.
+
+70. How does the app show error state?
+Answer: It displays the returned error message on the page when a request fails.
+
+
+SECTION 3: ADVANCED QUESTIONS
+=============================
+
+71. Explain the full authentication flow from frontend to backend.
+Answer: The user submits login data, the frontend sends it to /api/auth/login, the backend validates it, issues a JWT, the frontend stores it, and subsequent requests send the token in the Authorization header.
+
+72. Explain the full task CRUD flow from frontend to backend.
+Answer: The frontend dispatches actions for create/read/update/delete, sends requests to the API, the backend validates access and ownership, updates MongoDB, and the frontend updates state from the returned data.
+
+73. How would you handle token expiration in this app?
+Answer: Detect 401 responses, clear localStorage, and redirect to login. A refresh token system could also be added later.
+
+74. What is the security issue if a JWT secret is weak?
+Answer: Attackers could forge valid tokens and bypass authentication.
+
+75. How do you prevent duplicate users from being created?
+Answer: By checking if the email already exists in the database before creating a new user.
+
+76. How do you ensure that one user cannot access another user’s tasks?
+Answer: By comparing the task’s user id with the authenticated user id in the backend.
+
+77. Why is req.user.id used after JWT verification?
+Answer: It identifies the current authenticated user for authorization checks.
+
+78. How does the app ensure that only a valid token can access protected routes?
+Answer: The backend verifies the JWT in the auth middleware before allowing the request to continue.
+
+79. What are the risks of storing token data in localStorage?
+Answer: localStorage is vulnerable to XSS attacks, so storing tokens there may expose them to malicious scripts.
+
+80. How would you implement refresh tokens in this app?
+Answer: Issue both access and refresh tokens, store refresh tokens securely, and rotate them when access tokens expire.
+
+81. What is the difference between bcrypt hashing and encryption?
+Answer: Hashing is one-way and designed for password storage, while encryption is reversible and used for securing data.
+
+82. How would you improve this app for production use?
+Answer: Add stronger validation, better security, environment configuration, proper logging, tests, and deployment setup.
+
+83. What would you add for better form validation?
+Answer: Validation messages, required field checks, email format checks, and password strength rules.
+
+84. How would you add pagination to tasks?
+Answer: Add page and limit parameters in the API and frontend and return only a slice of task results per page.
+
+85. How would you add search and filtering in the dashboard?
+Answer: Add filters by title/status and a backend query to return matching tasks.
+
+86. How would you add sorting by priority or date?
+Answer: Add sort logic to the backend and UI controls to sort tasks by priority, date, or status.
+
+87. How would you implement dark mode?
+Answer: Add a theme toggle and use CSS variables or conditional classes to change colors.
+
+88. How would you add unit tests for the backend?
+Answer: Use Node.js testing tools such as Jest or Mocha to test controllers, routes, and middleware.
+
+89. How would you add unit tests for the frontend?
+Answer: Use React Testing Library and Vitest to test rendering and user interactions.
+
+90. How would you handle failed API requests gracefully?
+Answer: Show error messages, keep the UI responsive, and redirect users when they are unauthorized.
+
+91. What is the purpose of reset() in the Redux slices?
+Answer: It clears error and loading flags after an action so the next request can begin with a clean state.
+
+92. What happens if the backend fails to connect to MongoDB?
+Answer: The server logs the error and exits, because database access is required for core app functionality.
+
+93. How would you handle startup errors in production?
+Answer: Use proper logging, health checks, and deployment settings to ensure errors are visible and recoverable.
+
+94. Why is it important to validate task title and description before creating a task?
+Answer: To ensure tasks contain useful information and prevent incomplete data from entering the database.
+
+95. How can you improve the user experience of the dashboard?
+Answer: Add search, task filters, better empty states, improved layout, and animations.
+
+96. What would be the first improvement you make to this project?
+Answer: I would improve security and validation first, followed by better user experience features.
+
+97. How would you deploy this project to a real cloud environment?
+Answer: Deploy the backend to a cloud service, the frontend to a static host, and configure environment variables securely.
+
+98. How would you secure the API against malicious requests?
+Answer: Use validation, rate limiting, secure headers, JWT verification, and sanitization of inputs.
+
+99. How would you separate concerns better in this project architecture?
+Answer: Improve layering by separating UI, state, API services, models, controllers, and utilities more clearly.
+
+100. How would you explain the project in one short interview answer?
+Answer: “This is a full-stack task management app built with React and Express, with MongoDB for storage and JWT-based authentication for user security.”
+
+
+SECTION 4: SITUATION-BASED QUESTIONS
+=====================================
+
+101. Suppose the login request fails. What will the user see?
+Answer: The user sees an error message and stays on the login page.
+
+102. Suppose the user enters mismatched passwords during registration. What happens?
+Answer: The app shows an alert and stops the registration process.
+
+103. Suppose the user is not logged in but visits the dashboard URL. What happens?
+Answer: The app redirects them to the login page.
+
+104. Suppose the API returns 401 Unauthorized. How should the frontend react?
+Answer: It should clear the stored user state and redirect to login.
+
+105. Suppose a user tries to update another user’s task. What should happen in the backend?
+Answer: The backend should reject the request with an authorization error.
+
+106. Suppose the database is down. How would the app behave?
+Answer: The backend would fail to connect or the requests would fail, and the app would not load data properly.
+
+107. Suppose a task creation request has no title. What should the backend return?
+Answer: It should return a 400 Bad Request error with a meaningful message.
+
+108. Suppose a user logs out. What state should be cleared?
+Answer: The user session should be removed from Redux and localStorage.
+
+109. Suppose the page refreshes after login. How does the app recover the session?
+Answer: It loads the saved user from localStorage and restores state.
+
+110. Suppose you need to add a new feature like due date. How would you update the app?
+Answer: Add the due date to the model, update the API, form, and UI, and include it in the task data flow.
+
+
+SECTION 5: QUICK ANSWER PRACTICE
+=================================
+
+111. What is the main use of the backend in this project?
+Answer: It handles data storage, authentication, and protected API operations.
+
+112. What is the main use of the frontend in this project?
+Answer: It provides the user interface and interaction flow for the app.
+
+113. Why does the task API require a token?
+Answer: To verify the identity of the user and ensure access control.
+
+114. Why is Express used in this project?
+Answer: It provides a simple and efficient framework for building the backend API.
+
+115. Why is React used in this project?
+Answer: It allows the frontend to build a dynamic interface with reusable components.
+
+116. Why is MongoDB chosen here?
+Answer: It is well-suited for storing structured data like users and tasks.
+
+117. Why is Redux used in this project?
+Answer: It helps manage state across the complete app efficiently.
+
+118. Why is the app divided into frontend and backend folders?
+Answer: To keep client and server logic separate and maintainable.
+
+119. What is the purpose of a controller in this project?
+Answer: It contains request handling logic and communication with the database.
+
+120. What is the purpose of a route in this project?
+Answer: Routes map HTTP requests to controller functions.
+
+
+SECTION 6: MINI INTERVIEW TOPICS
+=================================
+
+121. Authentication flow
+Answer: User registers or logs in, receives a token, and uses it for protected API access.
+
+122. Authorization rules
+Answer: Only the authenticated owner of a task can update or delete it.
+
+123. JWT token handling
+Answer: Tokens are created at login and verified in middleware before protected routes are processed.
+
+124. Task CRUD operations
+Answer: Users can create, read, update, and delete tasks through the API.
+
+125. Redux state management
+Answer: Redux stores authentication and task data for the entire application.
+
+126. Protected routes
+Answer: These routes redirect unauthenticated users to login.
+
+127. MongoDB schemas
+Answer: Schemas define how data is structured and validated in the database.
+
+128. API design
+Answer: The backend exposes REST-style endpoints for authentication and tasks.
+
+129. Frontend-backend integration
+Answer: The frontend uses Axios to communicate with the backend and update the UI.
+
+130. Security considerations
+Answer: Security includes hashed passwords, JWT verification, protected routes, and ownership checks.
+
+END OF ANSWER KEY
+=================
