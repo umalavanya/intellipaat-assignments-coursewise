@@ -2,10 +2,13 @@ TASK MANAGER PROJECT - INTERVIEW ANSWER KEY
 ===========================================
 
 1. What is this project about?
-Answer: This project is a task management application where users can register, log in, create tasks, update tasks, mark tasks complete or pending, and delete tasks.
+Answer: This project is a task management application where users can 
+register, log in, create tasks, update tasks, 
+mark tasks complete or pending, and delete tasks.
 
 2. What is the main purpose of a task manager application?
-Answer: It helps users organize and manage their work by storing tasks, updating their status, and tracking progress.
+Answer: It helps users organize and manage their work by storing tasks, 
+updating their status, and tracking progress.
 
 3. Which frontend library is used in this project?
 Answer: React is used for the frontend.
@@ -17,37 +20,49 @@ Answer: Express.js is used for the backend.
 Answer: MongoDB is used as the database.
 
 6. What is MongoDB?
-Answer: MongoDB is a NoSQL document database used to store application data in collections and documents.
+Answer: MongoDB is a NoSQL document database used to store application data 
+in collections and documents.
 
 7. What is React?
-Answer: React is a JavaScript library used to build user interfaces with reusable components.
+Answer: React is a JavaScript library used to build user interfaces 
+with reusable components.
 
 8. What is Express.js?
-Answer: Express.js is a lightweight Node.js web framework used to build APIs and backend logic.
+Answer: Express.js is a lightweight Node.js web framework used to build 
+APIs and backend logic.
 
 9. What is Node.js?
-Answer: Node.js is a JavaScript runtime that allows JavaScript to run on the server side.
+Answer: Node.js is a JavaScript runtime that allows JavaScript 
+to run on the server side.
 
 10. What is JWT?
-Answer: JWT stands for JSON Web Token. It is used to securely authenticate users by sending a signed token between frontend and backend.
+Answer: JWT stands for JSON Web Token. 
+It is used to securely authenticate users by sending a signed token 
+between frontend and backend.
 
 11. What is a user model?
-Answer: A user model defines the structure of the user document in the database, such as name, email, and password.
+Answer: A user model defines the structure of the user document in 
+the database, such as name, email, and password.
 
 12. What is a task model?
-Answer: A task model defines how each task is stored, including user reference, title, description, and status.
+Answer: A task model defines how each task is stored, 
+including user reference, title, description, and status.
 
 13. What is the difference between frontend and backend?
-Answer: The frontend is what users see and interact with, while the backend handles logic, database communication, and authentication.
+Answer: The frontend is what users see and interact with, 
+while the backend handles logic, database communication, and authentication.
 
 14. What is the purpose of authentication?
-Answer: Authentication verifies who the user is before allowing access to protected resources.
+Answer: Authentication verifies who the user is before allowing access 
+to protected resources.
 
 15. What is authorization?
-Answer: Authorization decides whether an authenticated user is allowed to perform a specific action or access certain data.
+Answer: Authorization decides whether an authenticated user is allowed to 
+perform a specific action or access certain data.
 
 16. What is a protected route?
-Answer: A protected route is a route that can only be accessed by logged-in users.
+Answer: A protected route is a route that can only be accessed by 
+logged-in users.
 
 17. Why is password hashing important?
 Answer: Hashing protects user passwords by storing a transformed version instead of the plain text password.

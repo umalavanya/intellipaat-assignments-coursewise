@@ -1,0 +1,114 @@
+COMPLETED TASK SLIDE-TO-END INSTRUCTIONS
+=========================================
+
+Goal
+----
+When a task is marked as completed:
+
+1. Strike through its title and description.
+2. Move it automatically to the end of the task list.
+3. Animate the movement smoothly.
+
+No backend changes or taskSlice.js changes are required.
+
+Step 1: Install the animation library
+--------------------------------------
+Open a terminal and run:
+
+cd frontend/client
+npm install framer-motion
+
+Step 2: Update Dashboard.jsx
+----------------------------
+Open:
+
+frontend/client/src/components/Dashboard.jsx
+
+Add this import with the other imports:
+
+import { motion } from 'framer-motion';
+
+Before the component's return statement, create a sorted copy of the tasks:
+
+const sortedTasks = [...tasks].sort(
+  (a, b) =>
+    Number(a.status === 'completed') - Number(b.status === 'completed')
+);
+
+The spread operator is important because it prevents mutating the Redux tasks array.
+
+Step 3: Render sortedTasks
+--------------------------
+Find the existing task-list code:
+
+{tasks && tasks.map((task) => (
+  <div key={task._id} className="task-card">
+
+Replace it with:
+
+{sortedTasks.map((task) => (
+  <motion.div
+    key={task._id}
+    layout
+    transition={{ duration: 0.4, ease: 'easeInOut' }}
+    className={`task-card ${
+      task.status === 'completed' ? 'completed' : ''
+    }`}
+  >
+
+At the end of that task card, replace the matching closing </div> with:
+
+</motion.div>
+
+Keep the existing key={task._id}. React and Framer Motion use it to identify the same task while its position changes.
+
+Step 4: Add strike-through styling
+----------------------------------
+Open:
+
+frontend/client/src/index.css
+
+Add this CSS:
+
+.task-card.completed .task-title,
+.task-card.completed .task-description {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+How it works
+------------
+The existing handleToggleStatus function already changes the task status between pending and completed and sends the update to the backend.
+
+After the update succeeds:
+
+1. Redux receives the updated task.
+2. sortedTasks places pending tasks first and completed tasks last.
+3. The completed class applies the strike-through styling.
+4. motion.div with layout animates the task to its new position.
+
+The relevant existing handler should remain:
+
+const handleToggleStatus = (task) => {
+  const updatedTask = {
+    ...task,
+    status: task.status === 'pending' ? 'completed' : 'pending',
+  };
+  dispatch(updateTask({ id: task._id, taskData: updatedTask }));
+};
+
+Important notes
+---------------
+- Do not use tasks.sort(...) directly because it mutates Redux state.
+- Use [...tasks].sort(...).
+- CSS order by itself can place completed tasks at the end, but it will not smoothly animate the movement.
+- If a completed task is marked pending again, it will automatically move back before the completed tasks.
+
+Test checklist
+--------------
+1. Start the frontend with npm run dev.
+2. Create two or more pending tasks.
+3. Mark one task as completed.
+4. Confirm that its title and description are struck through.
+5. Confirm that it slides to the end of the list.
+6. Mark it pending again and confirm that it moves back before completed tasks.
