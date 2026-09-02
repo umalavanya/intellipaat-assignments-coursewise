@@ -1,0 +1,130 @@
+==========================================
+TASK MANAGER API ENDPOINTS - POSTMAN GUIDE
+==========================================
+
+BASE URL: http://localhost:5000
+
+==========================================
+1. TEST ENDPOINT
+==========================================
+Method: GET
+URL: http://localhost:5000/api/test
+Headers: None
+Body: None
+Response: { "message": "Server is running!" }
+
+==========================================
+2. ROOT ENDPOINT
+==========================================
+Method: GET
+URL: http://localhost:5000/
+Headers: None
+Body: None
+Response: Task Manager API is running
+
+==========================================
+AUTHENTICATION ENDPOINTS
+==========================================
+
+--- REGISTER USER ---
+Method: POST
+URL: http://localhost:5000/api/auth/register
+Headers: Content-Type: application/json
+Body:
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+Response:
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+
+--- LOGIN USER ---
+Method: POST
+URL: http://localhost:5000/api/auth/login
+Headers: Content-Type: application/json
+Body:
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+Response:
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+
+==========================================
+TASK ENDPOINTS (All require authentication)
+==========================================
+
+--- CREATE TASK ---
+Method: POST
+URL: http://localhost:5000/api/tasks
+Headers:
+  Content-Type: application/json
+  Authorization: Bearer {token}
+Body:
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread",
+  "status": "pending"
+}
+Response: { "_id": "...", "user": "...", "title": "...", "description": "...", "status": "pending" }
+
+--- GET ALL TASKS ---
+Method: GET
+URL: http://localhost:5000/api/tasks
+Headers: Authorization: Bearer {token}
+Body: None
+Response: Array of tasks
+
+--- UPDATE TASK ---
+Method: PUT
+URL: http://localhost:5000/api/tasks/{taskId}
+Headers:
+  Content-Type: application/json
+  Authorization: Bearer {token}
+Body:
+{
+  "title": "Buy groceries",
+  "status": "completed"
+}
+Response: Updated task object
+
+--- DELETE TASK ---
+Method: DELETE
+URL: http://localhost:5000/api/tasks/{taskId}
+Headers: Authorization: Bearer {token}
+Body: None
+Response: { "message": "Task removed" }
+
+==========================================
+TESTING FLOW IN POSTMAN
+==========================================
+
+1. First, call Register or Login to get a token
+2. Copy the token from the response
+3. For protected endpoints, add Authorization header with value: Bearer {your-token}
+4. Test task operations using the token
+
+==========================================
+IMPORTANT NOTES
+==========================================
+
+- All protected endpoints require Authorization header
+- Token format: Bearer {jwt_token}
+- Replace {taskId} with actual task ID from database
+- Replace {token} with actual JWT token from login/register
+- Status values: "pending" or "completed"
