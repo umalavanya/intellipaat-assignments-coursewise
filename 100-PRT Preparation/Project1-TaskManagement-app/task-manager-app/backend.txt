@@ -1,0 +1,430 @@
+==================================================
+TASK MANAGER APP - BACKEND
+==================================================
+
+File: backend/.env
+==================================================
+
+[Contents not available in workspace listing; inspect file if needed]
+
+File: backend/package.json
+==================================================
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
+
+File: backend/server.js
+==================================================
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./config/db');
+
+dotenv.config();
+
+// Connect to MongoDB with error handling
+connectDB().catch(err => {
+  console.error('Failed to connect to MongoDB:', err);
+  process.exit(1);
+});
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Test route to check if server is working
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is running!' });
+});
+
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/tasks', require('./routes/taskRoutes'));
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('Task Manager API is running');
+});
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Global error:', err);
+  res.status(500).json({ 
+    message: 'Something went wrong!', 
+    error: err.message 
+  });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Test the server at: http://localhost:${PORT}/api/test`);
+});
+
+File: backend/config/db.js
+==================================================
+const mongoose = require('mongoose') ;
+
+const connectDB = async () => {
+    try{
+        await mongoose.connect(process.env.MONGO_URI) ;
+        console.log('MongoDB Connected') ;
+    } catch (error) {
+        console.error(error.message) ;
+        process.exit(1) ;
+    } 
+} ;
+
+module.exports = connectDB ;
+
+File: backend/controllers/authController.js
+==================================================
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  });
+};
+
+// @desc    Register user
+// @route   POST /api/auth/register
+// @access  Public
+const registerUser = async (req, res) => {
+  console.log('Registration request received:', req.body); // LOGGING
+  
+  try {
+    const { name, email, password } = req.body;
+
+    // Validation
+    if (!name || !email || !password) {
+      console.log('Missing fields:', { name, email, password }); // LOGGING
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    // Check if user exists
+    const userExists = await User.findOne({ email });
+    console.log('User exists check:', userExists); // LOGGING
+    
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Create user
+    console.log('Creating user...'); // LOGGING
+    const user = await User.create({ 
+      name, 
+      email, 
+      password 
+    });
+    console.log('User created:', user); // LOGGING
+
+    if (user) {
+      const token = generateToken(user.id);
+      res.status(201).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid user data' });
+    }
+  } catch (error) {
+    console.error('Registration error DETAILS:', error); // LOGGING
+    console.error('Error stack:', error.stack); // LOGGING
+    res.status(500).json({ 
+      message: error.message,
+      stack: error.stack 
+    });
+  }
+};
+
+// @desc    Login user
+// @route   POST /api/auth/login
+// @access  Public
+const loginUser = async (req, res) => {
+  console.log('Login request received:', req.body); // LOGGING
+  
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    const user = await User.findOne({ email });
+    console.log('User found:', user ? 'Yes' : 'No'); // LOGGING
+    
+    if (user && (await user.matchPassword(password))) {
+      const token = generateToken(user.id);
+      res.json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error('Login error DETAILS:', error); // LOGGING
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser };
+
+File: backend/controllers/taskController.js
+==================================================
+const Task = require('../models/Task');
+
+// @desc    Create a task
+// @route   POST /api/tasks
+// @access  Private
+const createTask = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+
+    if (!title || !description) {
+      return res.status(400).json({ message: 'Please fill all fields' });
+    }
+
+    const task = await Task.create({
+      user: req.user.id,
+      title,
+      description,
+    });
+
+    res.status(201).json(task);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Get all tasks.
+// @route   GET /api/tasks
+// @access  Private
+const getTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ user: req.user.id });
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Update task
+// @route   PUT /api/tasks/:id
+// @access  Private
+const updateTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    // Check user
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Delete task
+// @route   DELETE /api/tasks/:id
+// @access  Private
+const deleteTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    await task.deleteOne();
+    res.json({ message: 'Task removed' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createTask, getTasks, updateTask, deleteTask };
+
+File: backend/middleware/auth.js
+==================================================
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const protect = async (req, res, next) => {
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select('-password');
+      next();
+    } catch (error) {
+      res.status(401).json({ message: 'Not authorized, token failed' });
+    }
+  }
+
+  if (!token) {
+    res.status(401).json({ message: 'Not authorized, no token' });
+  }
+};
+
+module.exports = { protect };
+
+File: backend/models/User.js
+==================================================
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true,
+});
+
+// Password hashing middleware
+UserSchema.pre('save', async function() {
+  // Only hash the password if it's modified (or new)
+  if (!this.isModified('password')) {
+    return next;
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Method to compare password
+UserSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
+
+File: backend/models/Task.js
+==================================================
+const mongoose = require('mongoose') ;
+
+const TaskSchema = new mongoose.Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required: true,
+    },
+    title: {
+        type:String,
+        required: true,
+        trim: true, 
+    },
+    description:{
+        type: String,
+        required: true,
+    },
+    status:{
+        type:String,
+        enum:['pending', 'completed'],
+        default:'pending'
+    }
+
+},{
+    timestamps: true,
+
+}) ;
+
+module.exports = mongoose.model('Task', TaskSchema) ;
+
+File: backend/routes/authRoutes.js
+==================================================
+const express = require('express');
+const router = express.Router();
+const { registerUser, loginUser } = require('../controllers/authController');
+
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+
+module.exports = router;
+
+File: backend/routes/taskRoutes.js
+==================================================
+const express = require('express');
+const router = express.Router();
+const { protect } = require('../middleware/auth');
+const {
+  createTask,
+  getTasks,
+  updateTask,
+  deleteTask,
+} = require('../controllers/taskController');
+
+router.route('/')
+  .post(protect, createTask)
+  .get(protect, getTasks);
+
+router.route('/:id')
+  .put(protect, updateTask)
+  .delete(protect, deleteTask);
+
+module.exports = router;
+
+==================================================
+END OF BACKEND FILES
+==================================================
