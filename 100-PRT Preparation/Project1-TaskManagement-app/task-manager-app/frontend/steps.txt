@@ -1,0 +1,1381 @@
+FRONTEND MICROTASK GUIDE FOR THIS TASK MANAGER APP
+=================================================
+
+Goal:
+Create a React + Vite frontend that matches this project structure and behavior:
+- user can register and login
+- protected dashboard route
+- list tasks
+- create, edit, toggle completion, delete tasks
+- use Redux Toolkit for auth and task state
+- use React Router for navigation
+- use Axios to call the backend APIs
+- use Lucide icons and custom CSS for styling
+
+This guide is written as microtasks. Follow them in order.
+
+-------------------------------------------------------------------
+MICROTASK 1: CREATE FRONTEND FOLDER STRUCTURE
+-------------------------------------------------------------------
+Inside the project root, create:
+
+frontend/
+  client/
+    package.json
+    vite.config.js
+    index.html
+    public/
+    src/
+      App.jsx
+      main.jsx
+      index.css
+      assets/
+      components/
+        Login.jsx
+        Register.jsx
+        Dashboard.jsx
+        TaskForm.jsx
+        PrivateRoute.jsx
+      store/
+        authSlice.js
+        taskSlice.js
+        store.js
+
+Important:
+- Use `frontend/client` as the actual app folder.
+- `src` is where all React components live.
+- `store` holds Redux state slices.
+
+-------------------------------------------------------------------
+MICROTASK 2: INITIALIZE REACT APP WITH VITE
+-------------------------------------------------------------------
+Open terminal in `frontend/client` and run:
+
+npm init vite@latest . -- --template react
+
+If you want to recreate the exact package setup used here, make sure the app uses:
+- React 19
+- Vite 8
+- React Router DOM
+- Redux Toolkit
+- Axios
+- Lucide React
+
+Then install dependencies:
+
+npm install react-redux @reduxjs/toolkit axios react-router-dom lucide-react
+
+Also ensure these dev dependencies exist:
+
+npm install -D vite @vitejs/plugin-react @types/react @types/react-dom
+
+Your package.json should look like this structurally:
+
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
+    "axios": "^1.19.0",
+    "lucide-react": "^1.34.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^7.18.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "oxlint": "^1.79.0",
+    "vite": "^8.2.2"
+  }
+}
+
+-------------------------------------------------------------------
+MICROTASK 3: CONFIGURE VITE AND HTML ENTRY POINT
+-------------------------------------------------------------------
+Create or update `vite.config.js` so React works properly:
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+});
+
+Create `index.html` with a root div:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+-------------------------------------------------------------------
+MICROTASK 4: SET UP THE REDUX STORE ENTRY
+-------------------------------------------------------------------
+Create `src/store/store.js`:
+
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './authSlice';
+import taskReducer from './taskSlice';
+
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    tasks: taskReducer,
+  },
+});
+
+This is important because the app has two slices:
+- auth: login / register / logout state
+- tasks: create / read / update / delete task state
+
+-------------------------------------------------------------------
+MICROTASK 5: CREATE THE APP ROOT AND RENDER THE STORE
+-------------------------------------------------------------------
+Create `src/main.jsx` like this:
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import App from './App.jsx';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+This ensures every component can access Redux state.
+
+-------------------------------------------------------------------
+MICROTASK 6: BUILD THE APP ROUTER
+-------------------------------------------------------------------
+Create `src/App.jsx` with routes:
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route 
+          path="/" 
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard" 
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          } 
+        />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+Important rules:
+- `/login` and `/register` are public
+- `/` and `/dashboard` are protected
+- `PrivateRoute` redirect logic prevents unauthenticated users from seeing the dashboard
+
+-------------------------------------------------------------------
+MICROTASK 7: BUILD THE PROTECTED ROUTE WRAPPER
+-------------------------------------------------------------------
+Create `src/components/PrivateRoute.jsx`:
+
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+const PrivateRoute = ({ children }) => {
+  const { user } = useSelector((state) => state.auth);
+  
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
+};
+
+export default PrivateRoute;
+
+This checks whether a logged-in user exists in Redux state.
+
+-------------------------------------------------------------------
+MICROTASK 8: CREATE AUTH REDUX SLICE
+-------------------------------------------------------------------
+Create `src/store/authSlice.js`.
+
+This slice should include:
+- initial state from localStorage
+- `register` async thunk calling `POST http://localhost:5000/api/auth/register`
+- `login` async thunk calling `POST http://localhost:5000/api/auth/login`
+- `logout` async thunk removing the user from localStorage
+- reducers `reset` to clear loading/error/success flags
+- extraReducers for pending/fulfilled/rejected states
+
+Exact structure:
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const user = JSON.parse(localStorage.getItem('user'));
+
+const initialState = {
+  user: user || null,
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+  message: '',
+};
+
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      if (response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+      }
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', userData);
+      if (response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+      }
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  localStorage.removeItem('user');
+});
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    reset: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = '';
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.message = '';
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.message = '';
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.isSuccess = false;
+        state.isError = false;
+        state.message = '';
+      });
+  },
+});
+
+export const { reset } = authSlice.actions;
+export default authSlice.reducer;
+
+Important behavior:
+- `localStorage` stores the user object containing token and user info
+- login/register success updates auth state and triggers the route to navigate to dashboard
+
+-------------------------------------------------------------------
+MICROTASK 9: BUILD LOGIN PAGE
+-------------------------------------------------------------------
+Create `src/components/Login.jsx`.
+
+This form should:
+- hold email and password in local form state
+- dispatch `login({ email, password })` on submit
+- show `isError && <div className="error">{message}</div>`
+- navigate to `/dashboard` when `user` or `isSuccess` becomes true
+- use `Link` to route to `/register`
+- disable submit button while loading
+
+Exact logic:
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { login, reset } from '../store/authSlice';
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isSuccess || user) {
+      navigate('/dashboard');
+    }
+    dispatch(reset());
+  }, [user, isSuccess, navigate, dispatch]);
+
+  const onChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({ email, password }));
+  };
+
+  return (
+    <div className="auth-container">
+      <h2>Login</h2>
+      {isError && <div className="error">{message}</div>}
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+            placeholder="Enter your email"
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            required
+            placeholder="Enter password"
+          />
+        </div>
+        <button type="submit" className="btn" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
+        </button>
+        <p style={{ marginTop: '15px', textAlign: 'center' }}>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+-------------------------------------------------------------------
+MICROTASK 10: BUILD REGISTRATION PAGE
+-------------------------------------------------------------------
+Create `src/components/Register.jsx`.
+
+This page must:
+- collect `name`, `email`, `password`, `confirmPassword`
+- compare password and confirmPassword
+- show an alert if they don’t match
+- call `dispatch(register(userData))`
+- navigate to `/dashboard` on success
+- link back to login page
+
+The logic should be:
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { register, reset } from '../store/authSlice';
+
+const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const { name, email, password, confirmPassword } = formData;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isSuccess || user) {
+      navigate('/dashboard');
+    }
+    dispatch(reset());
+  }, [user, isSuccess, navigate, dispatch]);
+
+  const onChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    const userData = { name, email, password };
+    dispatch(register(userData));
+  };
+
+  return (
+    <div className="auth-container">
+      <h2>Register</h2>
+      {isError && <div className="error">{message}</div>}
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChange}
+            required
+            placeholder="Enter your name"
+          />
+        </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+            placeholder="Enter your email"
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            required
+            placeholder="Enter password"
+            minLength="6"
+          />
+        </div>
+        <div className="form-group">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={onChange}
+            required
+            placeholder="Confirm password"
+            minLength="6"
+          />
+        </div>
+        <button type="submit" className="btn" disabled={isLoading}>
+          {isLoading ? 'Registering...' : 'Register'}
+        </button>
+        <p style={{ marginTop: '15px', textAlign: 'center' }}>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Register;
+
+-------------------------------------------------------------------
+MICROTASK 11: CREATE TASK SLICE
+-------------------------------------------------------------------
+Create `src/store/taskSlice.js`.
+
+This slice must manage task CRUD operations using JWT token from localStorage.
+
+Important logic:
+- get token from `localStorage.getItem('user')`
+- create `config = { headers: { Authorization: `Bearer ${token}` } }`
+- call backend endpoints:
+  - POST `http://localhost:5000/api/tasks`
+  - GET `http://localhost:5000/api/tasks`
+  - PUT `http://localhost:5000/api/tasks/${id}`
+  - DELETE `http://localhost:5000/api/tasks/${id}`
+
+Structure:
+
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const initialState = {
+  tasks: [],
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+  message: '',
+};
+
+const getToken = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user?.token;
+};
+
+export const createTask = createAsyncThunk(
+  'tasks/create',
+  async (taskData, thunkAPI) => {
+    try {
+      const token = getToken();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post('http://localhost:5000/api/tasks', taskData, config);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getTasks = createAsyncThunk(
+  'tasks/getAll',
+  async (_, thunkAPI) => {
+    try {
+      const token = getToken();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get('http://localhost:5000/api/tasks', config);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  'tasks/update',
+  async ({ id, taskData }, thunkAPI) => {
+    try {
+      const token = getToken();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(`http://localhost:5000/api/tasks/${id}`, taskData, config);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'tasks/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = getToken();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await axios.delete(`http://localhost:5000/api/tasks/${id}`, config);
+      return id;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+const taskSlice = createSlice({
+  name: 'tasks',
+  initialState,
+  reducers: {
+    reset: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = '';
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.tasks.push(action.payload);
+      })
+      .addCase(createTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getTasks.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTasks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.tasks = action.payload;
+      })
+      .addCase(getTasks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const index = state.tasks.findIndex(task => task._id === action.payload._id);
+        if (index !== -1) {
+          state.tasks[index] = action.payload;
+        }
+      })
+      .addCase(updateTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.tasks = state.tasks.filter(task => task._id !== action.payload);
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      });
+  },
+});
+
+export const { reset } = taskSlice.actions;
+export default taskSlice.reducer;
+
+-------------------------------------------------------------------
+MICROTASK 12: BUILD TASK FORM MODAL
+-------------------------------------------------------------------
+Create `src/components/TaskForm.jsx`.
+
+This modal supports both create and edit states.
+
+Required behavior:
+- Accept props: `taskToEdit` and `onClose`
+- form fields: `title`, `description`, `status`
+- if editing, pre-fill form with task values
+- if not editing, default status is `pending`
+- on submit:
+  - validate `title` and `description`
+  - if editing, call `dispatch(updateTask({ id: taskToEdit._id, taskData: formData })).unwrap()`
+  - else `dispatch(createTask(formData)).unwrap()`
+  - clear form and close modal after success
+  - call `dispatch(reset())`
+- if there is an error, keep form open and show error message
+
+Structure:
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTask, updateTask, reset } from '../store/taskSlice';
+
+const TaskForm = ({ taskToEdit, onClose }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    status: 'pending',
+  });
+
+  const { title, description, status } = formData;
+  const dispatch = useDispatch();
+  const { isLoading, isError, message } = useSelector((state) => state.tasks);
+
+  useEffect(() => {
+    if (taskToEdit) {
+      setFormData({
+        title: taskToEdit.title || '',
+        description: taskToEdit.description || '',
+        status: taskToEdit.status || 'pending',
+      });
+    }
+  }, [taskToEdit]);
+
+  const onChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!title || !description) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    try {
+      if (taskToEdit) {
+        await dispatch(updateTask({ id: taskToEdit._id, taskData: formData })).unwrap();
+      } else {
+        await dispatch(createTask(formData)).unwrap();
+      }
+
+      setFormData({ title: '', description: '', status: 'pending' });
+      onClose();
+      dispatch(reset());
+    } catch {
+      // Keep form open for error display
+    }
+  };
+
+  return (
+    <div className="task-form-modal" onClick={onClose}>
+      <div className="task-form-content" onClick={(e) => e.stopPropagation()}>
+        <h2>{taskToEdit ? 'Edit Task' : 'Create New Task'}</h2>
+        {isError && <div className="error">{message}</div>}
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              type="text"
+              name="title"
+              value={title}
+              onChange={onChange}
+              required
+              placeholder="Enter task title"
+            />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="description"
+              value={description}
+              onChange={onChange}
+              required
+              placeholder="Enter task description"
+            />
+          </div>
+          {taskToEdit && (
+            <div className="form-group">
+              <label>Status</label>
+              <select name="status" value={status} onChange={onChange}>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          )}
+          
+          <div className="form-actions">
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? 'Saving...' : taskToEdit ? 'Update' : 'Create'}
+            </button>
+            <button type="button" onClick={onClose}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default TaskForm;
+
+-------------------------------------------------------------------
+MICROTASK 13: BUILD DASHBOARD SCREEN
+-------------------------------------------------------------------
+Create `src/components/Dashboard.jsx`.
+
+This dashboard should:
+- read `user` and `tasks` from Redux
+- redirect to `/login` if no user exists
+- on mount, if user exists, call `dispatch(getTasks())`
+- reset task state when component unmounts
+- show welcome message with `user?.name`
+- show "New Task" button to open create modal
+- show "Logout" button
+- list all tasks in cards
+- each card shows title, description, status badge
+- each task card has buttons:
+  - toggle done/pending
+  - edit
+  - delete
+- use `TaskForm` modal for create/edit
+
+Exact logic:
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../store/authSlice';
+import { getTasks, deleteTask, updateTask, reset } from '../store/taskSlice';
+import TaskForm from './TaskForm';
+import { 
+  PlusCircle, 
+  LogOut, 
+  Edit, 
+  Trash2, 
+  CheckCircle, 
+  Circle,
+  ListChecks 
+} from 'lucide-react';
+
+const Dashboard = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const { tasks, isLoading } = useSelector((state) => state.tasks);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      dispatch(getTasks());
+    }
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      dispatch(deleteTask(id));
+    }
+  };
+
+  const handleToggleStatus = (task) => {
+    const updatedTask = {
+      ...task,
+      status: task.status === 'pending' ? 'completed' : 'pending',
+    };
+    dispatch(updateTask({ id: task._id, taskData: updatedTask }));
+  };
+
+  const openEditForm = (task) => {
+    setEditingTask(task);
+    setShowForm(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setEditingTask(null);
+  };
+
+  return (
+    <div className="container">
+      <div className="header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <ListChecks size={28} color="#1a1a2e" />
+          <h1>Task Manager</h1>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <span style={{ color: '#666' }}>Welcome, {user?.name}</span>
+          <button onClick={() => setShowForm(true)} style={{ background: '#1a1a2e' }}>
+            <PlusCircle size={18} style={{ marginRight: '5px' }} />
+            New Task
+          </button>
+          <button onClick={handleLogout} style={{ background: '#e94560' }}>
+            <LogOut size={18} style={{ marginRight: '5px' }} />
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {isLoading && <div style={{ textAlign: 'center', padding: '20px' }}>Loading tasks...</div>}
+
+      {tasks && tasks.length === 0 && !isLoading && (
+        <div className="empty-state">
+          <p>No tasks yet. Click "New Task" to create one!</p>
+        </div>
+      )}
+
+      {tasks && tasks.map((task) => (
+        <div key={task._id} className="task-card">
+          <div className="task-content">
+            <div className="task-title">{task.title}</div>
+            <div className="task-description">{task.description}</div>
+            <span className={`task-status ${task.status === 'completed' ? 'status-completed' : 'status-pending'}`}>
+              {task.status}
+            </span>
+          </div>
+          <div className="task-actions">
+            <button 
+              className="btn-toggle" 
+              onClick={() => handleToggleStatus(task)}
+              title={task.status === 'pending' ? 'Mark as completed' : 'Mark as pending'}
+            >
+              {task.status === 'pending' ? <CheckCircle size={18} /> : <Circle size={18} />}
+            </button>
+            <button className="btn-edit" onClick={() => openEditForm(task)}>
+              <Edit size={18} />
+            </button>
+            <button className="btn-delete" onClick={() => handleDelete(task._id)}>
+              <Trash2 size={18} />
+            </button>
+          </div>
+        </div>
+      ))}
+
+      {showForm && (
+        <TaskForm 
+          taskToEdit={editingTask} 
+          onClose={closeForm} 
+        />
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;
+
+Important details:
+- `user?.name` is displayed in the header after login
+- `button` with `PlusCircle` opens create modal
+- `task.status` is toggled between `pending` and `completed`
+- `window.confirm()` is used before deleting a task
+
+-------------------------------------------------------------------
+MICROTASK 14: ADD GLOBAL STYLES
+-------------------------------------------------------------------
+Create `src/index.css` and copy the exact styling pattern used here.
+
+This file should include:
+- global reset using `* { margin: 0; padding: 0; box-sizing: border-box; }`
+- `body` background `#f0f2f5`, font family `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif`
+- `.container` max width 800px and center alignment
+- `.auth-container` for login/register card
+- `.form-group` and its labels, inputs, textarea
+- `.btn`, `.btn-secondary`, `.error`, `.success`
+- `.header` flex layout
+- `.task-card`, `.task-content`, `.task-title`, `.task-description`, `.task-status`, `.status-pending`, `.status-completed`
+- `.task-actions`, `.btn-edit`, `.btn-delete`, `.btn-toggle`
+- `.task-form-modal`, `.task-form-content`, `.form-actions`, `.empty-state`
+
+Use this CSS style structure:
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.auth-container {
+  max-width: 400px;
+  margin: 100px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1a1a2e;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #16213e;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #fee;
+  color: #c0392b;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #1a1a2e;
+}
+
+.header button {
+  padding: 8px 20px;
+  background: #e94560;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.task-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.task-description {
+  color: #666;
+  margin: 5px 0;
+}
+
+.task-status {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.task-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-edit {
+  background: #4a90d9;
+  color: white;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-toggle {
+  background: #2ecc71;
+  color: white;
+}
+
+.task-form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.task-form-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions button[type="submit"] {
+  background: #1a1a2e;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background: #ddd;
+  color: #333;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+}
+
+-------------------------------------------------------------------
+MICROTASK 15: UNDERSTAND THE BACKEND API CONTRACT
+-------------------------------------------------------------------
+Your frontend depends on these API routes from the backend:
+
+Auth:
+- POST /api/auth/register
+- POST /api/auth/login
+
+Tasks:
+- GET /api/tasks
+- POST /api/tasks
+- PUT /api/tasks/:id
+- DELETE /api/tasks/:id
+
+Authentication:
+- Send `Authorization: Bearer <token>` header for all task APIs
+- The backend returns a user object from localStorage, which includes the token
+
+Data shape expected by the frontend:
+- user: { _id, name, email, token }
+- task: { _id, title, description, status, user }
+
+-------------------------------------------------------------------
+MICROTASK 16: RUN THE APP
+-------------------------------------------------------------------
+In `frontend/client`, run:
+
+npm install
+npm run dev
+
+Then open the local Vite URL in the browser.
+
+Expected flow:
+1. Sign up for an account
+2. Login
+3. Dashboard loads tasks
+4. Create a new task
+5. Edit a task
+6. Toggle task status
+7. Delete task
+8. Logout
+
+-------------------------------------------------------------------
+MICROTASK 17: CHECK FOR COMMON BUGS
+-------------------------------------------------------------------
+Before considering the frontend complete, verify these:
+
+- Route guard blocks access to `/dashboard` when no user exists
+- `localStorage` value is read correctly with JSON parsing
+- `logout` removes the saved user from localStorage
+- Task fetch runs only after user is present
+- `TaskForm` closes only after successful create or update
+- Warnings or errors from React Router are not present
+- Task list re-renders after CRUD operations
+- Status badges show pending/completed correctly
+- Buttons have working `onClick` handlers
+- Password mismatch validation works during registration
+
+-------------------------------------------------------------------
+MICROTASK 18: FINAL FILE SUMMARY
+-------------------------------------------------------------------
+Your final frontend should contain these files:
+
+frontend/client/src/App.jsx
+frontend/client/src/main.jsx
+frontend/client/src/index.css
+frontend/client/src/store/store.js
+frontend/client/src/store/authSlice.js
+frontend/client/src/store/taskSlice.js
+frontend/client/src/components/Login.jsx
+frontend/client/src/components/Register.jsx
+frontend/client/src/components/PrivateRoute.jsx
+frontend/client/src/components/Dashboard.jsx
+frontend/client/src/components/TaskForm.jsx
+
+If you follow all steps in order, you will recreate the same frontend behavior and structure as this project.
