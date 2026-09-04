@@ -1,0 +1,97 @@
+TASK MANAGEMENT API ENDPOINTS
+==============================
+
+BASE URL
+--------
+Use the port shown in your .env file (for example, 5000):
+http://localhost:5000
+
+
+BROWSER CHECKS (GET requests)
+-----------------------------
+1. Health check
+   URL: http://localhost:5000/test
+   Method: GET
+   Browser result: {"message":"The server is working!!"}
+
+2. API welcome message
+   URL: http://localhost:5000/
+   Method: GET
+   Browser result: {"message":"Task Manager API is running"}
+
+3. Get all tasks for the logged-in user
+   URL: http://localhost:5000/api/tasks
+   Method: GET
+   Header required: Authorization: Bearer YOUR_JWT_TOKEN
+   Note: The browser address bar cannot send this Authorization header.
+         Use Postman, Thunder Client, or a frontend fetch request.
+
+
+AUTHENTICATION ENDPOINTS
+------------------------
+4. Register a user
+   URL: http://localhost:5000/api/auth/register
+   Method: POST
+   Body (JSON):
+   {
+     "name": "Test User",
+     "email": "test@example.com",
+     "password": "password123"
+   }
+   Authentication: Not required
+
+5. Login a user
+   URL: http://localhost:5000/api/auth/login
+   Method: POST
+   Body (JSON):
+   {
+     "email": "test@example.com",
+     "password": "password123"
+   }
+   Authentication: Not required
+   Save the token returned in the response for task requests.
+
+
+TASK ENDPOINTS
+--------------
+All task endpoints require this header:
+Authorization: Bearer YOUR_JWT_TOKEN
+
+6. Create a task
+   URL: http://localhost:5000/api/tasks
+   Method: POST
+   Body (JSON):
+   {
+     "title": "Learn Express",
+     "description": "Build a task management API"
+   }
+
+7. Get all tasks
+   URL: http://localhost:5000/api/tasks
+   Method: GET
+
+8. Update a task
+   URL: http://localhost:5000/api/tasks/TASK_ID
+   Method: PUT
+   Body (JSON) - send one or more fields:
+   {
+     "title": "Learn Express and MongoDB",
+     "description": "Build and test the API",
+     "status": "completed"
+   }
+   Replace TASK_ID with the task _id returned by create/get.
+
+9. Delete a task
+   URL: http://localhost:5000/api/tasks/TASK_ID
+   Method: DELETE
+   Replace TASK_ID with the task _id returned by create/get.
+
+
+POSTMAN / THUNDER CLIENT ORDER
+------------------------------
+1. Open /api/auth/register with the JSON body above.
+2. Open /api/auth/login with the JSON body above and copy the returned token.
+3. Add Authorization -> Bearer Token to every task request.
+4. Create a task, copy its _id, then test GET, PUT, and DELETE.
+
+Important: Replace localhost:5000 everywhere if your PORT in .env is different.
