@@ -13,7 +13,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route 
           path="/" 
-          element={<Register />} 
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          } 
         />
         <Route 
           path="/dashboard" 
