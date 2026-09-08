@@ -1,0 +1,58 @@
+const productsSeed = [
+  {
+    name: 'Wireless Noise-Canceling Headphones',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80',
+    description: 'Immerse yourself in pure sound with active noise cancellation, 30-hour battery life, and ultra-soft memory foam earcups.',
+    category: 'Electronics',
+    price: 199.99,
+    countInStock: 15,
+    rating: 4.8,
+  },
+  {
+    name: 'Minimalist Smart Watch',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80',
+    description: 'Track your fitness, heart rate, and notifications in style with a crystal AMOLED display and 7-day battery life.',
+    category: 'Electronics',
+    price: 149.50,
+    countInStock: 20,
+    rating: 4.6,
+  },
+  {
+    name: 'Premium Leather Backpack',
+    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop&q=80',
+    description: 'Crafted from full-grain leather with dedicated 15-inch laptop compartment and water-resistant lining.',
+    category: 'Fashion',
+    price: 119.00,
+    countInStock: 8,
+    rating: 4.7,
+  },
+  {
+    name: 'Mechanical Gaming Keyboard',
+    image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80',
+    description: 'Tactile mechanical switches, customizable RGB backlight, and durable aluminum alloy top frame.',
+    category: 'Electronics',
+    price: 89.99,
+    countInStock: 12,
+    rating: 4.9,
+  },
+  {
+    name: 'Ergonomic Office Chair',
+    image: 'https://images.unsplash.com/photo-1580481072645-022f9a6d83d0?w=600&auto=format&fit=crop&q=80',
+    description: 'Breathable mesh backrest, 3D adjustable armrests, and lumbar support for all-day comfort.',
+    category: 'Furniture',
+    price: 249.99,
+    countInStock: 5,
+    rating: 4.5,
+  },
+  {
+    name: 'Portable Bluetooth Speaker',
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop&q=80',
+    description: '360-degree deep bass sound, IPX7 waterproof rating, and 20 hours of continuous playtime.',
+    category: 'Electronics',
+    price: 69.95,
+    countInStock: 25,
+    rating: 4.6,
+  },
+];
+
+export default productsSeed;
