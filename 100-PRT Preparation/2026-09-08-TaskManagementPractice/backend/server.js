@@ -20,7 +20,7 @@ app.get('/', (req,res) => {
     res.json({message: 'The server is working fine!!!'})
 })
 
-app.use((err, res, req, next) => {
+app.use((err, req, res, next) => {
 
     console.log(err.message) ;
 
