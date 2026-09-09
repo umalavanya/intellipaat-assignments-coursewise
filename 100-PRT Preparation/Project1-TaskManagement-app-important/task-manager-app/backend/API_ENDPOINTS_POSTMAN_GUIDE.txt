@@ -1,0 +1,488 @@
+TASK MANAGER API ENDPOINTS AND POSTMAN TESTING GUIDE
+====================================================
+
+This document describes the API currently implemented in backend/server.js.
+
+1. SERVER SETUP
+---------------
+
+Backend folder:
+  task-manager-app/backend
+
+Install dependencies, if needed:
+  npm install
+
+Create or verify backend/.env:
+  PORT=5000
+  MONGO_URI=mongodb://localhost:27017/task-manager
+  JWT_SECRET=your_secret_key_here
+
+Requirements:
+- Node.js and npm installed
+- MongoDB running
+- A valid MONGO_URI
+- A JWT_SECRET value
+
+Start the backend from the backend folder:
+  npm run dev
+
+Or start it without nodemon:
+  npm start
+
+Default base URL:
+  http://localhost:5000
+
+If PORT in .env is different, replace 5000 in every URL below with that port.
+
+The server must connect to MongoDB before protected task operations can work.
+
+
+2. COMMON POSTMAN SETTINGS
+--------------------------
+
+For every request with a JSON body:
+1. Open the Headers tab.
+2. Add this header:
+     Content-Type: application/json
+3. Select Body > raw.
+4. Select JSON from the format dropdown.
+
+For protected task requests:
+1. Open the Authorization tab.
+2. Set Type to Bearer Token.
+3. Paste the token returned by Register or Login into the Token field.
+
+Postman will then send this header automatically:
+  Authorization: Bearer YOUR_TOKEN_HERE
+
+Recommended Postman environment variables:
+  baseUrl = http://localhost:5000
+  token = paste-the-token-here
+  taskId = paste-a-task-id-here
+
+You can use URLs such as:
+  {{baseUrl}}/api/test
+  {{baseUrl}}/api/auth/register
+  {{baseUrl}}/api/tasks
+
+For Authorization, use the environment variable:
+  {{token}}
+
+
+3. COMPLETE API ENDPOINT LIST
+-----------------------------
+
+A. Health check
+---------------
+Method: GET
+URL: {{baseUrl}}/api/test
+Authentication: None
+
+Purpose:
+Confirms that the Express server is running.
+
+Request body:
+None
+
+Successful response: HTTP 200
+{
+  "message": "Server is running!"
+}
+
+
+B. Root status check
+--------------------
+Method: GET
+URL: {{baseUrl}}/
+Authentication: None
+
+Purpose:
+Confirms that the Task Manager API is available.
+
+Request body:
+None
+
+Successful response: HTTP 200
+Task Manager API is running
+
+
+C. Register a user
+------------------
+Method: POST
+URL: {{baseUrl}}/api/auth/register
+Authentication: None
+
+Headers:
+  Content-Type: application/json
+
+Request body:
+{
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "Password123"
+}
+
+Required fields:
+- name
+- email
+- password
+
+Successful response: HTTP 201
+{
+  "_id": "USER_ID",
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "token": "JWT_TOKEN"
+}
+
+Possible responses:
+- HTTP 400: { "message": "Please fill all fields" }
+- HTTP 400: { "message": "User already exists" }
+- HTTP 500: server or database error
+
+Important:
+Save the token from the successful response. It is required for task requests.
+Do not send a duplicate email when repeating this test. Use a new email address.
+
+
+D. Login
+--------
+Method: POST
+URL: {{baseUrl}}/api/auth/login
+Authentication: None
+
+Headers:
+  Content-Type: application/json
+
+Request body:
+{
+  "email": "testuser@example.com",
+  "password": "Password123"
+}
+
+Required fields:
+- email
+- password
+
+Successful response: HTTP 200
+{
+  "_id": "USER_ID",
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "token": "JWT_TOKEN"
+}
+
+Possible responses:
+- HTTP 400: { "message": "Please fill all fields" }
+- HTTP 401: { "message": "Invalid credentials" }
+- HTTP 500: server or database error
+
+Use the returned token for all protected endpoints.
+
+
+E. Create a task
+-----------------
+Method: POST
+URL: {{baseUrl}}/api/tasks
+Authentication: Bearer token required
+
+Headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+
+Request body:
+{
+  "title": "Prepare Postman tests",
+  "description": "Verify every Task Manager API endpoint"
+}
+
+Required fields:
+- title
+- description
+
+Optional field:
+- status: "pending" or "completed"
+
+Example including status:
+{
+  "title": "Prepare Postman tests",
+  "description": "Verify every Task Manager API endpoint",
+  "status": "pending"
+}
+
+Successful response: HTTP 201
+{
+  "_id": "TASK_ID",
+  "user": "USER_ID",
+  "title": "Prepare Postman tests",
+  "description": "Verify every Task Manager API endpoint",
+  "status": "pending",
+  "createdAt": "DATE",
+  "updatedAt": "DATE",
+  "__v": 0
+}
+
+Save the returned _id as the Postman variable taskId.
+
+Possible responses:
+- HTTP 400: { "message": "Please fill all fields" }
+- HTTP 401: no token or invalid token
+- HTTP 500: server or database error
+
+
+F. Get all current user's tasks
+-------------------------------
+Method: GET
+URL: {{baseUrl}}/api/tasks
+Authentication: Bearer token required
+
+Headers:
+  Authorization: Bearer {{token}}
+
+Request body:
+None
+
+Successful response: HTTP 200
+[
+  {
+    "_id": "TASK_ID",
+    "user": "USER_ID",
+    "title": "Prepare Postman tests",
+    "description": "Verify every Task Manager API endpoint",
+    "status": "pending",
+    "createdAt": "DATE",
+    "updatedAt": "DATE",
+    "__v": 0
+  }
+]
+
+The response contains only tasks belonging to the authenticated user.
+If the user has no tasks, the response is an empty array: []
+
+Possible responses:
+- HTTP 401: no token or invalid token
+- HTTP 500: server or database error
+
+
+G. Update a task
+----------------
+Method: PUT
+URL: {{baseUrl}}/api/tasks/{{taskId}}
+Authentication: Bearer token required
+
+Headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+
+Request body examples:
+{
+  "title": "Prepare final Postman tests",
+  "description": "All endpoints have been verified",
+  "status": "completed"
+}
+
+You may send one or more task fields. Valid task fields are:
+- title
+- description
+- status: "pending" or "completed"
+
+Successful response: HTTP 200
+{
+  "_id": "TASK_ID",
+  "user": "USER_ID",
+  "title": "Prepare final Postman tests",
+  "description": "All endpoints have been verified",
+  "status": "completed",
+  "createdAt": "DATE",
+  "updatedAt": "DATE",
+  "__v": 0
+}
+
+Possible responses:
+- HTTP 401: no token, invalid token, or task belongs to another user
+- HTTP 404: { "message": "Task not found" }
+- HTTP 500: server or database error
+
+
+H. Delete a task
+----------------
+Method: DELETE
+URL: {{baseUrl}}/api/tasks/{{taskId}}
+Authentication: Bearer token required
+
+Headers:
+  Authorization: Bearer {{token}}
+
+Request body:
+None
+
+Successful response: HTTP 200
+{
+  "message": "Task removed"
+}
+
+Possible responses:
+- HTTP 401: no token, invalid token, or task belongs to another user
+- HTTP 404: { "message": "Task not found" }
+- HTTP 500: server or database error
+
+
+4. DETAILED POSTMAN TESTING ORDER
+---------------------------------
+
+Follow these requests in this order.
+
+Step 1: Start the backend
+1. Open a terminal.
+2. Change to the backend folder.
+3. Run npm run dev.
+4. Confirm the terminal shows the server port and MongoDB connection.
+
+Step 2: Create a Postman environment
+1. Open Postman.
+2. Create an environment named Task Manager Local.
+3. Add baseUrl with value http://localhost:5000.
+4. Add token with an empty initial value.
+5. Add taskId with an empty initial value.
+6. Select this environment in the top-right environment selector.
+
+Step 3: Check server health
+1. Create a GET request.
+2. Set the URL to {{baseUrl}}/api/test.
+3. Click Send.
+4. Confirm HTTP 200 and message "Server is running!".
+
+If this fails:
+- Confirm the backend process is still running.
+- Confirm the port in the URL matches PORT in backend/.env.
+- Check the backend terminal for startup errors.
+
+Step 4: Register a test user
+1. Create a POST request to {{baseUrl}}/api/auth/register.
+2. Select Body > raw > JSON.
+3. Enter the registration JSON shown above.
+4. Click Send.
+5. Confirm HTTP 201.
+6. Copy the token from the response.
+7. Open the Task Manager Local environment and set token to this value.
+
+Step 5: Verify login
+1. Create a POST request to {{baseUrl}}/api/auth/login.
+2. Use the same email and password used during registration.
+3. Click Send.
+4. Confirm HTTP 200.
+5. Replace the environment token with the token from this response.
+
+Step 6: Create a task
+1. Create a POST request to {{baseUrl}}/api/tasks.
+2. Open Authorization, choose Bearer Token, and enter {{token}}.
+3. Add the task JSON shown above in Body > raw > JSON.
+4. Click Send.
+5. Confirm HTTP 201.
+6. Copy the response _id into the taskId environment variable.
+
+Step 7: List tasks
+1. Create a GET request to {{baseUrl}}/api/tasks.
+2. Set Authorization to Bearer Token with {{token}}.
+3. Click Send.
+4. Confirm HTTP 200 and verify the created task appears in the array.
+
+Step 8: Update the task
+1. Create a PUT request to {{baseUrl}}/api/tasks/{{taskId}}.
+2. Set Authorization to Bearer Token with {{token}}.
+3. Add the update JSON shown above.
+4. Click Send.
+5. Confirm HTTP 200.
+6. Verify that the title, description, or status changed.
+
+Step 9: Delete the task
+1. Create a DELETE request to {{baseUrl}}/api/tasks/{{taskId}}.
+2. Set Authorization to Bearer Token with {{token}}.
+3. Click Send.
+4. Confirm HTTP 200 and message "Task removed".
+
+Step 10: Confirm deletion
+1. Send GET {{baseUrl}}/api/tasks again.
+2. Confirm the deleted task is no longer in the response.
+
+
+5. NEGATIVE TESTS
+-----------------
+
+These tests verify that authentication and validation are working.
+
+Test A: Missing registration field
+POST {{baseUrl}}/api/auth/register
+Body:
+{
+  "name": "Incomplete User",
+  "email": "incomplete@example.com"
+}
+Expected: HTTP 400 and "Please fill all fields".
+
+Test B: Invalid login password
+POST {{baseUrl}}/api/auth/login
+Body:
+{
+  "email": "testuser@example.com",
+  "password": "WrongPassword"
+}
+Expected: HTTP 401 and "Invalid credentials".
+
+Test C: Task request without a token
+GET {{baseUrl}}/api/tasks
+Remove the Authorization header.
+Expected: HTTP 401 and "Not authorized, no token".
+
+Test D: Create task with missing fields
+POST {{baseUrl}}/api/tasks
+Use a valid token and body:
+{
+  "title": "Only a title"
+}
+Expected: HTTP 400 and "Please fill all fields".
+
+Test E: Nonexistent task
+GET {{baseUrl}}/api/tasks/000000000000000000000000
+Use a valid token.
+Expected: The current implementation has no GET-by-id route, so this URL is not a supported task endpoint. Use PUT or DELETE with a valid task ID when testing a specific task.
+
+Test F: Delete the same task twice
+Send DELETE for the same task ID twice.
+Expected:
+- First request: HTTP 200 and "Task removed".
+- Second request: HTTP 404 and "Task not found".
+
+
+6. POSTMAN CHECKLIST
+--------------------
+
+[ ] MongoDB is running.
+[ ] backend/.env contains MONGO_URI and JWT_SECRET.
+[ ] Backend starts with npm run dev or npm start.
+[ ] GET /api/test returns HTTP 200.
+[ ] POST /api/auth/register returns HTTP 201.
+[ ] POST /api/auth/login returns HTTP 200.
+[ ] The JWT token is saved in the Postman environment.
+[ ] POST /api/tasks returns HTTP 201.
+[ ] The task ID is saved in the Postman environment.
+[ ] GET /api/tasks returns the user's tasks.
+[ ] PUT /api/tasks/:id returns the updated task.
+[ ] DELETE /api/tasks/:id returns HTTP 200.
+[ ] A second GET /api/tasks confirms deletion.
+[ ] Requests without a token return HTTP 401.
+
+
+7. SUPPORTED ROUTES SUMMARY
+---------------------------
+
+GET     /                         Public root status
+GET     /api/test                 Public health check
+POST    /api/auth/register        Public user registration
+POST    /api/auth/login           Public user login
+POST    /api/tasks                Protected task creation
+GET     /api/tasks                Protected list of user's tasks
+PUT     /api/tasks/:id            Protected task update
+DELETE  /api/tasks/:id            Protected task deletion
+
+There is currently no GET /api/tasks/:id endpoint.

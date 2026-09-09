@@ -4,9 +4,12 @@ const createTask = async (req,res) => {
     try{
         const {title, description} = req.body ;
         if(!title || !description) {
-            return res.status(400).json({message:'Please fill all the fields!s'})
+            return res.status(400).json({message:'Please fill all the fields!'})
         }
-        const task = await Task.create({user:req.uer.id,title, description}) ;
+        const task = await Task.create({
+            user:req.user.id,
+            title, 
+            description}) ;
         res.status(201).json(task) ;
     } catch (error){
         res.status(500).json({message:error.message}) ;
@@ -54,7 +57,7 @@ const updateTask = async (req,res) => {
 
 const deleteTask = async (req,res) => {
     try{
-
+        console.log(req.params.id) ;
         const task = await Task.findById(req.params.id) ;
 
         if(!task){
@@ -64,6 +67,8 @@ const deleteTask = async (req,res) => {
         if(task.user.toString() !== req.user.id){
             return res.status(401).json({message: 'Not Authorized'})
         }
+
+        await task.deleteOne() ;
 
     } catch (error){
         res.status(500).json({message:error.message}) ;
