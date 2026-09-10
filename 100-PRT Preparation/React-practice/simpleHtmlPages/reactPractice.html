@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Form Example</title>
+    
+    <!-- 2. Add React, ReactDOM, Babel and PropTypes as script tags -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.8/prop-types.js"></script>
+</head>
+<body>
+    <!-- Root element where React will render -->
+    <div id="root"></div>
+
+    <!-- 3. Add script tag with babel jsx code in it -->
+    <script type="text/babel">
+        // 4. Create a HelpForm component that renders an input 
+        // and a paragraph that displays what user has typed in the form.
+        function HelpForm() {
+            // 5. Use state to keep track of form value
+            const [inputValue, setInputValue] = React.useState('');
+
+            const handleChange = (event) => {
+                setInputValue(event.target.value);
+            };
+
+            return (
+                <div style={{ 
+                    maxWidth: '500px', 
+                    margin: '50px auto', 
+                    padding: '20px',
+                    fontFamily: 'Arial, sans-serif'
+                }}>
+                    <h2>Help Form</h2>
+                    <input 
+                        type="text" 
+                        placeholder="Type something..." 
+                        value={inputValue}
+                        onChange={handleChange}
+                        style={{
+                            width: '100%',
+                            padding: '10px',
+                            fontSize: '16px',
+                            border: '2px solid #ccc',
+                            borderRadius: '6px',
+                            marginBottom: '20px',
+                            boxSizing: 'border-box'
+                        }}
+                    />
+                    <p style={{
+                        padding: '15px',
+                        background: '#f7fafc',
+                        borderRadius: '6px',
+                        border: '1px solid #e2e8f0',
+                        minHeight: '50px',
+                        fontSize: '18px'
+                    }}>
+                        <strong>You typed:</strong> {inputValue || 'Nothing yet...'}
+                    </p>
+                </div>
+            );
+        }
+
+        // Render the component to the root element
+        ReactDOM.createRoot(document.getElementById('root')).render(<HelpForm />);
+    </script>
+</body>
+</html>

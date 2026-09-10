@@ -1,0 +1,16 @@
+*{
+    margin:0 ;
+    padding:0 ;
+    box-sizing:border-box ;
+}
+
+body{
+    background: linear-gradient(130deg, rgb(46, 5, 70), rgb(176, 53, 187));
+    min-height: 100vh ; 
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+

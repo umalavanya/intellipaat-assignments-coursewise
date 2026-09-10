@@ -1,0 +1,102 @@
+/* App Container */
+.app-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Input Form */
+.todo-input-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.todo-input:focus {
+  border-color: #007bff;
+}
+
+.add-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Todo List */
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.todo-text {
+  flex: 1;
+  cursor: pointer; /* Indicates it's clickable */
+  user-select: none;
+}
+
+/* Completed state */
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Remove Button */
+.remove-btn {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}

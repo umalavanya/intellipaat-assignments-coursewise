@@ -1,0 +1,141 @@
+/* Base Styles */
+.main-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 2px solid #333;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.products-container {
+  padding: 1.5rem;
+  border: 2px solid #333;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.product-container-header {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.product-container-description {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.product-item {
+  padding: 1.5rem;
+  border: 2px solid #333;
+  border-radius: 12px;
+  background: #f7f7f7;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ========== MEDIA QUERIES ========== */
+
+/* Tablets (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+  .main-container {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .product-container-header {
+    font-size: 1.3rem;
+  }
+}
+
+/* Small Tablets & Large Phones (481px - 767px) */
+@media screen and (max-width: 768px) {
+  .main-container {
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .products-container {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .product-item {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .product-container-header {
+    font-size: 1.2rem;
+  }
+
+  .product-container-description {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Phones (up to 480px) */
+@media screen and (max-width: 480px) {
+  .main-container {
+    margin: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .products-container {
+    padding: 0.75rem;
+    border-radius: 6px;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .product-item {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .product-container-header {
+    font-size: 1.1rem;
+    padding: 0.25rem;
+  }
+
+  .product-container-description {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .product-item:hover {
+    transform: none; /* Remove hover effect on mobile for better UX */
+  }
+}

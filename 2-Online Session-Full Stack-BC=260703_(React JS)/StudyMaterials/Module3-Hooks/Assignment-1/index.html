@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>useDocumentTitle</title>
+    <!-- React, ReactDOM, Babel -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Custom hook: sets document title
+        function useDocumentTitle(title) {
+            useEffect(() => {
+                document.title = title;
+            }, [title]);
+        }
+
+        function App() {
+            const [title, setTitle] = useState('My Document');
+
+            useDocumentTitle(title);
+
+            return (
+                <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+                    <h2>useDocumentTitle Hook</h2>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Type a title..."
+                        style={{ padding: '8px 12px', fontSize: '16px', width: '300px' }}
+                    />
+                    <p style={{ marginTop: '12px', color: '#555' }}>
+                        Current title: <strong>{title || '(empty)'}</strong>
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#888' }}>
+                        Check the browser tab title 👆
+                    </p>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
