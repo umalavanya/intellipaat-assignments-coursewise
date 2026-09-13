@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Forgot Password</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="index2.css">
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- LOGIN PAGE CONTAINER                       -->
+    <!-- ========================================== -->
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h2>Login</h2>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            
+            <!-- Left Side: Form -->
+            <div class="form-section">
+                <!-- Top Icon Box -->
+                <div class="top-icon-box">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+
+                <form action="#">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon"></i>
+                        <input type="text" placeholder="Username*" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input type="password" placeholder="Password*" required>
+                        <i class="fa-regular fa-eye toggle-password"></i>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Login</button>
+
+                    <p class="bottom-link">
+                        Forgot Password? <a href="#">Reset Here</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Right Side: Illustration -->
+            <div class="illustration-section">
+                <!-- Placeholder for Login Illustration -->
+                <img src="https://img.freepik.com/free-vector/computer-login-concept-illustration_114360-7962.jpg?w=740" alt="Login Illustration">
+            </div>
+
+        </div>
+    </div>
+
+    <br><br> <!-- Spacer between the two examples -->
+
+    <!-- ========================================== -->
+    <!-- FORGOT PASSWORD PAGE CONTAINER             -->
+    <!-- ========================================== -->
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h2>Forgot Password</h2>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            
+            <!-- Left Side: Form -->
+            <div class="form-section">
+                <!-- Top Icon Box -->
+                <div class="top-icon-box">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <form action="#">
+                    <div class="input-group">
+                        <i class="fa-regular fa-envelope icon"></i>
+                        <input type="email" placeholder="Email*" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Send Reset Link</button>
+
+                    <p class="bottom-link">
+                        Already having account? <a href="#">Sign In Here</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Right Side: Illustration -->
+            <div class="illustration-section">
+                <!-- Placeholder for Forgot Password Illustration -->
+                <img src="https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-1095.jpg?w=740" alt="Forgot Password Illustration">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

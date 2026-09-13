@@ -1,0 +1,184 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f4f7f9; /* Light gray-blue background */
+    display: flex;
+    flex-direction: column; /* Stacks the two examples vertically */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.container {
+    background-color: #fff;
+    width: 850px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Ensures header corners are rounded */
+    margin-bottom: 20px;
+}
+
+/* Header Styling */
+.header {
+    background-color: #3bb4d8; /* Cyan/Blue color from image */
+    padding: 20px 40px;
+    color: white;
+}
+
+.header h2 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* Layout for Form and Image */
+.content-wrapper {
+    display: flex;
+    padding: 50px 40px;
+    gap: 30px;
+}
+
+/* Left Side: Form */
+.form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center the icon box */
+}
+
+/* Top Icon Box (User group / Lock) */
+.top-icon-box {
+    width: 60px;
+    height: 60px;
+    background-color: #f0f8fb;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    color: #3bb4d8;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(59, 180, 216, 0.1);
+}
+
+form {
+    width: 100%;
+    max-width: 300px; /* Keep form elements constrained */
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+}
+
+.input-group:focus-within {
+    border-bottom-color: #3bb4d8;
+}
+
+.input-group .icon {
+    color: #a0a0a0;
+    font-size: 14px;
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #333;
+    background: transparent;
+}
+
+.input-group input::placeholder {
+    color: #a0a0a0;
+}
+
+.toggle-password {
+    color: #a0a0a0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #3bb4d8;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px; /* Pill shape */
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2a9cbd;
+}
+
+/* Bottom Links (Forgot Password / Sign In) */
+.bottom-link {
+    text-align: center;
+    font-size: 11px;
+    color: #888;
+    margin-top: 20px;
+}
+
+.bottom-link a {
+    color: #3bb4d8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.bottom-link a:hover {
+    text-decoration: underline;
+}
+
+/* Right Side: Illustration */
+.illustration-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.illustration-section img {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+    
+    .content-wrapper {
+        flex-direction: column-reverse; /* Put image on top on mobile */
+        padding: 30px 20px;
+    }
+
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .form-section {
+        margin-top: 20px;
+    }
+}

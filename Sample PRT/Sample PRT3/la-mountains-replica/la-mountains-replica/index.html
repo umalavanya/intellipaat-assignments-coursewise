@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los Angeles Mountains</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Los Angeles Mountains home">LOS ANGELES<br><span>MOUNTAINS</span></a>
+      <nav>
+        <a href="#history">01. History</a>
+        <a href="#climb">02. Climb</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Los Angeles Mountains">
+      <div class="hero-overlay-title">LOS ANGELES<br><span>MOUNTAINS</span></div>
+    </section>
+
+    <nav class="sticky-nav" aria-label="Section navigation">
+      <div class="nav-inner">
+        <a class="brand small" href="#top">LOS ANGELES<br><span>MOUNTAINS</span></a>
+        <div class="nav-links">
+          <a href="#history">01. History</a>
+          <a href="#climb">02. Climb</a>
+        </div>
+      </div>
+    </nav>
+
+    <section id="history" class="history section">
+      <div class="section-heading container">
+        <div class="section-mark">01.</div>
+        <div>
+          <h2>History</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Tellus id interdum velit laoreet.
+            Eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Felis imperdiet
+            proin fermentum leo vel orci porta non. Diam in arcu cursus euismod quis viverra.
+            Dignissim convallis aenean et tortor.
+          </p>
+        </div>
+      </div>
+
+      <div class="carousel-wrap">
+        <button class="carousel-arrow prev" aria-label="Previous image">‹</button>
+        <div class="carousel" id="carousel">
+          <img src="https://full-stack-prt.netlify.app/images/lam-first-carousel-image.png" alt="Hiker standing on a mountain ridge">
+          <img src="https://full-stack-prt.netlify.app/images/lam-second-carousel-image.png" alt="Mountain valley">
+          <img src="https://full-stack-prt.netlify.app/images/lam-first-carousel-image.png" alt="Hiker standing on a mountain ridge">
+          <img src="https://full-stack-prt.netlify.app/images/lam-second-carousel-image.png" alt="Mountain valley">
+        </div>
+        <button class="carousel-arrow next" aria-label="Next image">›</button>
+        <div class="dots" id="dots" aria-label="Carousel pagination"></div>
+      </div>
+    </section>
+
+    <section id="climb" class="climb section">
+      <div class="section-heading container">
+        <div class="section-mark">02.</div>
+        <div>
+          <h2>Climb</h2>
+          <p>
+            Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Proin sed libero
+            enim sed faucibus. Adipiscing commodo elit at imperdiet dui accumsan.
+          </p>
+        </div>
+      </div>
+
+      <div class="mountain-tabs">
+        <input type="radio" name="mountain" id="mountain-1" checked>
+        <label for="mountain-1">MOUNTAIN 1</label>
+        <input type="radio" name="mountain" id="mountain-2">
+        <label for="mountain-2">MOUNTAIN 2</label>
+
+        <div class="tab-panel panel-1">
+          <div class="schedule">
+            <h3>SCHEDULE</h3>
+            <div><span>17 Nov 2016</span><span>Vestibulum viverra</span></div>
+            <div><span>13 Dec 2016</span><span>Vestibulum viverra</span></div>
+            <div><span>28 Dec 2016</span><span>Vestibulum viverra</span></div>
+            <div><span>9 Feb 2017</span><span>Vestibulum viverra</span></div>
+          </div>
+        </div>
+
+        <div class="tab-panel panel-2">
+          <div class="schedule">
+            <h3>SCHEDULE</h3>
+            <div><span>18 Nov 2016</span><span>Voluptas tempore</span></div>
+            <div><span>14 Dec 2016</span><span>Voluptas tempore</span></div>
+            <div><span>29 Dec 2016</span><span>Voluptas tempore</span></div>
+            <div><span>10 Feb 2017</span><span>Voluptas tempore</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>COPYRIGHT 2016. ALL RIGHTS RESERVED.</footer>
+  <script src="script.js"></script>
+</body>
+</html>
