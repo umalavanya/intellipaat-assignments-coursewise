@@ -1,0 +1,17 @@
+*{
+  margin:0 ;
+  padding: 0 ;
+  box-sizing: border-box ;
+  font-family: sans-serif;
+}
+
+/* ---- Global Layout & colors */
+
+.app-container{
+  min-height: 100vh ;
+  background-color: #9c2c6d; 
+  display: flex ;
+  justify-content: center;
+  align-items: center ;
+}
+

@@ -1,0 +1,204 @@
+/* --- Auth Pages (Login/Register) --- */
+.auth-wrapper {
+  background-color: #3b1538; /* Dark inner background */
+  padding: 40px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo-icon {
+  font-size: 40px;
+  color: #3b82f6; /* Blue logo color */
+  margin-bottom: 5px;
+}
+
+.logo-text {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background-color: #f1f5f9;
+  color: #333;
+}
+
+.auth-input::placeholder {
+  color: #888;
+}
+
+.auth-btn {
+  background-color: #d18d38; /* Orange button */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-btn:hover {
+  background-color: #b87a2d;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  color: #d18d38;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.auth-switch:hover {
+  text-decoration: underline;
+}
+
+/* --- Chat Page --- */
+.chat-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #2d2d2d; /* Dark header background */
+}
+
+/* Navbar */
+.navbar {
+  height: 60px;
+  background-color: #2d2d2d;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 30px;
+  border-bottom: 1px solid #444;
+}
+
+.logout-btn {
+  background-color: #8b5cf6; /* Purple logout button */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.logout-btn:hover {
+  background-color: #7c3aed;
+}
+
+/* Chat Body */
+.chat-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #1e1e2e; /* Very dark sidebar */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #2a2a3a;
+}
+
+.user-item:hover {
+  background-color: #2a2a3a;
+}
+
+.user-item.active {
+  background-color: #2a2a3a;
+}
+
+.avatar-small {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 15px;
+  background-color: #444;
+  object-fit: cover;
+}
+
+.user-name {
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Main Chat Area */
+.chat-main {
+  flex: 1;
+  background-color: #4a153f; /* Dark burgundy/purple area */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.robot-avatar {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.welcome-text span {
+  color: #d18d38; /* Orange highlight for name */
+}
