@@ -1,0 +1,22 @@
+body{
+    font-family: sans-serif;
+    text-align: center ;
+    padding: 40px ; 
+} 
+
+#display{
+    font-size: 60px ;
+    margin: 20px ;
+    background-color: gold;
+    width: 50% ;
+    max-width: 700px ;
+    border-radius: 10px ;
+
+}
+
+button{
+    font-size:20px ;
+    padding: 10px 20px ;
+    margin: 5px ;
+    cursor: pointer ;
+}
