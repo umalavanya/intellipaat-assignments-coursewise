@@ -33,7 +33,7 @@ function Login() {
             <div className="auth-switch-tag">Don't have an account?</div>
             <Link className="auth-switch-link" 
                   to='/register' 
-                  replace>Create Account
+                  replace>Register
             </Link>
         </div> 
 
