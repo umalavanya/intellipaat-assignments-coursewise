@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-register-forgotPassword pages</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container" id="signup">    
+        <div class="auth-header">
+            <h1>Sign Up</h1>
+        </div>
+        <div class="auth-wrapper">
+            <div class="form-section">
+                <form action="#">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon"></i>
+                        <input 
+                            type="text" 
+                            name="fullname" 
+                            placeholder="Full Name"
+                            required
+                            class="fullname"
+                            >
+                        </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon"></i>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email"
+                            required
+                            class="email"
+                        >
+                    </div>
+
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-phone icon"></i>
+                        <input 
+                        type="tel" 
+                        name="phone" 
+                        placeholder="Phone Number"
+                        required
+                        class="phone"
+                        >
+                       
+                    </div>
+
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="************"
+                        required
+                        class="password"
+                        >
+
+                        <i class="fa-regular fa-eye-slash icon"></i>
+                       
+                    </div>
+
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input 
+                        type="password" 
+                        name="confirmPassword" 
+                        placeholder="************"
+                        required
+                        class="password"
+                        >                     
+                    </div>
+                    <button class="btn-primary">Submit</button>                   
+                </form>
+
+                <p class="bottom-link">Already have an account <a href="#signin">Sign In</a></p>
+                
+            </div>
+
+            <div class="illustration-section">
+                <img src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?w=740" alt="sign up illustration">
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container" id="signin">
+        
+        <div class="auth-header">
+            <h1>Sign In</h1>
+        </div>
+        <div class="auth-wrapper">
+            <div class="form-section">
+                <form action="#">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user icon"></i>
+                        <input 
+                            type="text" 
+                            name="username" 
+                            placeholder="User Name"
+                            required
+                            class="username"
+                            >
+                        </div>
+
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="************"
+                        required
+                        class="password"
+                        >
+
+                        <i class="fa-regular fa-eye-slash icon"></i>
+                       
+                    </div>
+                    <button class="btn-primary">Submit</button>                   
+                </form>
+
+                <p class="bottom-link">Don't have an account? <a href="#signup">Sign Up</a></p>
+                 </div>
+
+            <div class="illustration-section">
+                <img src="https://img.freepik.com/free-vector/computer-login-concept-illustration_114360-7962.jpg?w=740" alt="sign in illustration">
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container" id="signup">    
+        <div class="auth-header">
+            <h1>Forgot Password</h1>
+        </div>
+        <div class="auth-wrapper">
+            <div class="form-section">
+                <form action="#">
+                    
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope icon"></i>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email"
+                            required
+                            class="email"
+                        >
+                    </div>
+                    <button class="btn-primary">Send Reset Link</button>                   
+                </form>
+
+                <p class="bottom-link">Don't have an account? <a href="#signup">Sign Up</a></p>
+                
+            </div>
+
+            <div class="illustration-section">
+                <img src="https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-1095.jpg?w=740" alt="forgot password illustration">
+            </div>
+        </div>
+    </div>
+
+
+    
+</body>
+</html>
