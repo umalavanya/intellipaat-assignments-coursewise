@@ -1,0 +1,63 @@
+.auth-container{
+
+    display: flex ;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+
+
+
+}
+
+.auth-header{
+
+}
+
+.auth-wrapper{
+
+    display: flex ;
+
+}
+
+.form-section{
+    display: flex ;
+
+
+}
+
+form{
+    flex: 1 ;
+}
+
+.input-group{
+    display: flex ;
+    justify-content: center ;
+    align-items: center ;
+
+}
+
+.input-icon{
+
+
+}
+
+.input-item{
+
+}
+
+.illustration-section{
+
+    width: 100% ;
+    max-height: 300px ;
+
+}
+
+.illustration-section img{
+    width: 100% ;   
+}
+
+@media (max-width: 850px ){
+    .auth-wrapper{
+        flex-direction: column-reverse ;
+    }
+}
