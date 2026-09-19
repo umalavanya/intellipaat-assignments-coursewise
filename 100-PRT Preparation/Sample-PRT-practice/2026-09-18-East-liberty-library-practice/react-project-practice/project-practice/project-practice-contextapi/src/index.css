@@ -1,0 +1,124 @@
+:root{
+  --black: #000000 ;
+  --dark-red: #8E1616 ;
+  --gold: #E8C999 ;
+  --cream: #F8EEDF ;
+}
+
+*{
+  margin:  0; 
+  padding: 0 ;
+  box-sizing: border-box ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+  background-color: var(--cream); 
+  display: flex ;
+  align-items: center;
+  justify-content: center;
+  height: 100vh ;
+}
+
+
+.auth-container{
+  background-color: var(--cream);
+  color: var(--black) ;
+  border: 1px solid var(--gold) ;
+  border-radius: 12px ;
+  padding: 20px ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ;
+  box-shadow: 0 10px 25px var(--gold);
+
+}
+
+.auth-container h2{
+  color: var(--dark-red) ;
+  text-align: center ;;
+}
+
+.auth-box{
+  display: flex ;
+  flex-direction: column ;
+  justify-content: center ;
+  align-items: center ;
+  gap: 10px ;
+}
+
+.auth-box input{
+  width: 100% ;
+  padding: 10px ;
+  border-radius: 10px ;
+  border: none ;
+}
+
+.btn-primary{
+  width: 100% ;
+  padding: 10px ;
+  background-color: var(--dark-red);
+  border-radius: 10px ;
+  border: none ;
+  color: var(--cream) ;
+  font-weight: 600;
+  font-size: 1.1rem;
+
+}
+
+.btn-primary:hover{
+  background-color: var(--black);
+}
+
+.auth-switch{
+  text-align: center ;
+}
+
+.auth-switch a{
+  text-decoration: none;
+  font-weight: 600 ;
+  color: var(--dark-red)
+}
+
+.navbar{
+  background: var(--black); 
+  color: var(--cream) ;
+  padding: 1rem 2rem  ;
+  display: flex ;
+  justify-content: center;
+  align-items: center ;
+  width: 100% ;
+
+}
+
+.navbar h1{
+  color: var(--gold) ;
+  font-size: 1.4rem ;
+}
+
+.navbar button{
+  background: var(--dark-red) ;
+  color: var(--cream) ;
+  border: none ;
+  padding: 0.5rem 1.2rem ;
+  border-radius: 8px ;
+  cursor: pointer ;
+  font-weight: 600 ;
+}
+
+
+.dashboard{
+  min-height: 100vh ;
+}
+
+.dashboard-content{
+  padding: 2rem ;
+  max-width: 900px ;
+  margin: 0 auto ;
+
+}
+
+.dashboard-content h2{
+  color: var(--dark-red) ;
+  margin-bottom: 1.5rem ;
+
