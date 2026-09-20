@@ -1,0 +1,21 @@
+Problem Statement:
+You are working as a React JS developer at ForcastInsights. You are required to
+leverage your React skills to develop a state-of-the-art Application. This project
+aims to create a robust, user-friendly web application that delivers real-time
+information and actionable insights to users.
+Tasks to be Performed:
+● Build a multi-page application that uses the React Context API to manage
+application-wide state.
+● Allow users to switch between light and dark themes, and persist the
+selected theme across page navigation.
+● Implement the theme-switching functionality using the Context API.
+● The page will have some text on the switch of the theme text as well as
+background color will get changed.
+
+
+use the colors
+#FDA403
+#E8751A
+#C51350
+#8A1253
+use react vite setup
