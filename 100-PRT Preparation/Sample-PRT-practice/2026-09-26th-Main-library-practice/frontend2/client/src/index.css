@@ -1,0 +1,35 @@
+:root{
+  --black: #000000 ;
+  --dark-red: rgb(123, 4, 4) ;
+  --cream: #ebd5ab ;
+  --gold : rgba(243, 196, 9, 0.958) ;
+}
+
+*{
+  margin: 0 ;
+  padding:  0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center ;
+}
+
+div{
+  border: 1px solid var(--gold) ;
+  text-align: center ;
+  padding: 10px ;
+  border-radius: 10px ;
+  box-shadow: 2px 2px 2px gray;
+}
+
+.auth-box{
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center ;
+  gap: 10px ;
+}
