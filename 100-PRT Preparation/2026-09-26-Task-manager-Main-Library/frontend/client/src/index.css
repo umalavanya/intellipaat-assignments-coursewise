@@ -1,0 +1,133 @@
+/* General Styles */
+:root{
+    --black : #000000 ;
+    --dark-red: #8E1616 ;
+    --cream: #E6C999 ;
+    --gold: #e7af23 ;
+}
+
+*{
+    margin: 0 ;
+    padding: 0 ;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+    background-color: var(--cream ) ; 
+    min-height: 100vh ;
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Auth container styles */
+
+.auth-main{
+    display: flex ;
+    flex-direction: column ;
+    justify-content: center ;
+    max-width: 300px ;
+}
+
+.auth-container{
+    display: flex ; 
+    flex-direction: column ;
+    justify-content: center ;
+    align-items: center; 
+    border: 1px solid var(--gold);
+    padding: 20px ;
+    width: 100% ;
+    color: var(--black) ;
+    background : white ;
+    border-radius: 10px;
+    box-shadow: 1px 20px 50px #777777;
+}
+
+.auth-container h2{
+    color: var(--dark-red) ;
+    text-align: center ;
+    margin-bottom: 10px ;
+    font-size: 35px;
+
+}
+
+.auth-box{
+    display: flex ;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px ;
+
+}
+
+.auth-box input{
+    width: 100% ;
+    padding: 10px  ;
+    border-radius: 10px ;
+    border: none ;
+    background-color:  var(--cream);
+    font-size: 20px;
+}
+
+.auth-btn{
+    width: 100% ;
+    padding: 10px ;
+    border: none ;
+    background-color: var(--dark-red);
+    border-radius: 10px ;
+    color: var(--cream) ;
+    font-size: 20px ;
+    font-weight:  500 ;
+}
+
+.auth-btn:hover{
+    background-color: var(--black);
+}
+
+.auth-switch{
+    color: var(--dark-red) ;
+    margin-top: 10px ;
+}
+
+.auth-switch a{
+    text-decoration: none ;
+    color: var(--dark-red) ;
+    font-weight: 800  ;
+}
+
+.auth-switch a:hover{
+    color: black ;
+    background-color: var(--gold);
+    padding: 5px ;
+    border-radius: 10px; 
+}
+
+.navbar{
+    background: var(--black);
+    color: var(--cream) ;
+    padding: 1rem 2rem ;
+    display: flex ;
+    justify-content: center ;
+    align-items: center ;
+} 
+
+.navbar h1{
+    color: var(--gold) ;
+    font-size: 1.4rem ;
+
+}
+
+.nav-bar button{
+    background: var(--dark-red); 
+    color: var(--cream) ;
+    border: none ;
+    padding: 0.5rem 1.2rem ;
+    border-radius: 8px ;
+    cursor: pointer ;
+    font-weight: 600 ;
+
+}
+.dashboard{
+    min-height: 100vh ;
+}
