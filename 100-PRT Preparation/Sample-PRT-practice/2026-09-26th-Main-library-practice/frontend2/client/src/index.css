@@ -1,0 +1,20 @@
+:root{
+  --black: #000000 ;
+  --dark-red: E81616 ;
+  --cream: #e3ca90 ;
+  --gold: #e1a235 ;
+}
+
+*{
+  margin:  0;
+  padding: 0 ;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+  min-height: 100vh ;
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
