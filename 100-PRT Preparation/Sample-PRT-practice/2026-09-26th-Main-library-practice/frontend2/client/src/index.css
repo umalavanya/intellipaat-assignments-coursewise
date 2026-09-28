@@ -1,0 +1,23 @@
+:root{
+  --gold: #e1900d ;
+}
+
+*{
+  margin: 0 ;
+  padding: 0 ;
+  box-sizing: border-box ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+} 
+
+body{
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div{
+  border: 1px solid gray ;
+  border-radius: 5px ;
+  padding: 10px ;
+}
